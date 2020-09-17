@@ -25,3 +25,4 @@ We are unable to post the data used because of privacy restrictions. However, th
 ## More information
 
 * [Description of IMVH](https://economics.ucsd.edu/undergraduate-program/video-handbooks/index.html)
+* [CAMSEE Research Plan](https://camsee.ucsd.edu/_files/170886_2019_07_08_Revised_Research_Plan_clean.pdf)
