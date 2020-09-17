@@ -1,0 +1,154 @@
+\documentclass[10pt, letterpaper, landscape]{article}
+\usepackage[pass]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{babel}
+\usepackage{blindtext}
+\usepackage{graphicx}
+\usepackage{layouts}
+
+\title{The effect of supplementary video lectures on learning in undergraduate microeconomics}
+\author{%
+	Melissa Famulari\\
+	\small Department of Economics\\
+	\small University of California San Diego\\
+	\and
+	Zachary A. Goodman\thanks{The authors thank Craig McIntosh and numerous seminar participants for their helpful feedback.}\\
+	\small Department of Economics\\
+	\small University of California San Diego\\
+}
+
+
+% 8.5 x 11 with 0.5 inch margins
+\geometry{reset, letterpaper, height=7.5in, width=10in, hmarginratio=1:1, vmarginratio=1:1, marginparsep=0pt, marginparwidth=0pt} %, headheight=15pt}
+
+
+\usepackage{booktabs}
+
+% *****************************************************************
+% Estout related things
+% *****************************************************************
+\newcommand{\sym}[1]{\rlap{#1}}% Thanks to David Carlisle
+
+\let\estinput=\input% define a new input command so that we can still flatten the document
+
+\newcommand{\estwide}[3]{
+	\vspace{.75ex}{
+		\begin{tabular*}
+			{\textwidth}{@{\hskip\tabcolsep\extracolsep\fill}l*{#2}{#3}}
+			\toprule
+			\estinput{#1}
+			\bottomrule
+			\addlinespace[.75ex]
+		\end{tabular*}
+	}
+}	
+
+\newcommand{\estauto}[3]{
+	\vspace{.75ex}{
+		\begin{tabular}{l*{#2}{#3}}
+			\toprule
+			\estinput{#1}
+			\bottomrule
+			\addlinespace[.75ex]
+		\end{tabular}
+	}
+}
+
+% Allow line breaks with \\ in specialcells
+\newcommand{\specialcell}[2][c]{%
+	\begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
+
+% *****************************************************************
+% Custom subcaptions
+% *****************************************************************
+% Note/Source/Text after Tables
+\newcommand{\figtext}[1]{
+	\vspace{-1.9ex}
+	\captionsetup{justification=justified,font=footnotesize}
+	\caption*{\hspace{6pt}\hangindent=1.5em #1}
+}
+\newcommand{\fignote}[1]{\figtext{\emph{Note:~}~#1}}
+
+\newcommand{\figsource}[1]{\figtext{\emph{Source:~}~#1}}
+
+% Add significance note with \starnote
+\newcommand{\starnote}{\figtext{* p < 0.1, ** p < 0.05, *** p < 0.01. Standard errors in parentheses.}}
+
+% *****************************************************************
+% siunitx
+% *****************************************************************
+\usepackage{siunitx} % centering in tables
+\sisetup{
+	detect-mode,
+	tight-spacing		= true,
+	group-digits		= false ,
+	input-signs		= ,
+	input-symbols		= ( ) [ ] - + *,
+	input-open-uncertainty	= ,
+	input-close-uncertainty	= ,
+	table-align-text-post	= false
+}
+
+
+\usepackage[flushleft]{threeparttable}
+
+
+
+
+
+\begin{document}
+
+%\maketitle 
+%\begin{abstract}
+%	The abstract goes here eventually.
+%\end{abstract}
+
+% \tableofcontents
+\newpage
+
+
+	
+%\titlepage
+%\fancyhf{} % clear all header and footers
+%\renewcommand{\headrulewidth}{0pt} % remove the header rule
+%\setcounter{page}{1}
+%\pagenumbering{arabic}
+%\fancyheadoffset{0cm}  % This is so page number does not extend into right margin (thesis requirements).
+%\rhead{\thepage}  % Center the page number at the Footer
+%\pagestyle{fancy}
+%
+%\drawdimensionstrue
+\printinunitsof{in}
+\pagediagram   % draws diagram with all layout vernacular identified (except bottom margin)
+\pagevalues
+\currentpage
+
+\section{Plots} \bigskip
+
+%\includegraphics[width=\textwidth]{../plots/attritecoefplot.png}
+
+%\includegraphics[width=\textwidth]{../plots/attritebinscatter.png}
+
+%\includegraphics[width=\textwidth]{../plots/attriterd.png}
+
+\section{Tables} \newpage
+
+\input{../tables/balancetableall.tex}
+
+\input{../tables/balancetablematched.tex}
+
+\input{../tables/firststage_allrel.tex}
+
+\input{../tables/firststage_b4mid2rel.tex}
+
+
+%\section{Appendix}
+
+%\includegraphics[width=\textwidth]{./plots/ppopbar.png}
+
+
+%\input{./firststage_pre_mid1_table.tex}
+
+\end{document}

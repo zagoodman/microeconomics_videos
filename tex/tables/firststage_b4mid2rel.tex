@@ -1,0 +1,21 @@
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{Effect of Being Assigned Treatment (ITT) on Relevant Videos Watched before Midterm 2}
+\begin{tabular}{l*{8}{S}}
+\toprule
+                    &\multicolumn{4}{c}{Unique Videos}                                                      &\multicolumn{4}{c}{Total Videos}                                                       \\\cmidrule(lr){2-5}\cmidrule(lr){6-9}
+                    &\multicolumn{1}{c}{All Observations}&\multicolumn{1}{c}{All Observations}&\multicolumn{1}{c}{Matching Pairs}&\multicolumn{1}{c}{Matching Pairs}&\multicolumn{1}{c}{All Observations}&\multicolumn{1}{c}{All Observations}&\multicolumn{1}{c}{Matching Pairs}&\multicolumn{1}{c}{Matching Pairs}\\
+\midrule
+Treated             &        6.74\sym{***}&        6.21\sym{***}&        6.18\sym{***}&        5.32\sym{***}&       10.26\sym{***}&        9.86\sym{***}&        9.93\sym{***}&        8.36\sym{***}\\
+                    &      (1.56)         &      (1.12)         &      (1.19)         &      (1.29)         &      (2.82)         &      (1.80)         &      (1.96)         &      (1.97)         \\
+Midterm 1 score     &        0.01         &       -0.21         &       -0.67         &      -42.45         &       -0.51         &       -0.62         &       -1.58         &      -67.38         \\
+                    &      (0.72)         &      (0.62)         &      (0.69)         &     (28.82)         &      (1.29)         &      (0.95)         &      (1.09)         &     (40.98)         \\
+Year = 2019         &       -8.76\sym{***}&       -5.97\sym{***}&       -6.91\sym{***}&                     &      -13.51\sym{***}&       -8.10\sym{***}&       -9.37\sym{***}&                     \\
+                    &      (1.57)         &      (1.16)         &      (1.20)         &                     &      (2.84)         &      (1.80)         &      (1.96)         &                     \\
+Intercept           &       26.23\sym{***}&        1.62         &        2.65         &       -4.00         &       38.23\sym{***}&       -8.86         &       -7.41         &      -18.29         \\
+                    &      (1.38)         &      (7.29)         &      (7.50)         &     (14.80)         &      (2.55)         &      (9.23)         &      (9.53)         &     (18.28)         \\
+\midrule
+N                   &\multicolumn{1}{c}{374}         &\multicolumn{1}{c}{372}         &\multicolumn{1}{c}{330}         &\multicolumn{1}{c}{330}         &\multicolumn{1}{c}{374}         &\multicolumn{1}{c}{372}         &\multicolumn{1}{c}{330}         &\multicolumn{1}{c}{330}         \\
+Controls            &        {No}         &       {Yes}         &       {Yes}         &       {Yes}         &        {No}         &       {Yes}         &       {Yes}         &       {Yes}         \\
+Pair Fixed Effects  &        {No}         &        {No}         &        {No}         &       {Yes}         &        {No}         &        {No}         &        {No}         &       {Yes}         \\
+\bottomrule \multicolumn{9}{@{}p{1\textwidth}} {\textit{Notes}: 'Videos watched' includes all videos watched before the second midterm relevant to the course. Test score variables are normalized by the control mean and standard deviation. Standard errors are robust to heteroskedasticity. ***, **, and * indicate significance at the 1, 5, and 10 percent critical levels, respectively.} \end{tabular} \end{table}
