@@ -18,7 +18,9 @@ Of note, the design of the experiment includes randomizing students who scored b
 
 ## Repository details
 
-We are unable to post the data used because of privacy restrictions. However, the repository contains the output from our Jupyter Notebooks.
+We are unable to post the data used because of privacy restrictions. However, the repository contains the output from our Jupyter Notebooks:
+* [Data prep](https://nbviewer.jupyter.org/github/zagoodman/microeconomics_videos/blob/master/jupyter/assemble_data.ipynb)
+* [Data analysis](https://nbviewer.jupyter.org/github/zagoodman/microeconomics_videos/blob/master/jupyter/assemble_data.ipynb)
 
 ## More information
 
