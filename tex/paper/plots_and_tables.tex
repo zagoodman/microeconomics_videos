@@ -25,6 +25,7 @@
 
 
 \usepackage{booktabs}
+\usepackage{caption}
 
 % *****************************************************************
 % Estout related things
@@ -60,21 +61,6 @@
 \newcommand{\specialcell}[2][c]{%
 	\begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
 
-% *****************************************************************
-% Custom subcaptions
-% *****************************************************************
-% Note/Source/Text after Tables
-\newcommand{\figtext}[1]{
-	\vspace{-1.9ex}
-	\captionsetup{justification=justified,font=footnotesize}
-	\caption*{\hspace{6pt}\hangindent=1.5em #1}
-}
-\newcommand{\fignote}[1]{\figtext{\emph{Note:~}~#1}}
-
-\newcommand{\figsource}[1]{\figtext{\emph{Source:~}~#1}}
-
-% Add significance note with \starnote
-\newcommand{\starnote}{\figtext{* p < 0.1, ** p < 0.05, *** p < 0.01. Standard errors in parentheses.}}
 
 % *****************************************************************
 % siunitx
@@ -127,7 +113,7 @@
 
 \section{Plots} \bigskip
 
-%\includegraphics[width=\textwidth]{../plots/attritecoefplot.png}
+\includegraphics[width=\textwidth]{../plots/attritecoefplot.png}
 
 %\includegraphics[width=\textwidth]{../plots/attritebinscatter.png}
 
@@ -143,6 +129,15 @@
 
 \input{../tables/firststage_b4mid2rel.tex}
 
+\input{../tables/firststage_duration.tex}
+
+\input{../tables/itt_table.tex}
+
+\input{../tables/late_table.tex}
+
+\input{../tables/interaction_first.tex}
+
+\input{../tables/interaction_second.tex}
 
 %\section{Appendix}
 

@@ -3,23 +3,23 @@
 \caption{Effect of Watching Videos (LATE) on Test Scores for those induced by treatment}
 \begin{tabular}{l*{8}{S}}
 \toprule
-                    &\multicolumn{3}{c}{Final}                                        &\multicolumn{5}{c}{Midterm 2}                                                                                \\\cmidrule(lr){2-4}\cmidrule(lr){5-9}
+                    &\multicolumn{4}{c}{Final}                                                              &\multicolumn{4}{c}{Midterm 2}                                                          \\\cmidrule(lr){2-5}\cmidrule(lr){6-9}
                     &\multicolumn{1}{c}{All Observations}&\multicolumn{1}{c}{Matching Pairs}&\multicolumn{1}{c}{Matching Pairs}&\multicolumn{1}{c}{All Observations}&\multicolumn{1}{c}{Matching Pairs}&\multicolumn{1}{c}{Matching Pairs}&\multicolumn{1}{c}{m7}&\multicolumn{1}{c}{m8}\\
 \midrule
 relu\_since\_mid1     &                     &                     &                     &                     &                     &                     &                     &                     \\
                     &                     &                     &                     &                     &                     &                     &                     &                     \\
 relu\_bt\_mid1\_mid2   &                     &                     &                     &                     &                     &                     &                     &                     \\
                     &                     &                     &                     &                     &                     &                     &                     &                     \\
-Unique, relevant videos&       0.008\sym{**} &       0.006         &       0.005         &       0.003         &                     &                     &                     &                     \\
+Unique, relevant videos&       0.008\sym{**} &       0.007\sym{*}  &       0.006         &       0.008\sym{*}  &                     &                     &                     &                     \\
                     &     (0.004)         &     (0.004)         &     (0.004)         &     (0.005)         &                     &                     &                     &                     \\
-Midterm 1 score     &       0.538\sym{***}&       0.439\sym{***}&       0.420\sym{***}&                     &       0.491\sym{***}&       0.398\sym{***}&       0.392\sym{***}&                     \\
-                    &     (0.039)         &     (0.041)         &     (0.048)         &                     &     (0.044)         &     (0.045)         &     (0.053)         &                     \\
-Year = 2019         &       0.047         &       0.030         &       0.018         &                     &       0.377\sym{**} &       0.237\sym{*}  &       0.241\sym{*}  &                     \\
-                    &     (0.090)         &     (0.088)         &     (0.093)         &                     &     (0.166)         &     (0.123)         &     (0.143)         &                     \\
-Unique, rel. videos before Midterm 2&                     &                     &                     &                     &       0.035\sym{**} &       0.030\sym{**} &       0.028\sym{*}  &       0.021         \\
-                    &                     &                     &                     &                     &     (0.015)         &     (0.015)         &     (0.016)         &     (0.019)         \\
-Intercept           &      -0.299         &      -1.205\sym{**} &      -1.235\sym{**} &                     &      -0.947\sym{**} &      -1.502\sym{*}  &      -1.662\sym{*}  &                     \\
-                    &     (0.202)         &     (0.601)         &     (0.595)         &                     &     (0.454)         &     (0.839)         &     (0.866)         &                     \\
+Midterm 1 score     &       0.654\sym{***}&       0.542\sym{***}&       0.515\sym{***}&                     &       0.558\sym{***}&       0.478\sym{***}&       0.481\sym{***}&                     \\
+                    &     (0.047)         &     (0.049)         &     (0.059)         &                     &     (0.048)         &     (0.049)         &     (0.055)         &                     \\
+Year = 2019         &       0.057         &       0.039         &       0.025         &                     &       0.307\sym{**} &       0.236\sym{**} &       0.244\sym{*}  &                     \\
+                    &     (0.090)         &     (0.088)         &     (0.093)         &                     &     (0.151)         &     (0.117)         &     (0.130)         &                     \\
+Unique, rel. videos before Midterm 2&                     &                     &                     &                     &       0.027\sym{*}  &       0.028\sym{*}  &       0.029\sym{*}  &       0.029\sym{*}  \\
+                    &                     &                     &                     &                     &     (0.015)         &     (0.015)         &     (0.016)         &     (0.016)         \\
+Intercept           &      -0.405\sym{**} &      -1.842\sym{***}&      -1.893\sym{***}&                     &      -0.812\sym{*}  &      -1.689\sym{***}&      -1.743\sym{***}&                     \\
+                    &     (0.202)         &     (0.385)         &     (0.410)         &                     &     (0.427)         &     (0.442)         &     (0.441)         &                     \\
 \midrule
-\multicolumn{1}{c}{N}&\multicolumn{1}{c}{374}         &\multicolumn{1}{c}{374}         &\multicolumn{1}{c}{332}         &\multicolumn{1}{c}{332}         &\multicolumn{1}{c}{373}         &\multicolumn{1}{c}{373}         &\multicolumn{1}{c}{331}         &\multicolumn{1}{c}{330}         \\
-\bottomrule \multicolumn{7}{@{}p{1\textwidth}} {\textit{Notes}: 'Unique relevant video' variables are instrumented using exogenously assigned treatment. The first coefficient in each column is the local average treatment effect of each video that was induced to be watched by treatment. Test score variables are in standard deviation-units. Standard errors are robust to heteroskedasticity. ***, **, and * indicate significance at the 1, 5, and 10 percent critical levels, respectively.} \end{tabular} \end{table}
+\multicolumn{1}{c}{N}&\multicolumn{1}{c}{374}         &\multicolumn{1}{c}{374}         &\multicolumn{1}{c}{332}         &\multicolumn{1}{c}{332}         &\multicolumn{1}{c}{395}         &\multicolumn{1}{c}{395}         &\multicolumn{1}{c}{362}         &\multicolumn{1}{c}{362}         \\
+\bottomrule \multicolumn{9}{@{}p{1\textwidth}} {\textit{Notes}: 'Unique relevant video' variables are instrumented using exogenously assigned treatment. The first coefficient in each column is the local average treatment effect on exam score of each video induced to be watched by treatment. Test score variables are in standard deviation-units. Standard errors are robust to heteroskedasticity. ***, **, and * indicate significance at the 1, 5, and 10 percent critical levels, respectively.} \end{tabular} \end{table}
