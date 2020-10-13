@@ -141,6 +141,9 @@ dmypy.json
 
 ### TeX Template
 
+## Mac files
+*.DS_Store
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
