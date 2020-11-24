@@ -239,7 +239,7 @@ We conducted the field experiment in four intermediate microeconomics courses, t
 
 Students were informed about the experiment during the first lecture and in the syllabus, which was provided to all students via the course webpage. A hard copy of the consent form was given to the students on the second day of class.  At any time during the quarter, students were permitted to opt out of having their anonymized data included in the analysis, which would not begin until grades had been posted and data had been anonymized\footnote{Students could opt out via a form handled by the Teaching + Learning Commons (T+LC) so that neither the instructor nor research team could observe which students decided to opt out. The T+LC also anonymized the data for the research team before any analysis was conducted.}. Students below the age of 18 at the start of the course as well as pupils enrolled in the course via an online extension program were removed from the analysis dataset.
 
-The experiment began four weeks into the term following the first midterm exam, and as such, only students who took the first midterm were included in the experiment. Following the first midterm, students were assigned to one of three treatment arms: ``Incentive", ``Control", or ``Above median". Students who scored below the median on the first midterm were randomly assigned to \textit{Incentive} or \textit{Control} whereas \textit{Above median} includes all other students. Random assignment was performed using pairwise stratification conditional on midterm score and year cohort (specific detail on treatment assignment can be found in the Appendix). Students in the \textit{Incentive} arm received a grading scheme that encouraged watching videos during the rest of the term whereas \textit{Control} and \textit{Above the median} received the standard grading scheme that does not directly reward watching videos. The two different grading schemes are outlined in Table \ref{gradescheme}. Specifically, the \textit{Incentive} grading scheme requires that at least 40 of 48 eligible videos in the IMVH be watched to earn 4 percentage points towards the students' final grades\footnote{Watched in standard speed, 40 videos would require students to spend between 5.5 and 7.1 hours, depending on the length of videos chosen (on average 9.7 minutes in length each). Watching all incentivized videos in standard speed would require just shy of eight hours.}.
+The experiment began four weeks into the term following the first midterm exam, and as such, only students who took the first midterm were included in the experiment. Following the first midterm, students were assigned to one of three treatment arms: \textit{Incentive}, \textit{Control}, or \textit{Above median}. Students who scored below the median on the first midterm were randomly assigned to \textit{Incentive} or \textit{Control} whereas \textit{Above median} includes all other students. Random assignment was issued using pairwise random assignment stratified on midterm score and year cohort (details on treatment assignment can be found in the Appendix). Students in the \textit{Incentive} arm received a grading scheme that encouraged watching videos during the rest of the term whereas \textit{Control} and \textit{Above the median} received the standard grading scheme that does not directly reward watching videos. The two different grading schemes are outlined in Table \ref{gradescheme}. Specifically, the \textit{Incentive} grading scheme requires that at least 40 of 48 eligible videos in the IMVH be watched to earn 4 percentage points towards the students' final grades\footnote{Watched in standard speed, 40 videos would require students to spend between 5.5 and 7.1 hours, depending on the length of videos chosen (on average 9.7 minutes in length each). Watching all incentivized videos in standard speed would require just shy of eight hours.}.
 Notably, the 4 percentage points comes at the expense of the first midterm score, which had already occurred at the time of treatment assignment. Hence, we isolate the video incentive as the sole difference between treatment arms, giving us more confidence that the exclusivity assumption of our encouragement design holds. % TODO - move this to after the model explanations?
 
 \begin{table}
@@ -315,6 +315,58 @@ where $Y_{it}$ is an outcome of interest (e.g. videos watched or test scores) fo
 To identify the causal effect parameter of interest, $\beta$, we make three assumptions: 1) \textit{treatment status unconfounded given controls}: $Z_{it} \perp \!\!\! \perp \Big(Y_{it}(Z=1), Y_{it}(Z=0)\Big) \Big| X_{it}$; 2)\textit{Excludability}: 3) \textit{Non-interference/Stable Unit Treatment Value Assumption (SUTVA)}: 
 
 
+% Neyman test of zero avg causal effect
+
+\subsection{ITT}
+
+We are interested in knowing the average effect of being assigned to the \textit{Incentive} arm on exam scores, which we will refer to as the Intent to Treat Effect (ITT). We will test the null hypothesis that being treated has zero effect against the alternative that being treated has a nonzero effect on exam scores. %positive effect?
+
+We will estimate the ITT using Neyman's \citeyear{neyman1935} repeated sampling approach, considering each pair (block) a completely randomized experiment and combining the results. We begin by estimating the point estimate of the ITT as the difference in means between the \textit{Incentive} and \textit{Control} arms, which is equivalent to the average difference in means across all pairs:
+
+\begin{equation} \label{itt_spec}
+	\hat{\tau} = \bar{\tau}_I - \bar{\tau}_C = \frac{1}{J}\sum_{j=1}^{J} \bar{y}_{j,I} - \bar{y}_{j,C}
+\end{equation}
+
+where $\hat{\tau}$ is the point estimate of the ITT, $J$ is the number of pairs in the sample, and other notation follows from above.
+
+The point estimate $\hat{\tau}$ is appropriate if treatment is not confounded by observable or unobservable variables. While this assumption is true in expectation given random assignment of treatment, as a robustness check we estimate specifications that control for differences in observed characteristics, described later in this paper.
+
+Following Neyman's repeated sampling approach, the estimated standard error of $\hat{\tau}$ (\cite{imai2008}, \cite{ai2015}, \cite{ai2017}) is:
+
+\begin{equation} \label{se_block}
+	\hat{SE}(\hat{\tau_j}) = \Big(\frac{1}{J}\sum_{j=1}^{J} \hat{V}(\hat{\tau_j}) \Big)^\frac{1}{2}
+\end{equation}
+
+where $\hat{V}(\hat{\tau_j})$ is the estimated variance within block (pair) $j\in \{1,...,J\}$. This within-block variance given one control and one treated unit per block is (\cite{ir2015}, \cite{ai2017}):
+
+\begin{equation} \label{v_block}
+	\hat{V}(\hat{\tau_j}) = s_{j, I}^2 + s_{j, C}^2
+\end{equation}
+
+where $s_{j, I}$ and $s_{j, C}$ are the \textit{Incentive} and \textit{Control} sample variances within block $j$, respectively. Unfortunately, these sample variances are not estimable with only one unit in each arm per block. As such, we use the following estimator, which is conservative (confidence intervals wider) if there is heterogeneity in the treatment effect (\cite{imai2008}, \cite{ai2015}, \cite{ai2017}):
+
+\begin{equation} \label{se_imai}
+	\hat{SE}(\hat{\tau_j}) = \Big(\frac{1}{J(J-1)}\sum_{j=1}^{J} (\hat{\tau_j} - \hat{\tau})^2 \Big)^\frac{1}{2}
+\end{equation}
+
+However, it is impossible to estimate this estimator in the special case when 
+
+Assuming a constant treatment effect within the population, the point estimate of the ITT is simply the difference in means of the outcome in the sample. 
+
+
+
+where $z_i \in \{0,1\}$ is the treatment assignment for student $i$, $y_i$ is the student's observed outcome, and $N$ is the number of students in the sample. 
+
+Since treatment is assigned using a matched pair design,
+
+ the appro
+
+\begin{equation}
+	Y_{it} = \beta Z_{it} + f(X_{it}) + \epsilon_{it}
+\end{equation}
+
+
+
 
 % *****************************************************************
 % Results
@@ -333,6 +385,7 @@ To identify the causal effect parameter of interest, $\beta$, we make three assu
 % *****************************************************************
 
 \section{Conclusion} \label{conclusion}
+
 Students come to college, in part, to learn how to learn.  In large classes it is not possible to meet individually with every student to provide individual advice on effective studying technoques and students who likely would benefit the most from such advice may be the least likely to come ask the instructor or TA for help with how to pass the class.  
 
 Which type of classes?  This suggests "learning interventions" may be particularly effective for typically classes taken in the student's first quarter/semester, the first upper division classes in the major, and/or large classes. 
@@ -345,6 +398,9 @@ We examine the effectiveness of an educational innovation, a video handbook, whe
 
 Our field experiment is unable to determine whether the videos uniquely helped the treated students or whether any intervention that induced additional time spent on the course would have been effective.  We do have suggestive evidence that the videos were uniquely effective:  treated students in the next couse in the sequence, where there was no grade inducement to watch videos, continued to watch the videos at a higher rate than the control students.  
 
+Students come to college, in part, to learn how to learn. In large classes it is not possible to meet individually with every student to provide individual advice on effective studying and students who likely would benefit the most from such advice may be the least likely to come ask the instructor or TA for help with how to pass the class.  This suggests "learning interventions" may be particularly effective in classes taken in the first quarter/semester, the first upper division classes in the major, and/or large classes. Further, transfer students, who simultaneously take their first class at the university, first large class, and first upper division class may particularly benefit from such interventions.  Finally, students at the margin of success in a major may benefit 
+
+
 
 \printbibliography
 
@@ -352,8 +408,35 @@ Our field experiment is unable to determine whether the videos uniquely helped t
 % Appendix
 % *****************************************************************
 
-\section{Appendix}
+\section*{Appendix}
 
+\renewcommand{\thesubsection}{\Alph{subsection}}
+
+\subsection{Additional experiment details}
+
+In this section we outline additional experiment details that could prove useful for replication or understanding our analysis choices.
+
+\subsubsection{Randomization} \label{a_randomization}
+Students were assigned to treatment arms using a matched pairs design, a special case of blocked randomization in which each block contains exactly two units, one treated and one control. Several authors detail how matched pair designs can improve the \textit{ex ante} precision of treatment effect estimates (versus complete randomization) by matching treatment units whose potential outcomes are similar (e.g. \cite{ir2015}, \cite{ai2017}). The 
+
+Additionally, we were unable to observe most pretreatment covariates until after the experiment had finished because of student privacy concerns, making blocking on these variables impossible. We learned from the previous cohorts' data that between the first midterm score and math quiz score, the midterm score predicted significantly more variation in the final exam score. Hence, we ass
+
+\subsubsection{Selection of control variables} \label{a_selection}
+
+In this section we discuss how we select control variables included in linear models estimated in this paper. In our nonparametric estimation strategies that use generalized random forests, the algorithms implicitly select control variables that matter most for treatment heterogeneity and explaining variance in the outcome variables of interest (see Appendix \ref{a_grf}).
+
+Equation \ref{TBD} includes a vector of control variables related linearly to the outcomes of interest. Although $d_i$, the treatment indicator is randomly assigned and in expectation $d_i$ is orthogonal to all observed and unobserved pretreatment covariates, in small samples stochastic imbalances can occur, which if controlled for can reduce bias of the treatment effect estimator \parencite{ai2017}. Even if perfect balance is achieved, controlling for orthogonal covariates can improve precision of the treatment effect estimator if the covariates can predict unexplained variance in the outcome. 
+
+By definition it is not possible to guarantee balance on unobserved covariates. As discussed in Appendix \ref{a_randomization}, we mechanically balanced the treatment arms on first midterm score, one of the few observables at the time of treatment assignment, with our knowledge from previous cohorts' data that the first midterm score explains a significant portion of variance in final exam score. Hence in our estimation strategies involving controls we always include the first midterm score and year, following the recommendations of \textcite{bm2009} to control for all covariates used to seek balance when assigning treatment.
+
+For variables unobservable at time of randomization but observable at time of analysis, we cannot guarantee balance, nor is it clear \textit{ex ante}, beyond our intuition, which will predict variation in the outcome variables of interest. 
+
+\subsubsection{Generalized Random Forests} \label{a_grf}
+
+In this section we discuss our implementation of Generalized Random Forests proposed by \textcite{atw2019}
+
+
+\item
 
 
 \end{document}
