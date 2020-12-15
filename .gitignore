@@ -7,6 +7,9 @@ data/
 *.csv
 *.dta
 
+# unnecessary tex intermediates
+*.yaml
+
 ### Python Template
 
 # Byte-compiled / optimized / DLL files
@@ -428,4 +431,3 @@ TSWLatexianTemp*
 # option is specified. Footnotes are the stored in a file with suffix Notes.bib.
 # Uncomment the next line to have this generated file ignored.
 #*Notes.bib
-tex/paper/video_experiment-cache.yaml
