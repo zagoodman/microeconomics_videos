@@ -1,0 +1,36 @@
+\begin{spacing}{1.0} 
+ \def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi} 
+\begin{table} \centering \label{secondstage_table} 
+ \caption{Effect of Videos on Grades} 
+\begin{threeparttable} 
+\begin{tabular}{m{0.35\linewidth} *{4}{>{\centering\arraybackslash}m{0.1\linewidth}}}
+\toprule
+                                     &      (1) &      (2) &      (3) &      (4) \\
+\midrule
+          \multicolumn{5}{l}{\textbf{Panel A}: Midterm 2 Score} \\ 
+\indentrow{RF: Incentive}  &    0.18\sym{*} &    0.18\sym{*} &    0.18\sym{*} &    0.17\sym{*} \\
+                                     &  (0.090) &  (0.094) &  (0.090) &  (0.096) \\
+        \customlinespace \indentrow{2SLS: 10 Videos}  &   0.027\sym{*} &   0.027\sym{*} &   0.030\sym{*} &   0.029\sym{*} \\
+                                     &  (0.015) &  (0.015) &  (0.015) &  (0.015) \\
+ \customlinespace \indentrow{2SLS: 1 Hour of Videos}  &   0.224\sym{*} &   0.233\sym{*} &  0.238\sym{**} &   0.222\sym{*} \\
+                                     &  (0.128) &  (0.138) &  (0.121) &  (0.124) \\
+                        \customlinespace Observations &      395 &      362 &      395 &      362 \\
+          \midrule 
+ \multicolumn{5}{l}{\textbf{Panel B}: Final Exam Score} \\ 
+\indentrow{RF: Incentive}  &   0.17\sym{**} &    0.17\sym{*} &   0.17\sym{**} &     0.14 \\
+                                     &  (0.089) &  (0.103) &  (0.088) &  (0.103) \\
+        \customlinespace \indentrow{2SLS: 10 Videos}  &  0.008\sym{**} &   0.008\sym{*} &  0.008\sym{**} &   0.009\sym{*} \\
+                                     &  (0.004) &  (0.005) &  (0.004) &  (0.005) \\
+ \customlinespace \indentrow{2SLS: 1 Hour of Videos}  &  0.074\sym{**} &   0.074\sym{*} &  0.074\sym{**} &    0.058 \\
+                                     &  (0.038) &  (0.045) &  (0.037) &  (0.044) \\
+                        \customlinespace Observations &      374 &      332 &      374 &      332 \\
+       \midrule 
+ Treatment assignment controls &      Yes &       No &      Yes &      Yes \\
+                Demographic controls &       No &       No &      Yes &      Yes \\
+                  Pair Fixed Effects &       No &       No &       No &      Yes \\
+\bottomrule
+\end{tabular}
+\Fignote{This table reports coefficients on $Incentive_i$ from Equation \ref{late_spec} and $Video_i$ from Equation TBD. Test scores are measured in standard deviation units. Model (1) contains linear controls midterm 1 score and year; (2) is the difference in means and standard errors calculated using the repeated sampling framework of Neyman (1923); (3) and (4) use the post-double-selection (PDS) procedure of \textcite{bch2014a} to select control variables then estimate treatment effects and standard errors. The control variables selected using PDS are listed in Table \ref{controlvars_selected_itt}. Models (2) and (4) contain only students whose matched-pair did not attrite from the experiment.  \Regnote} 
+ \end{threeparttable} 
+ \end{table} 
+ \end{spacing}
