@@ -7,7 +7,7 @@
  \begin{longtable}{p{0.07\linewidth} >{\hangindent=1em}p{0.38\linewidth} p{0.22\linewidth} p{0.22\linewidth}}
 \caption{ITT model controls selected via post-double-selection}\label{controlvars_selected_itt}\\
 \toprule
-   Table &                          Dependent Variable &                  Controls,\newline All Observations &                                    Controls,\newline Fixed Effects \\
+      Table &                          Dependent Variable &                  Controls,\newline All Observations &                                                         Controls,\newline Fixed Effects \\
 \midrule
 \endfirsthead 
 \multicolumn{4}{r}{{Table \ref{controlvars_selected_itt} (continued)}} \\
@@ -21,61 +21,64 @@
 \bottomrule
 \insertTableNotes 
 \endlastfoot
- Table 1 &                Hours unique videos by Final &                                        Hours videos &                                                       Hours videos \\
-         &               Hours unique videos by Mid. 2 &                                        Hours videos &                                                       Hours videos \\
-         &                       Hours videos by Final &                                        Hours videos &                                                       Hours videos \\
-         &                      Hours videos by Mid. 2 &                                        Hours videos &                    Hours videos\newline PSET visits\newline Videos \\
-         &             Num. unique videos before Final &                         Hours videos\newline Videos &                                                             Videos \\
-         &            Num. unique videos before Mid. 2 &                                              Videos &                                                             Videos \\
-         &                    Num. videos before Final &                         Hours videos\newline Videos &                                        Hours videos\newline Videos \\
-         &                   Num. videos before Mid. 2 &                                              Videos &                                         PSET visits\newline Videos \\
- \midrule 
- Table 2 &                            Final exam score &                                                None &                                   Math quiz score\newline Transfer \\
-         &                             Midterm 2 score &                                                None &                                                    Math quiz score \\
- \midrule 
- Table 3 &                                 All classes &                                      Cumulative GPA &            Cumulative GPA\newline Math quiz score\newline Transfer \\
-         &                    Econ classes ex. Micro A &                                                None &                                                           Transfer \\
-         &                           Excluding Micro A &                                      Cumulative GPA &                                                           Transfer \\
-         &                      Excluding econ classes &                                                None &                                                               None \\
-         &                     Letter grade in Micro A &      Cumulative GPA\newline Latinx\newline Transfer &                                                     Cumulative GPA \\
-         &                     Num. classes not passed &                                                None &                                                               None \\
-         &                         Num. classes passed &                     Cumulative GPA\newline Transfer &                                    Cumulative GPA\newline Transfer \\
-         &                     Num. classes taken P/NP &                                              Latinx &                                                             Latinx \\
-         &               Num. classes taken for letter &                  Cumulative GPA\newline No cum. GPA &                                                     Cumulative GPA \\
-         &                      Num. classes withdrawn &                                                None &                                                               None \\
-         &                       Num. units taken P/NP &                                              Latinx &                                                             Latinx \\
-         &           Num. units taken for letter grade &                  Cumulative GPA\newline No cum. GPA &                                                     Cumulative GPA \\
-         &                        Num. units withdrawn &                                                None &                                                               None \\
-         &                       \% classes taken P/NP &                                                None &                                                             Latinx \\
-         &                 \% classes taken for letter &                                                None &                                                             Latinx \\
- \midrule 
- Table 4 &                                  Attendance &  Female\newline Math quiz score\newline PSET visits &                                                        PSET visits \\
-         &                         Num. Piazza answers &                                                None &                                                               None \\
-         &                     Num. Piazza days online &                                                None &                                                               None \\
-         &                 Num. Piazza questions asked &                                                None &                                                               None \\
-         &                           Num. Piazza views &                                                None &                                                              Asian \\
-         &                         Num. of PSET visits &                                         PSET visits &                                                        PSET visits \\
- \midrule 
- Table 5 &                    Final exam score, winter &                                                None &                      Latinx\newline Math quiz score\newline Videos \\
-         &                 Hours unique videos, winter &                                        Hours videos &                      Latinx\newline Math quiz score\newline Videos \\
-         &                    Midterm 1 score, Micro B &                                                None &                                     Latinx\newline Math quiz score \\
-         &                    Midterm 2 score, Micro B &                                                None &                       Asian\newline Latinx\newline Math quiz score \\
-         &                     Num. classes not passed &                                                None &                                                               None \\
-         &                         Num. classes passed &                                                None &                                                               None \\
-         &                     Num. classes taken P/NP &                                                None &                                                           Transfer \\
-         &               Num. classes taken for letter &                                                None &                                                        No cum. GPA \\
-         &                      Num. classes withdrawn &                                                None &                                                               None \\
-         &                  Num. unique videos, winter &                                        Hours videos &  Latinx\newline Math quiz score\newline PSET visits\newline Videos \\
-         &                       Num. units taken P/NP &                                                None &                                                           Transfer \\
-         &           Num. units taken for letter grade &                                                None &                                                               None \\
-         &                        Num. units withdrawn &                                                None &                                                               None \\
-         &  Term GPA, econ courses ex. Micro B, winter &                                                None &                                                    Math quiz score \\
-         &                       Term GPA, ex. Micro B &                                      Cumulative GPA &                                 Cumulative GPA\newline PSET visits \\
-         &                  Term GPA, ex. econ courses &                                                None &                                                        PSET visits \\
-         &                            Term GPA, winter &                                      Cumulative GPA &                                 Cumulative GPA\newline PSET visits \\
-         &                Took 100B for a letter grade &                                                None &                                                    Math quiz score \\
-         &                       \% classes taken P/NP &                                                None &                                       No cum. GPA\newline Transfer \\
-         &                 \% classes taken for letter &                                                None &                                       No cum. GPA\newline Transfer \\
+    Table 1 &                Hours unique videos by Final &                                        Hours videos &                                                                            Hours videos \\
+            &               Hours unique videos by Mid. 2 &                                        Hours videos &                                                                            Hours videos \\
+            &                       Hours videos by Final &                                        Hours videos &                                                                            Hours videos \\
+            &                      Hours videos by Mid. 2 &                                        Hours videos &                                         Hours videos\newline PSET visits\newline Videos \\
+            &             Num. unique videos before Final &                         Hours videos\newline Videos &                                                                                  Videos \\
+            &            Num. unique videos before Mid. 2 &                                              Videos &                                                                                  Videos \\
+            &                    Num. videos before Final &                         Hours videos\newline Videos &                                                             Hours videos\newline Videos \\
+            &                   Num. videos before Mid. 2 &                                              Videos &                                                              PSET visits\newline Videos \\
+    \midrule 
+ Table 2 &                            Final exam score &                                                None &                                                        Math quiz score\newline Transfer \\
+            &                             Midterm 2 score &                                                None &                                                                         Math quiz score \\
+    \midrule 
+ Table 3 &                                 All classes &                                      Cumulative GPA &                                 Cumulative GPA\newline Math quiz score\newline Transfer \\
+            &                    Econ classes ex. Micro A &                                                None &                                                                                Transfer \\
+            &                           Excluding Micro A &                                      Cumulative GPA &                                                                                Transfer \\
+            &                      Excluding econ classes &                                                None &                                                                                    None \\
+            &                     Letter grade in Micro A &      Cumulative GPA\newline Latinx\newline Transfer &                                                                          Cumulative GPA \\
+            &                     Num. classes not passed &                                                None &                                                                                    None \\
+            &                         Num. classes passed &                     Cumulative GPA\newline Transfer &                                                         Cumulative GPA\newline Transfer \\
+            &                     Num. classes taken P/NP &                                              Latinx &                                                                                  Latinx \\
+            &               Num. classes taken for letter &                  Cumulative GPA\newline No cum. GPA &                                                                          Cumulative GPA \\
+            &                      Num. classes withdrawn &                                                None &                                                                                    None \\
+            &                       Num. units taken P/NP &                                              Latinx &                                                                                  Latinx \\
+            &           Num. units taken for letter grade &                  Cumulative GPA\newline No cum. GPA &                                                                          Cumulative GPA \\
+            &                        Num. units withdrawn &                                                None &                                                                                    None \\
+            &                       \% classes taken P/NP &                                                None &                                                                                  Latinx \\
+            &                 \% classes taken for letter &                                                None &                                                                                  Latinx \\
+    \midrule 
+ Table 4 &                           Attendance checks &  Female\newline Math quiz score\newline PSET visits &                                                                             PSET visits \\
+            &                         Num. Piazza answers &                                                None &                                                                                    None \\
+            &                     Num. Piazza days online &                                                None &                                                                                    None \\
+            &                 Num. Piazza questions asked &                                                None &                                                                                    None \\
+            &                           Num. Piazza views &                                                None &                                                                                   Asian \\
+            &                         Num. of PSET visits &                                         PSET visits &                                                                             PSET visits \\
+    \midrule 
+ Table 5 &                             Hours of videos &                    Hours videos\newline PSET visits &                       Latinx\newline Math quiz score\newline PSET visits\newline Videos \\
+            &                             Midterm 1 score &                                                None &                                                          Latinx\newline Math quiz score \\
+            &                             Midterm 2 score &                                                None &                                            Asian\newline Latinx\newline Math quiz score \\
+            &                     Num. classes not passed &                                                None &                                                                                    None \\
+            &                         Num. classes passed &                                                None &                                                                                    None \\
+            &                     Num. classes taken P/NP &                                                None &                                                                                Transfer \\
+            &               Num. classes taken for letter &                                                None &                                                                             No cum. GPA \\
+            &                      Num. classes withdrawn &                                                None &                                                                                    None \\
+            &                              Num. of videos &                                        Hours videos &  Hours videos\newline Latinx\newline Math quiz score\newline PSET visits\newline Videos \\
+            &                       Num. units taken P/NP &                                                None &                                                                                Transfer \\
+            &           Num. units taken for letter grade &                                                None &                                                                                    None \\
+            &                        Num. units withdrawn &                                                None &                                                                                    None \\
+            &                                    Term GPA &                                      Cumulative GPA &                                                      Cumulative GPA\newline PSET visits \\
+            &  Term GPA, econ courses ex. Micro B, winter &                                                None &                                                                         Math quiz score \\
+            &                       Term GPA, ex. Micro B &                                      Cumulative GPA &                                                      Cumulative GPA\newline PSET visits \\
+            &                  Term GPA, ex. econ courses &                                                None &                                                                             PSET visits \\
+            &                                Took Micro B &                                                None &                                                                         Math quiz score \\
+            &                       \% classes taken P/NP &                                                None &                                                            No cum. GPA\newline Transfer \\
+            &                 \% classes taken for letter &                                                None &                                                            No cum. GPA\newline Transfer \\
+ Table None &                            Final exam score &                                                None &                                           Latinx\newline Math quiz score\newline Videos \\
+            &                         Hours unique videos &                                        Hours videos &                       Latinx\newline Math quiz score\newline PSET visits\newline Videos \\
+            &                          Num. unique videos &                                        Hours videos &                       Latinx\newline Math quiz score\newline PSET visits\newline Videos \\
+            &                                Pass Micro B &                                                None &                                           Latinx\newline Math quiz score\newline Videos \\
 \end{longtable}
 
 \end{ThreePartTable} 
