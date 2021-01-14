@@ -1,7 +1,6 @@
 \begin{spacing}{1.0} 
- \def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi} 
-\begin{table} \centering \label{firststage_table} 
- \caption{Effects of Grade Incentive on Video Watching} 
+\begin{table} \centering \caption{Effects of Grade Incentive on Video Watching} 
+\label{firststage_table} 
 \begin{threeparttable} 
 \begin{tabular}{m{0.35\linewidth} *{5}{>{\centering\arraybackslash}m{0.1\linewidth}}}
 \toprule
@@ -16,7 +15,8 @@
                                      &              &    (0.37) &    (0.39) &    (0.24) &    (0.26) \\
  \customlinespace \indentrow{Hours of unique videos}  &         2.97 &   0.79\sym{***} &   0.79\sym{***} &   0.75\sym{***} &   0.79\sym{***} \\
                                      &              &    (0.23) &    (0.23) &    (0.13) &    (0.15) \\
-                        \customlinespace Observations &              &       395 &       362 &       395 &       362 \\
+                        \midrule 
+ Observations &              &       395 &       362 &       395 &       362 \\
                  \midrule 
  \multicolumn{6}{l}{\textbf{Panel B}: By Final Exam} \\ 
 \indentrow{Videos}  &        53.09 &  39.25\sym{***} &  39.07\sym{***} &  38.77\sym{***} &  38.42\sym{***} \\
@@ -27,14 +27,14 @@
                                      &              &    (0.52) &    (0.55) &    (0.40) &    (0.44) \\
  \customlinespace \indentrow{Hours of unique videos}  &         4.35 &   2.35\sym{***} &   2.34\sym{***} &   2.36\sym{***} &   2.32\sym{***} \\
                                      &              &    (0.25) &    (0.27) &    (0.18) &    (0.20) \\
-                        \customlinespace Observations &              &       374 &       332 &       374 &       332 \\
-       \midrule 
- Treatment assignment controls &              &       Yes &        No &       Yes &       Yes \\
+                        \midrule 
+ Observations &              &       374 &       332 &       374 &       332 \\
+       Treatment assignment controls &              &       Yes &        No &       Yes &       Yes \\
                 Demographic controls &              &        No &        No &       Yes &       Yes \\
                   Pair Fixed Effects &              &        No &        No &        No &       Yes \\
 \bottomrule
 \end{tabular}
 \Fignote{This table reports coefficients on $Incentive_i$ from Equations \ref{itt_spec} and TBD. Model (1) contains linear controls midterm 1 score and year; (2) is the difference in means and standard errors calculated using the repeated sampling framework of Neyman (1923); (3) and (4) use the post-double-selection (PDS) procedure of \textcite{bch2014a} to select control variables then estimate treatment effects and standard errors. The control variables selected using PDS are listed in Table \ref{controlvars_selected_itt}. Models (2) and (4) contain only students whose matched-pair did not attrite from the experiment. \textit{Control Mean} is the mean for the Control students included in models (1) and (3), which is nearly identical to the mean for the Control students included in models (2) and (4).  \Regnote} 
- \end{threeparttable} 
- \end{table} 
- \end{spacing}
+\end{threeparttable}
+\end{table} 
+\end{spacing}

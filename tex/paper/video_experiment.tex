@@ -23,6 +23,7 @@
 \usepackage{graphicx}
 \usepackage[flushleft]{threeparttable}
 \usepackage{longtable}
+\usepackage{threeparttablex}
 \usepackage{multirow}
 \usepackage{array}
 \usepackage{tikz}
@@ -439,14 +440,14 @@ where $\tau$ is the average causal effect of watching videos and $Y_{it}(1)$ and
 
 A student's decision to watch videos is endogenous, so we must rely on an exogenous instrument to calculate an unbiased estimate of $\tau$. By randomly assigning treatment that induces significantly greater video watching, the treatment indicator $Z_{it}$ satisfies the instrument validity and relevancy conditions required to estimate $\tau$ using an instrumental variable approach (citation). We calculate an estimate of $\tau$ using a two-stage least squares approach:
 
-\begin{equation} \label{firststage}
+\begin{equation} \label{firststage_spec}
 	v_{it} = \alpha Z_{it} + f(X_{it}) + e_{it}
 \end{equation}
 \begin{equation} \label{secondstage}
 	y_{it} = \tau \hat{v}_{it} + g(X_{it}) + u_{it}
 \end{equation}
 
-where $\hat{v}_{it}$ is instrumented videos watched estimated by Equation \ref{firststage}, $f()$ and $g()$ are generic functions through which $X_{it}$ affects $v_{it}$ and $y_{it}$, respectively, and $e_{it}$ and $u_{it}$ are model residuals assumed to be mean-zero conditional on observables. $\hat{\tau}$ is the estimate of the local average treatment effect (LATE) of watching videos local to those students induced by treatment to watch videos.
+where $\hat{v}_{it}$ is instrumented videos watched estimated by Equation \ref{firststage_spec}, $f()$ and $g()$ are generic functions through which $X_{it}$ affects $v_{it}$ and $y_{it}$, respectively, and $e_{it}$ and $u_{it}$ are model residuals assumed to be mean-zero conditional on observables. $\hat{\tau}$ is the estimate of the local average treatment effect (LATE) of watching videos local to those students induced by treatment to watch videos.
 
 Under the assumptions of independence, monotonicity, and non-interference, $\hat{\tau}$ is an unbiased estimate of the LATE \parencite{ai1995}. Independence assumes that outcomes (e.g. grades) are only impacted by treatment through watching videos. This assumption could be violated if, for example, telling a student she is treated were to give her more confidence on subsequent exams during the quarter. Monotonicity, sometimes refered to as the ``no defiers assumption", is required because of two-sided noncompliance and requires that students assigned treatment are weakly more likely to watch videos than if they were assigned control. A violation of this assumption could occur if students get utility from rebelling against their assigned grade scheme. Non-interference, also known as the Stable Unit Treatment Value Assumption (SUTVA), assumes that each student's outcome depends only on their own treatment status and not the treatment status of their peers. Violations of SUTVA may include control students benefiting from having treated students in the same class (and perhaps studying together).
 
@@ -532,13 +533,13 @@ In this section, we first establish that \textit{Incentive} and \textit{Control}
 
 \subsection{Relevancy of the encouragement instrument}
 
-As described in the previous section, we use a Two-Stage Least Squares approach to estimate the LATE of watching videos on exam performance. We must check that our instrument is both valid and relevant to ensure this method will produce an unbiased estimate of the LATE \parencite{ir2015}. The validity condition is met by assigning the treatment arm at random conditional on observable characteristics, namely exam score and year of instruction. Additionally, Table \ref{balancetable} gives us further confidence that treatment status is uncorrelated with demographics. Next we check relevancy, i.e. whether treatment status generates significantly more video watching. Below in Table \ref{firststagetable} we present estimates from Equation \ref{firststage} and find that being assigned to the \textit{Incentive} arm induces students to watch XX more videos than does being assigned to the \textit{Control} arm. The F-statistic is XX, far greater than 10, the generally accepted minimum value required to consider an instrument relevant.
+As described in the previous section, we use a Two-Stage Least Squares approach to estimate the LATE of watching videos on exam performance. We must check that our instrument is both valid and relevant to ensure this method will produce an unbiased estimate of the LATE \parencite{ir2015}. The validity condition is met by assigning the treatment arm at random conditional on observable characteristics, namely exam score and year of instruction. Additionally, Table \ref{balance_table_final} gives us further confidence that treatment status is uncorrelated with demographics. Next we check relevancy, i.e. whether treatment status generates significantly more video watching. Below in Table \ref{firststage_table} we present estimates from Equation \ref{firststage_spec} and find that being assigned to the \textit{Incentive} arm induces students to watch XX more videos than does being assigned to the \textit{Control} arm. The F-statistic is XX, far greater than 10, the generally accepted minimum value required to consider an instrument relevant.
 
 \subsection{Estimation of causal effects}
 
 First, we estimate the causal effect of being assigned to the \textit{Incentive} arm on exam scores (ITT). This estimate is relevant for educators interested in predicting how requiring videos will change exam scores in their classes using the same grade-based incentive implemented in our experiment. Second, we estimate the causal effect of watching videos on exam scores, which is of interest to educators deciding which teaching technologies to provide for their classes as well as to students choosing among different studying tools.
 
-For both the ITTs and LATEs, we examine effects on the second midterm and final exams using both parametric methods (i.e. Equations \ref{itt_spec} and \ref{secondstage}) and nonparametric methods a la the repeated sampling framework of \textcite{neyman1923} and Generalized Random Forests proposed by \textcite{wa2018}. We check that our parametric results are robust to model specification by estimating Equation \ref{firststage} with and without $f(X_{it})$ as a vector of linear control variables and including $\hat{v}_{it}$ in Equation \ref{secondstage} with both linear and quadratic components. To rule out differential attrition across treatment arms as a confounder, we fit the aforementioned models dropping any student whose matched pair attrited before the conclusion of the experiment.
+For both the ITTs and LATEs, we examine effects on the second midterm and final exams using both parametric methods (i.e. Equations \ref{itt_spec} and \ref{secondstage}) and nonparametric methods a la the repeated sampling framework of \textcite{neyman1923} and Generalized Random Forests proposed by \textcite{wa2018}. We check that our parametric results are robust to model specification by estimating Equation \ref{firststage_spec} with and without $f(X_{it})$ as a vector of linear control variables and including $\hat{v}_{it}$ in Equation \ref{secondstage} with both linear and quadratic components. To rule out differential attrition across treatment arms as a confounder, we fit the aforementioned models dropping any student whose matched pair attrited before the conclusion of the experiment.
 
 \subsubsection{Effect of receiving encouragement}
 
@@ -587,26 +588,43 @@ Though randomized controlled trials estimating causal effects of teaching techno
 
 \printbibliography
 
+%%% TABLES
 
+\clearpage
+\input{../tables/balance_table_final.tex}
+
+\clearpage
 \input{../tables/firststage.tex}
 
+\clearpage
 \input{../tables/secondstage.tex}
 
-% Spillover to grades
+\clearpage
+\input{../tables/spillover_grades.tex}
 
-% Spillover to studying
+% \clearpage
+% \input{../tables/spillover_studying.tex}
 
 % Spillover to next quarter
 
-\clearpage
+%%% PLOTS
+
+% Time series
+
+% video CDF
 
 % *****************************************************************
 % Appendix
 % *****************************************************************
 
+\clearpage
+
 \section*{Appendix}
 
 \renewcommand{\thesubsection}{\Alph{subsection}}
+
+\setcounter{table}{0}
+\renewcommand{\thetable}{A\arabic{table}}
 
 \subsection{Additional experiment details}
 
@@ -621,7 +639,7 @@ We assigned treatment shortly after issuing midterm exam grades, which occured d
 
 Although our treatment assignment method provides a better chance of balance than does simple random sampling, by random chance and through non-random attrition, it is possible that the two treatment arms vary on \textit{ex post} observable and unobservable covariates that are correlated with the outcomes of interest, thereby confounding our treatment effect estimates. The primary cause of attrition was withdrawing from the course, which reduced our sample by XX students before the second midterm and XX students before the final exam. A XX\% rate of withdraw is in line with the withdraw rates observed in previous quarters. Another cause of attrition, albeit not from the course, is age: four students under the age of 18 during the experiment were removed from the analysis dataset. Additionally, seven students opted out of having their data included in the experiment analysis.
 
-Since neither the students' intent to withdraw, age, nor opt-out preferences were observable at the time of treatment assignment, we could not \textit{ex ante} balance this attrition across treatment arms. If students attrited non-randomly, that is, decided to attrite depending on their treatment status, then our treatment effect estimates would be biased. Fortunately, despite XX\% of students attriting before the second midterm and XX\% before the final exam, the two treatment arms below the median are balanced on nearly all observable pretreatment covariates, as shown in Table \ref{balancetable}, which gives us confidence that the \textit{Control} arm is a good counterfactual for the \textit{Incentive} arm.
+Since neither the students' intent to withdraw, age, nor opt-out preferences were observable at the time of treatment assignment, we could not \textit{ex ante} balance this attrition across treatment arms. If students attrited non-randomly, that is, decided to attrite depending on their treatment status, then our treatment effect estimates would be biased. Fortunately, despite XX\% of students attriting before the second midterm and XX\% before the final exam, the two treatment arms below the median are balanced on nearly all observable pretreatment covariates, as shown in Table \ref{balance_table_final}, which gives us confidence that the \textit{Control} arm is a good counterfactual for the \textit{Incentive} arm.
 
 \subsubsection{Selection of control variables} \label{a_selection}
 
@@ -636,13 +654,21 @@ For variables unobservable at time of randomization but observable at time of an
 
 PDS is a two step process in which first, model covariates are selected in an automated, principled fashion, and second, the model coefficients of interest are estimated while controlling for those selected covariates. The first step involves predicting, separately, both the outcome of interest (e.g., videos watched) and treatment status using lasso regression, which shrinks coefficient estimates towards zero. Note that since treatment is randomly assigned, the lasso should shrink most, if not all, of the coefficients towards zero when predicting treatment status. Next, the researcher takes the union of all covariates with non-zero coefficients and includes these covariates as controls in her model. With her control variables selected, she can now estimate treatment effects with reduced bias relative to including controls with less empirical rationale.
 
-In Table \ref{controlvars_desc} below, we describe all covariates observable in our study. In Table \ref{controlvars_selected}, we describe the covariates selected as controls for estimating the effect of treatment on each outcome variable of interest. All models include either pair fixed effects or year and midterm score as controls. To ensure these controls are ``selected" by the PDS procedure, we partialed out these controls from the first step prediction models by residualizing both sides of the equation as described in \textcite{bch2014b}.
+In Table \ref{controlvars_desc} below, we describe all covariates observable in our study. In Table \ref{controlvars_selected_itt}, we describe the covariates selected as controls for estimating the effect of treatment on each outcome variable of interest. All models include either pair fixed effects or year and midterm score as controls. To ensure these controls are ``selected" by the PDS procedure, we partialed out these controls from the first step prediction models by residualizing both sides of the equation as described in \textcite{bch2014b}.
+
+\clearpage
+
+\input{../tables/balance_table_mid2.tex}
+
+\clearpage
 
 \input{../tables/controlvars_desc.tex}
 
 \clearpage
 
 \input{../tables/controlvars_selected_itt.tex}
+
+\clearpage
 
 \input{../tables/controlvars_selected_iv.tex}
 

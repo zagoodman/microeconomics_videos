@@ -1,0 +1,49 @@
+\begin{spacing}{1.0} 
+\begin{table} \centering \caption{Spillover Effects of Incentive on Other Course Grades} 
+\label{spillover_grades} 
+\resizebox{\linewidth}{!}{% 
+\begin{threeparttable} 
+\begin{tabular}{m{0.44\linewidth} *{5}{>{\centering\arraybackslash}m{0.1\linewidth}}}
+\toprule
+                               & Control Mean &     (1) &     (2) &     (3) &     (4) \\
+\midrule
+                   \multicolumn{6}{l}{\textbf{Panel A}: Effects on Term GPA} \\ 
+\customlinespace \indentrow{All classes} &         2.59 &  0.13\sym{**} &   0.13\sym{*} &   0.11\sym{*} &    0.10 \\
+                               &              &  (0.06) &  (0.07) &  (0.06) &  (0.06) \\
+                   &              &     373 &     332 &     373 &     332 \\
+             \customlinespace \indentrow{Excluding Micro A} &         2.75 &    0.10 &    0.11 &    0.09 &    0.10 \\
+                               &              &  (0.07) &  (0.08) &  (0.07) &  (0.08) \\
+                   &              &     370 &     329 &     370 &     329 \\
+        \customlinespace \indentrow{Excluding econ classes} &         2.99 &    0.06 &    0.09 &    0.06 &    0.08 \\
+                               &              &  (0.10) &  (0.09) &  (0.09) &  (0.12) \\
+                   &              &     315 &     278 &     315 &     278 \\
+      \customlinespace \indentrow{Econ classes ex. Micro A} &         2.44 &    0.07 &    0.02 &    0.07 &   -0.03 \\
+                               &              &  (0.09) &  (0.08) &  (0.09) &  (0.11) \\
+                   &              &     258 &     228 &     258 &     228 \\
+           \midrule 
+ \multicolumn{6}{l}{\textbf{Panel B}: Effects on classes passed} \\ 
+\customlinespace \indentrow{Num. classes passed} &         3.28 &    0.08 &    0.09 &    0.05 &    0.02 \\
+                               &              &  (0.09) &  (0.10) &  (0.09) &  (0.09) \\
+       \customlinespace \indentrow{Num. classes not passed} &         0.31 &    0.01 &   -0.01 &    0.01 &   -0.01 \\
+                               &              &  (0.06) &  (0.06) &  (0.06) &  (0.06) \\
+        \customlinespace \indentrow{Num. classes withdrawn} &         0.05 &    0.01 &    0.01 &    0.01 &    0.01 \\
+                               &              &  (0.03) &  (0.02) &  (0.03) &  (0.02) \\
+       \midrule 
+ \multicolumn{6}{l}{\textbf{Panel C}: Effects on class grade type} \\ 
+\customlinespace \indentrow{Letter grade in Micro A} &         0.95 &   -0.04 &  -0.05\sym{*} &   -0.03 &   -0.04 \\
+                               &              &  (0.03) &  (0.03) &  (0.02) &  (0.03) \\
+   \customlinespace \indentrow{\% classes taken for letter} &         0.93 &   -0.01 &   -0.01 &   -0.01 &   -0.01 \\
+                               &              &  (0.01) &  (0.02) &  (0.01) &  (0.02) \\
+         \customlinespace \indentrow{\% classes taken P/NP} &         0.07 &    0.01 &    0.01 &    0.01 &    0.01 \\
+                               &              &  (0.01) &  (0.02) &  (0.01) &  (0.02) \\
+                  \midrule 
+Observations &              &     374 &     332 &     374 &     332 \\
+ Treatment assignment controls &              &     Yes &      No &     Yes &     Yes \\
+          Demographic controls &              &      No &      No &     Yes &     Yes \\
+            Pair Fixed Effects &              &      No &      No &      No &     Yes \\
+\bottomrule
+\end{tabular}
+\Fignote{This table reports coefficients on $Incentive_i$ from Equations \ref{itt_spec} and TBD. Model (1) contains linear controls midterm 1 score and year; (2) is the difference in means and standard errors calculated using the repeated sampling framework of Neyman (1923); (3) and (4) use the post-double-selection (PDS) procedure of \textcite{bch2014a} to select control variables then estimate treatment effects and standard errors. The control variables selected using PDS are listed in Table \ref{controlvars_selected_itt}. Models (2) and (4) contain only students whose matched-pair did not attrite from the experiment. GPA is measured on a 4.0 scale and is only affected by courses taken for a letter grade. Courses taken for Pass/No Pass (P/NP) have no bearing on GPA, nor do withdrawn courses. \textit{Control Mean} is the mean for the Control students included in models (1) and (3), which is nearly identical to the mean for the Control students included in models (2) and (4). \Regnote} 
+\end{threeparttable}}
+\end{table} 
+\end{spacing}
