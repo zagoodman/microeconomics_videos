@@ -1,11 +1,17 @@
 ### Custom
 
+# test files
+*test_file*
+
 # privacy-protected data
 data/
 *.xlsx
 *.xls
 *.csv
 *.dta
+
+# unnecessary tex intermediates
+*.yaml
 
 ### Python Template
 
