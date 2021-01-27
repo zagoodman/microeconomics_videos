@@ -1,12 +1,14 @@
 \documentclass[12pt]{article}
 \linespread{1.5}
+\pdfminorversion=6
 
 \usepackage[english]{babel}
 \usepackage{booktabs}
+\usepackage{bookmark}
 \usepackage{tabularx}
 \usepackage{caption}
 \usepackage{float,color}
-\usepackage[pdftex]{graphicx}
+\usepackage{graphicx,scalerel}
 \usepackage{hyperref}
 \hypersetup{colorlinks,linkcolor=black,urlcolor=blue,citecolor=black}
 \usepackage{amssymb}
@@ -50,6 +52,9 @@ backend=biber
 ]{biblatex}
 \addbibresource{bibliography.bib}
 
+% Scale hats and bars (e.g. \wh{x})
+\newcommand\wh[1]{\hstretch{2}{\hat{\hstretch{.5}{#1}}}}
+\newcommand\wb[1]{\hstretch{2}{\bar{\hstretch{.5}{#1}}}}
 
 % custom table functions
 % indents second level entries
@@ -157,22 +162,22 @@ We find that being assigned treatment (ITT) increased midterm and final exam sco
 
 Although treated students performed better on course assessments, for determining welfare it is important to identify where the time watching videos came from: leisure time, working, student organizations, studying for other classes, studying for current class using other methods, etc. On one hand, if watching videos is more productive than the next best studying method, then the utility of requiring videos is unambiguously positive as students can substitute studying time towards the more productive option. On the other hand, if students must reduce time allocated towards leisure or studying for other classes so they can watch more videos, then the welfare implications are less clear and could be negative depending on the students' preferences.
 
-We attempt to disentangle whether treated students spent more time studying or used their time more effectively by examining proxies for time use including class attendance, visits to a tutoring center (specific to this course), downloading materials from the course website, posting on the class discussion board, and reported time use from an in-class survey. Although our estimates are noisy, we find no statistically significant differences between treatment and control, and we can reject large decreases in take-up of other study methods by treated students. Surprisingly, in nearly all cases, the point estimates suggest that the treatment group used study methods beyond the videos at \textit{greater} rates than did their control peers. Though estimates are noisey, we find no significant differences in reported lesire time across treatment and control. Finally, we investigate spillovers to other courses taken during the same academic term as the experiment and similarly find that treated students perform \textit{better} than their control peers, which suggests that watching the videos likely did not dramatically reduce time spent studying for other classes.
+We attempt to disentangle whether treated students spent more time studying or used their time more effectively by examining proxies for time use including class attendance, visits to a tutoring center (specific to this course), downloading materials from the course website, posting on the class discussion board, and reported time use from an in-class survey. Although our estimates are noisy, we find no statistically significant differences between treatment and control, and we can reject large decreases in take-up of other study methods by treated students. Surprisingly, in nearly all cases, the point estimates suggest that the treatment group used study methods beyond the videos at \textit{greater} rates than did their control peers. Though estimates are noisy, we find no significant differences in reported leisure time across treatment and control. Finally, we investigate spillovers to other courses taken during the same academic term as the experiment and similarly find that treated students perform \textit{better} than their control peers, which suggests that watching the videos likely did not dramatically reduce time spent studying for other classes.
 
 Finally, we attempt to distinguish between two models of student learning which could explain why the video watching inducement improved student exam performance: an incomplete information model where students do not know how to study effectively versus a two-selves model where students like good grades but dislike studying. One important (and testable) difference between the incomplete information model and the two-selves model is what happens after exogenous incentives to watch videos are removed. While the former predicts that students exposed to treatment will continue watching videos given their new knowledge of a relatively productive studying technology, the latter predicts that the students will return to their lower baseline levels of video watching as their doer selves no longer have a commitment device reducing the temptation of immediately gratifying leisure. We examine video watching behavior during the term following the experiment in the subsequent microeconomics course and find that treated students watch significantly more videos than their control classmates, consistent with the incomplete information model.
 
-Collectively, we interpret our findings as strong evidence that requiring studying tools known by the instructor to be effective is utility enhancing for students who manifest their limited knowledge of how best to study, perhaps through poor performance on an early stage assessment. Finally, we provide suggestive evidence that students found the IMVH to be a relatively effective study method by examining video watching across the treatment and controls in the next class in the sequence. The rest of the paper is organized as follows. Section \ref{background} provides background on existing related literature. Section \ref{expdesign} describes the experimental design. Section \ref{results} presents the results of the experiment, and Section \ref{discussion} discusses those results. Section \ref{conclusion} concludes.
+Collectively, we interpret our findings as strong evidence that requiring studying tools known by the instructor to be effective is utility enhancing for students who manifest their limited knowledge of how best to study, perhaps through poor performance on an early stage assessment. Finally, we provide suggestive evidence that students found the IMVH to be a relatively effective study method by examining video watching across the treatment and controls in the next class in the sequence. The rest of the paper is organized as follows. Section \ref{models} presents competing models of studying behavior that may explain the observed phenomena. Section \ref{background} provides background on existing related literature. Section \ref{studydesign} describes the study design. Section \ref{results} presents the results of the experiment, and Section \ref{discussion} discusses those results. Section \ref{conclusion} concludes.
 
 
 % *****************************************************************
 % Jotting down some thoughts about models below
 % *****************************************************************
 
-\section{Models of Studying Behavior}
+\section{Models of Studying Behavior} \label{models}
 
 In this section we consider three models of student studying behavior: a neoclassical model, an imperfect information model, and a behavioral/procrastination model. For all three models, we consider the effects of an instructor's inducement to encourage student use an effective study method. We do not address the issue that the IMVH is a relatively unique study tool in that, to our knowledge, it is the first instructional book to be created entirely of videos. However, given the availability of close substitutes to the IMVH (lecture capture for example) we only briefly explore the added issues of inducing students to use a study tool whose usefulness is not known to the instructor.
 
-Neoclassical models of studying behavior assume that rational agents know their returns to studying using the methods available to them and allocate the optimal study time to each method given their utility function, which is increasing in leisure and grades and decreasing in time spent studying. In this model there is no room for an instructor to increase student well-being by intervening in their study decisions. \textcite{oettinger2002} provides some empirical support for the neoclassical model by demonstrating that student effort responds rationally to nonlinear grade incentives. Across 1200 students in a principles of economics class with absolute grading standards, he finds evidence of bunching just above the letter grade cutoffs and student performance on the final exam is higher if the student is just below a grade threshold.%blurb about instructors unable to observe students' utility functions, perhaps students have high returns outside of studying (e.g. networking, dating, etc.)?
+Neoclassical models of studying behavior assume that rational agents know their returns to studying using the methods available to them and allocate the optimal study time to each method given their utility function, which is increasing in leisure and grades and decreasing in time spent studying. In this model there is no room for an instructor to increase student well-being by intervening in their study decisions. \textcite{oettinger2002} provides some empirical support for the neoclassical model by demonstrating that student effort responds rationally to nonlinear grade incentives. Across 1200 students in a principles of economics class with absolute grading standards, he finds evidence of bunching just above the letter grade cutoffs and student performance on the final exam is higher if the student is just below a grade threshold. %blurb about instructors unable to observe students' utility functions, perhaps students have high returns outside of studying (e.g. networking, dating, etc.)?
 
 In addition to teaching specific skills, many would agree that the ``raison d'etre" of higher education is to teach students how to learn. There is evidence from psychology that college students do not know the return to various study methods.\footnote{See, for example, mccabe2011, prcc2007, drmnw2013} Universities often fund ``Teaching and Learning Centers" or ``Academic Skills Centers," part of whose mission is to help undergraduates learn to study more productively.\footnote{All nine University of California campuses have one. Some others in the US include Dartmouth's Academic Skills Center, Michigan's Center for Research on Teaching and Learning, UNC's Learning Center, and Yale's Teaching and Learning Center} We posit that for many students, a key assumption of the neoclassical model does not hold: that students possess complete information about the returns across studying methods. Instead, we offer the alternative hypothesis that students supply a quantity of study time that is optimal given their information constraints. In this `imperfect information' model, students choose study methods and quantities that are suboptimal relative to those they would have picked in a full information setting. Hence, an intervention by an entity that has more information about returns to studying across various methods (i.e. an instructor) can enhance student utility.
 
@@ -183,7 +188,7 @@ We consider the testable implications of the three models applied to a setting w
 
 Across all three models, before the first educational input is incentivized, students allocate time to the two studying methods until the marginal benefit of each (through higher grades) is equal to the marginal cost of forgone leisure. Consider the population of students initially consuming below the requisite level to earn the grade incentive. These students must decide if earning the grade incentive is worth forgone leisure and less time allocated to their outside studying option. Next we explore the differences in predictions across the three models.
 
-% For the `compliers' - those for whom the incentive induces greater takeup of the incentived input -
+% For the `compliers' - those for whom the incentive induces greater take-up of the incentivized input -
 
 % Depending on the relative returns to studying and the students' preferences, it is theoretically ambiguous how adding the incentive will affect grades. Next we highlight the primary differences between the models.
 
@@ -312,7 +317,7 @@ Across all three models, before the first educational input is incentivized, stu
 \end{center}
 \end{figure}
 
-In the neoclassical model, the marginal return to grades of the incentived input is less than that of the outside option for the `compliers', or those induced by the incentive to consume at least a fixed level of the incentived input. This model predicts bunching at the incentivized level cutoff since compliers would prefer to spend their marginal hours on leisure or studying with their other method. This model predicts a strict increase in video watching and weak decrease in other studying and leisure consumption. It is ambiguous whether cumulative study time increases or decreases as this depends on relative utility benefits of leisure and grades and the returns to studying by each method. However, if cumulative study time remains constant or decreases, then exam performance should strictly decrease since students are now suboptimally allocating study time versus their first-best allocation when considering only marginal returns to studying. On the other hand, if cumulative study time increases, students may earn greater exam grades but achieve lower utility compared to baseline. Importantly, this model predicts that in subsequent quarters students return to their pre-incentive levels of studying.
+In the neoclassical model, the marginal return to grades of the incentivized input is less than that of the outside option for the `compliers', or those induced by the incentive to consume at least a fixed level of the incentivized input. This model predicts bunching at the incentivized level cutoff since compliers would prefer to spend their marginal hours on leisure or studying with their other method. This model predicts a strict increase in video watching and weak decrease in other studying and leisure consumption. It is ambiguous whether cumulative study time increases or decreases as this depends on relative utility benefits of leisure and grades and the returns to studying by each method. However, if cumulative study time remains constant or decreases, then exam performance should strictly decrease since students are now suboptimally allocating study time versus their first-best allocation when considering only marginal returns to studying. On the other hand, if cumulative study time increases, students may earn greater exam grades but achieve lower utility compared to baseline. Importantly, this model predicts that in subsequent quarters students return to their pre-incentive levels of studying.
 
 In the imperfect information model, students' \textit{ex ante} allocations to each studying method are not necessarily first-best. Compliers update their priors about the returns to watching videos as they work towards hitting the minimum required level. At this cutoff, they make a decision whether to continue watching videos depending on their updated perceptions of the marginal benefit. Hence, bunching at the cutoff is predicted only if the updated marginal benefit at the cutoff is lower than the marginal benefit of the next best studying option or the marginal utility of leisure.
 
@@ -320,9 +325,10 @@ In the imperfect information model, students' \textit{ex ante} allocations to ea
 
 the incentive to watch videos will increase exam performance as long as total study time does not fall. A sharp prediction is that video watching will continue at the incentivized level in the absence of the grade incentive as students have learned an effective study tool. We also expect the treatment effect to be greater for students with more information problems and one plausible group is transfer students who are taking their first class at UC San Diego, their first upper division class and, typically, their first class under the quarter system (vs semester).
 
-Finally, in the behavioral model, the instructor's inducement helps students stick to study plans. As long as total study time does not fall, the inducment will increase exam performance. In the absence of the inducement, a sharp prediction is that video watching will revert to pre-inducment levels.
+Finally, in the behavioral model, the instructor's inducement helps students stick to study plans. As long as total study time does not fall, the inducement will increase exam performance. In the absence of the inducement, a sharp prediction is that video watching will revert to pre-inducement levels.
 
-In the empirical section, we test for the effects of being induced to watch the IMVH on both exam scores and several other study methods students could use to learn microeconomics (lecture attendance, visits to a class-specific tutoring lab, use of a class discussion board, downloads from the class web page). We also compare grades in other classes taken in the same quarter across the treatment and control group. For a subset of our sample we have survey responses on total study time in the quarter and leisure time. Since the experiment was conducted in the first of a required three-class sequence, we examine video watching in the second class. We test whether the effect of the inducemement to watch videos is greater for transfer students (assumed to have more information problems) and non-native English speakers (assumed to benefit the most from closed captioning, a key feature of the IMVH).
+In the empirical section, we test for the effects of being induced to watch the IMVH on both exam scores and several other study methods students could use to learn microeconomics (lecture attendance, visits to a class-specific tutoring lab, use of a class discussion board, downloads from the class web page). We also compare grades in other classes taken in the same quarter across the treatment and control group. For a subset of our sample we have survey responses on total study time in the quarter and leisure time. Since the experiment was conducted in the first of a required three-class sequence, we examine video watching in the second class. We test whether the effect of the inducement to watch videos is greater for transfer students (assumed to have more information problems) and non-native English speakers (assumed to benefit the most from closed captioning, a key feature of the IMVH).
+
 % *****************************************************************
 % Background
 % *****************************************************************
@@ -331,45 +337,79 @@ In the empirical section, we test for the effects of being induced to watch the 
 
 Students have many time-consuming activities to help them learn including attending class, watching recorded lectures, reading the textbook, doing homework, attending office hours, etc. There are several empirical challenges to estimating the causal effects of a learning activity. First, unobserved student characteristics, such as ability and motivation, are likely positively correlated both with the use of a learning activity and class performance. To estimate causal effects, empirical studies must address the selection into using a study method. Second, most instructors have experience working with motivated students who want to improve their study strategies after a negative exam shock and \textcite{oettinger2002} and \textcite{ss2008} provide empircal evidence of dynamic selection.\footnote{\textcite{oettinger2002} finds that students close to a grade threshold before the final exam perform better on the final}  Dynamic selection means that including student fixed effects in class performance regressions, a common empirical approach in this literature, will not uncover causal effects. Third, learning activities are substitutable and inducements to use one study strategy may affect student use of another. In these cases, even randomized experiments will not identify the causal effect of a study method but will rather identify the causal effects of a study policy and all of the changes in behavior caused by the policy. The causal effects of an educational policy, such as requiring homework, are likely useful for educators considering how to design their classes but are less useful for students wanting to know the relative effectiveness of study strategies. Fourth, the existence of the resource may change how the instructor teaches.  For example, several papers discuss how lecture capture changes the way instructors lecture.  Again, experiments randomly assigning student to classes taught one way versus another will not identify the causal effect of a study method if other aspects of learning transmission are changed.  A fifth empirical issue is that study strategies all take time and so most empirical studies jointly test the effectiveness of a particular learning method and devoting more time to the course. It is possible that the primary benefit to students is simply devoting more time to learning the course material, regardless of the study method.
 
-Our study uses a randomized control trial as well as a RD approach which solves issues (1) and (2).  Since we use within-class randomization, we solve issue (4).  Our study does not solve issues (3) and (5), however, we have empirical evidence on a large number of alternative study methods and test if the inducement to use the video book affected these other study methods to shed light on issue (3) and we have survey data on study time for the course for a selected sample of students which we use to test whether total study time for the couse differs across treated and control students to shed light on issue (5).
+Our study uses a randomized control trial as well as a RD approach which solves issues (1) and (2).  Since we use within-class randomization, we solve issue (4).  Our study does not solve issues (3) and (5), however, we have empirical evidence on a large number of alternative study methods and test if the inducement to use the video book affected these other study methods to shed light on issue (3) and we have survey data on study time for the course for a selected sample of students which we use to test whether total study time for the course differs across treated and control students to shed light on issue (5).
 
 Attending class: \textcite{cl2008} estimate the average effect of attending lecture for those who attend lecture (average treatment effect on the treated). The same instructor taught two required public finance classes of size 67 students and 47 students.  The instructor provided identical PowerPoints to both classes after lecture, but did not lecture on randomly chosen topics to a randomly chosen class.  The outcome is whether the student answers a multiple choice exam question correctly.  Physically attending lecture involves transportation costs and this costly aspect of lecture is not captured by the authors since the exam score comparison is across students who were all in class.  However, this study does identify the effect of attending a remote lecture versus having a written explanation.
 
 \textcite{dgm2010} analyze a policy where lecture attendance was voluntary before the midterm, but after the midterm, students scoring below the median were required to attend class. The policy affected 352 students taking three classes, two intermediate micro and one econometrics class. The policy led to a 36 percentage point increase in post-midterm attendance at the threshold. Using a regression discontinuity design, they find that a 10 percentage point increase in overall attendance results in a 0.17 standard deviation increase in the final exam score. They find no effect of the attendance policy on grades in other classes taken the same quarter, attending TA sections, homework scores, and the use of university tutors.
 % Zack--They also found positive but not statistically significant spillover effects on other classes. They hypothesize could be due to fixed costs of coming to campus.
-\textcite{ans2012} study section (as opposed to lecture) attendance across intermediate microeconomics, intermediate macroeconomics and econometrics for 444 students. The authors find that absenteism depends on day of week and time of day and, since students are randomly assigned to sections, use these variables as instruments for absenteeism. They also include student fixed-effects. Surprisingly, they find significant attendance effects only for students in the top quantiles: missing 10 percent of sections results in a 1 percentage point performance loss. The authors have no information about other uses of the student's time use, including attending the main lecture.
+\textcite{ans2012} study section (as opposed to lecture) attendance across intermediate microeconomics, intermediate macroeconomics and econometrics for 444 students. The authors find that absenteeism depends on day of week and time of day and, since students are randomly assigned to sections, use these variables as instruments for absenteeism. They also include student fixed-effects. Surprisingly, they find significant attendance effects only for students in the top quantiles: missing 10 percent of sections results in a 1 percentage point performance loss. The authors have no information about other uses of the student's time use, including attending the main lecture.
 
 Effect of Homework: \textcite{ts2012} randomly require two-thirds of students taking Principles of Economics classes to complete a one of three homework assignment for a grade. The other third may complete the homework, but it does not contribute to their grade. The outcome measure is exam performance on questions related to the three homework assignments. The authors use the score on the remaining exam questions as a control variable. They find significant effects pf homework on the first midterm but not the final exam. \textcite{gr2013} use within-class randomization to estimate the effects of required homework for 423 microeconomics principles students. A coin flip determined whether a student was in the treated group, where course points are based on both homework and exams, or in the control group, where all course points are based on exams. Treatment led to a 58 percentage point increase in completing all homework assignments and a 84 percentage point increase in completing the majority of homework assignments. They find that treated students are less likely to drop the class and score higher on the first two but not the last two exams. The average across the four exams is increased 5-6 percent by treatment and the control group GPA would increase from 2.44 to 2.68 if they had been required to do homework. They find three times larger treatment effects for students who initially fail the first exam (10 to 15 percent vs 4 to 6 percent increase in average test scores). The authors do not examine whether other uses of student time are affected by the homework policy.
 
-Effect of Study time: In a convincing empirical paper on the effects of study time, \textcite{ss2008} examine 210 Berea College students who were randomly assigned a roommate. Students whose roomates brought a video game to college, earn lower grades and spend less time studying. They authors instrument for study time using presence of a roommate with a video game and find that a one hour increase in study time per day (a .67 standard deviation increase in their sample) has the same effect of first semester GPA as a 5.21 increase in the ACT (an increase of 1.4 standard deviations in their sample).
+Effect of Study time: In a convincing empirical paper on the effects of study time, \textcite{ss2008} examine 210 Berea College students who were randomly assigned a roommate. Students whose roommates brought a video game to college, earn lower grades and spend less time studying. They authors instrument for study time using presence of a roommate with a video game and find that a one hour increase in study time per day (a .67 standard deviation increase in their sample) has the same effect of first semester GPA as a 5.21 increase in the ACT (an increase of 1.4 standard deviations in their sample).
 
 Other researchers have investigated using technology to improve learning. \textcite{abbm2020} conduct an experiment in Botswana during the COVID-19 pandemic and find that text messages and phone calls deployed as low cost, scalable learning technologies improved test scores by 0.16 to 0.29 standard deviations.
 
 Effect of Recorded Lectures: An educational resource closely related to the IMVH is when instructors record their lectures and make them available to students. Recorded lectures have course administration information which the IMVH does not have. Compared to an IMVH video, recorded lectures are typically much longer, less organized, and may include components that do not work well when recorded, such as group work or class discussion.  \textcite{savage2009} taught two intermediate micro classes: one 42-student class had "talk and chalk" lectures and the other 45-student class used technology that allowed lecture capture which was then made available to the students. The author finds no significant differences in observed student characteristics across the two sections but exam performance was significantly higher across the classes.
 
-Effect of Setting Goals:  \textcite{cgpr2020} explore the effect of having students set goals on class performance. They find that setting task-based goals, completing a specific number of online practice exams, improves student performance on exams. Those randomly assigned to complete task-based goals completed 0.102 of a standard deviation more practice exams and increased total course points by .068 of a standard deviation. The authors caution that it is important that the tasks are based on a productive study method. The authors also explored performance-based goals, getting dspecific grades in the course or on exams, did not have an effect on course points.  In the intervention studied in this class, the instructor gave the student a task-based goal, as opposed to the student setting theiwas set by the instructor as opposed to the student and there was a direct grade penalty to not acheiveing the goal.
+Effect of Setting Goals: \textcite{cgpr2020} explore the effect of having students set goals on class performance. They find that setting \textit{task-based} goals of completing a specific number of online practice exams improves student performance on exams. Those randomly assigned to complete task-based goals completed 0.10 standard deviations more practice exams and increased total course points by .07 standard deviations. The authors found no effect of setting \textit{performance-based} goals of achieving specific grades in the course or on exams on total course points. In the present study, we set for the students a \textit{task-based} goal of watching a specific number of videos. Unlike the
+
+caution that it is important that the tasks are based on a productive study method. The authors also explored performance-based goals, getting specific grades in the course or on exams, did not have an effect on course points.  In the intervention studied in this class, the instructor gave the student a task-based goal, as opposed to the student setting theiwas set by the instructor as opposed to the student and there was a direct grade penalty to not achieving the goal.
 
 This study adds to this body of research by studying the effectiveness of an educational innovation: a video textbook. We randomly assign half the students scoring below the mdican on the first midterm to a grading scheme which placed 4 percent, or 40 points, of the student's grade on watching 40 videos and down-weighted the first midterm by 4 percent.  This experiment allows two empirical strategies to test for causal effects: within class randomization for students scoring below the median on the first exam and a regression discontinuity approach at the median first exam score. We examine a large set of student study behaviors (lecture attendance, homework downloads from course web page, contributions to a discussion board, use of a class-specific tutoring lab) to determine if any of these study methods are substitutes or complements with video watching. We test for spillovers to other classes taken in the same quarter. We test for heterogeneous treatment effects using techniques that are robust to p-hacking. Finally, our research setting allows us to examine video views in the absence of the grade incentive in the next, required intermediate microeconomics class.
 
-The Intermediate Microeconomics Video Handbook (IMVH) is a collection of 220 shortish videos that cover the material for a year-long intermediate microeconomics class. Most topics were covered by two videos: one video introduces the concepts more intuitively with verbal explanations and graphs and the other video has the more formal, calculus-based definitions. The videos were created by six UC San Diego faculty members with professional videographer and production support. Many videos were created using an innovative presentation technology, the "learning glass," where the instructor uses neon markers to write on a large sheet of glass that has lights embeded along the glass edge to make the colors pop. The remaining videos are PowerPoint presentations that faculty edit as they talk and the instructor's image is superimposed next to the PowerPoint. Videos are closed captioned and were checked by graduate student for accuracy. Given the complexity of the material, a key objective of the faculty was to keep the web interface clean and simple so as not to distract from the content. A second objective was to help students find what they want quickly and so the IMVH has both a table of contents and an index, there are time stamps for each video on the IMVH web site to let students know what is in each video, and the video captions are searchable so, while watching the video, students can seach for a keyword and jump to the part of a video with that word. The last objective was to help students know where various topics "live" in interemediate microeconomics (in consumer theory?  in producer theory? in welfare theory?) and so we keep the table of conntents on the left panel displayed at all times except when the student is watching a video. While we do not know of another textbook completely comprised of videos, the IMVH is similar both to the Khan Academy web site, to lecture podcasts, and to textbook web sites that incorporate instructional videos.
+% *****************************************************************
+% Study design
+% *****************************************************************
 
+\section{Study Design} \label{studydesign}
+
+\subsection{Description of the Sample}
+
+We conducted the field experiment in an undergraduates intermediate microeconomics course taught during fall 2018 and fall 2019 by one of the authors. The university is a large, diverse and selective public research university in the United States.\footnote{The Carnegie Classification of Institutions of Higher Education classifies the university as an R1 (very high research activity) university. For the 2017-2018 academic year, the undergraduate student body shared the following demographics: 49.1\% female, 50.6\% male; 75.0\% in-state, 5.5\% out-of-state, and 19.5\% international; 59\% students of color; 28.6\% majoring in the social sciences, 26\% of which major in Economics. Among newly admitted students, about one-third were transfer students, and average SAT scores were 652 and 605 for math and critical reading, respectively. About 34\% of students are the first in their family to attend a four-year university.} At this institution, intermediate microeconomics is a three-quarter sequence required for students majoring in Economics. The experiment was conducted in the first course of the sequence, \textit{Micro A}. We also observe grades and video watching in the second course of the sequence, \textit{Micro B}, which was taught by the same instructor during both the winter 2018 and winter 2019 quarters. Both Micro A and B instructors created half of the videos relevant to their course in the IMVH.
+
+The structure is similar across the three courses in the Micro sequence. Students have the option to attend one of two lectures offered back to back twice per week, each lasting about 90 minutes. Two midterm and final exams are held at a common time outside of lecture. In addition to lecture, students have access to weekly one-hour discussion sections run by graduate teaching assistants (TAs) who are all Economics PhD candidates, including one of the authors. In lieu of office hours, the TAs and Undergraduate Instructional Assistants (UIAs) staff a tutoring lab open between three and four hours a day, six days per week. Students may also attend weekly Supplemental Instruction (SI) sessions offered by undergraduates majoring in Economics and trained by the university in SI. Besides the IMVH, students have access to a variety of learning resources online including a discussion board (moderated by the instructor, TAs, and UIAs), four years of previous exam questions, weekly (ungraded) problem sets, and semi-weekly (graded) online quizzes.
+
+% blurb about the curriculum? Are lectures recorded?
+
+% TODO: rename PSET "tutoring lab", Piazza "discussion board"
+
+% why might the results be externally valid, or at least more interesting beyond UCSD?
+
+Students were told about the experiment during the first lecture and provided an informed consent form in the syllabus. At any time during the quarter, students could opt out of having their data included in the analysis.\footnote{Students could opt out via an online form visible to a third party university organization so that neither the instructor nor research team could observe which students elected to opt out.} Students below the age of 18 at the start of the course as well as students enrolled via the university's extension program were removed from the analysis dataset.\footnote{Students under the age of 18 were excluded per IRB protocol. We exclude extension students because of their potentially very different preparation for the course and our inability to observe pretreatment covariates and outcomes outside of Micro A.} Ultimately, four students under 18, five extension students, and seven students who opted-out were removed from the analysis dataset, leaving a sample of 850 students.
+
+There are two unique features of the class worth noting. First, many non-econ majors take the class to either satisfy general education requirements or to explore majoring in economics. As there are many students in the experiment on the margin of majoring in economics, an important outcome is the likelihood the student takes Micro B. Second, about 37\% of the class is transfer students, for whom the class is not only their first experience with upper division coursework at a four-year research university, but also typically their first time taking classes under the faster-paced quarter system.\footnote{Community colleges, the most common previous institution for transfer students, are on the semester system in the state of the university.} We examine treatment effect heterogeneity to understand how transfer students might differentially benefit from the IMVH.
+
+\subsection{Description of the IMVH}
+
+The Intermediate Microeconomics Video Handbook (IMVH) is a collection of 220 short videos that cover the material in a year-long intermediate microeconomics course sequence.\footnote{A preview of the IMVH can be found at \url{https://iti.ucsd.edu/IMVH_Misc/Promo/IMVHPromo.html}.} The videos, designed to complement or replace a course textbook, include graphical and verbal intuition as well as formal algebraic and calculus-based definitions and proofs.
+
+The videos were created by six UC San Diego faculty members with professional videographer and production support. Many videos utilize the "learning glass," an innovative presentation technology where instructors write with neon markers on a large sheet of glass that has lights embedded along the glass edge to make the colors pop. The remaining videos feature faculty superimposed in front of slides. Videos are closed captioned and were checked by graduate students for accuracy.
+
+Given the complexity of the material, a key objective was to keep the web interface clean and simple so as not to distract from the content. The videos are organized by content area (e.g., consumer theory, producer theory, etc.) that help students understand where various topics "live" in intermediate microeconomics. When considering the design of the platform, one goal was to help students find material quickly. Besides a table of contents and an index, each video contains time stamps of the concepts therein. Another helpful feature is searchable captions, which allow the student to jump to the part of a video containing the searched-for word.
+
+While we do not know of another textbook completely comprised of videos, the IMVH is similar to Khan Academy, lecture podcasts, and textbook websites that incorporate instructional videos. Besides the engaging viewable nature, the IMVH differs from a traditional textbook in that the instructors explain, graph, and derive mathematical results in much the same way one would in a conventional lecture. However, the IMVH differs from lectures in that students control the pace: they can rewatch, speed up, or slow down the videos. Another difference is the ability to read captions and the reduced demand on the instructor's time. We summarize some options to present course material to students in Table \ref{tech_comparison}.\footnote{This table is a modification of a classification Martin Osborne proposed to one of the authors in an e-mail correspondence.}
+
+% alternative checkmark option:
+% \def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
 
 \begin{table}
-	\caption{Information Transmission Formats.}
+	\caption{Comparison of information transmission formats} \label{tech_comparison}
 	\centering
-	\begin{tabular}{c|c|c|c|c}
+	\begin{tabular}{|c*{4}{|>{\centering\arraybackslash}m{0.1\linewidth}}|}
 		\hline
-		& Lecture & Book & Lecture Capture & IMVH\\
+		Feature & Lecture & eText-book & Lecture Capture & IMVH\\
 		\hline
-		Instructor's time used & x & & &\\
-		Instructor-Learner Interaction & x & & &\\
-		Learner-Learner Interaction & x & & & \\
-		Readable & & x & ? & x \\
-		Scalable & ? & x & x & x\\
-		Searchable & & x & & x \\
-		Skimmable & & x & & x\\
-		Stoppable & ? & x & x & x\\
-		Watchable & x & & x & x\\
+		Instructor's time used & \checkmark & & &\\
+		Instructor-learner interaction & \checkmark & & &\\
+		Learner-learner interaction & \checkmark & & & \\
+		Readable & & \checkmark & ? & \checkmark \\
+		Scalable & ? & \checkmark & \checkmark & \checkmark \\
+		Searchable & & \checkmark & & \checkmark \\
+		Skimmable & & \checkmark & & \checkmark \\
+		Stoppable & ? & \checkmark & \checkmark & \checkmark \\
+		Watchable & \checkmark & & \checkmark & \checkmark \\
 
 		\hline
 
@@ -377,28 +417,18 @@ The Intermediate Microeconomics Video Handbook (IMVH) is a collection of 220 sho
 	\label{infotransmission}
 \end{table}
 
-Table 1 presents a classification of some options to present course material to students.\footnote{This table is a modification of a classification Martin Osborne proposed to one of the authors in an e-mail correspondance.} The IMVH differs from a traditional textbook because intructors explain, graph and derive mathematical results in much the same way one would in a lecture. The primary benefit of lecture is that students can stop the innstructor, ask questions and get answers in real time. There is also an important social aspect of lectures as students can interact with each other before, during and after lecture. The IMVH differs from lectures because students control the IMVH lecture: they can rewatch, speed up or slow down the lecture. Compared to a large lecture hall, all students can clearly see and hear the IMVH lecture. Finally, the IMVH is closed-captioned which may be particularly useful when English is not the first language of the instructor and/or the student. Compared to lecture capture, the IMVH presents the material differently than lecture
+\subsection{Experiment Design} \label{expdesign}
 
-% *****************************************************************
-% Data
-% *****************************************************************
-
-\section{Experimental Design} \label{expdesign}
-We conducted the field experiment in four intermediate microeconomics courses, two in fall 2018 and two in fall 2019. The university is a large, diverse and selective public research four-year university. At this institution, intermediate microeconomics is a three-term sequence required for students majoring in Economics. The experiment was conducted in the first course of the sequence. We also have grades and video viewing in the second course of the sequence.
-
-Students were told about the experiment in the first lecture and the syllabus. At any time during the quarter, students could opt out of having their data included in the analysis sample.\footnote{Students opt out via an online form owned by the Teaching + Learning Commons (T+LC) so that neither the instructor nor research team could observe which students decided to opt out.} Students below the age of 18 at the start of the course as well as students enrolled via Extension were removed from the analysis dataset.\footnote{Students under the age of 18 were excluded per IRB protocol. We exlude Extension students because of their small number, their unknown and potentially very different preparation for the course compared to UC San Diego students, and we are missing most do not have information are so different from we do not know if they met the course prerequisites nor and }
-
-The experiment began four weeks into the term following the first midterm exam, and as such, only students who took the first midterm were included in the experiment. Following the first midterm, students were assigned to one of three treatment arms: \textit{Incentive}, \textit{Control}, or \textit{Above median}. Students who scored below the median on the first midterm were randomly assigned to \textit{Incentive} or \textit{Control} whereas \textit{Above median} includes all other students in the experiment. Random assignment was issued using pairwise random assignment stratified on midterm score and year cohort (details on treatment assignment can be found in the Appendix). Students in the \textit{Incentive} arm received a grading scheme that encouraged watching videos during the rest of the term whereas \textit{Control} and \textit{Above the median} received the standard grading scheme that does not directly reward watching videos. The two different grading schemes are outlined in Table \ref{gradescheme}. Specifically, the \textit{Incentive} grading scheme requires that at least 40 of 48 eligible videos in the IMVH be watched to earn 4 percentage points towards the students' final grades\footnote{Watched in standard speed, 40 videos would require students to spend between 5.5 and 7.1 hours, depending on the length of videos chosen (on average 9.7 minutes in length each). Watching all incentivized videos in standard speed would require just shy of eight hours.}.
-Notably, the 4 percentage points comes at the expense of the first midterm score, which had already occurred at the time of treatment assignment. Hence, we isolate the video incentive as the sole difference between treatment arms, giving us more confidence that the exclusivity assumption of our encouragement design holds. % TODO - move this to after the model explanations?
+The experiment began four weeks into the term following the first midterm exam. All students who scored above the median on the first midterm, the \textit{Above median} arm, and half of students who scored below the median, the \textit{Control} arm, were assigned a conventional grading scheme that places weight only on exams and quizzes. The remaining half of students below the median we assigned to the \textit{Incentive} arm, whose grading scheme allots four percentage points conditional on watching at least 40 of 48 eligible videos in the IMVH.\footnote{Watched in standard speed, 40 videos would require students to spend between 5.5 and 7.1 hours, depending on the length of videos chosen (on average 9.7 minutes in length each). Watching all 48 incentivized videos in standard speed would require just shy of eight hours.} The 48 eligible videos comprise a subset of the 74 course-relevant videos that cover new class material since the first midterm. The two different grading schemes are outlined in Table \ref{gradescheme}. Notably, the four percentage points come at the expense of reduced weight placed on the first midterm score, which had already occurred at the time of treatment assignment. Hence, at the time of treatment assignment, the video incentive is the sole forward-looking difference between treatment arms.
 
 \begin{table}
-	\caption{Grade scheme by treatment arm. \textit{Control} represents same grade scheme as \textit{Above median}. Differences between the two grade schemes in red.}
+	\caption{Grade scheme by treatment arm. \textit{Control} represents same grade scheme as \textit{Above median}. Differences between the two grade schemes in bold.}
 	\centering
 	\begin{tabular}{ c|c|c }
 		Assessment & Incentive & Control \\
 		\hline
-		$>$40 videos & \red{4\%} & \red{0\%} \\
-		Midterm 1 & \red{18\%} & \red{22\%} \\
+		$>$40 videos & \textbf{4\%} & \textbf{0\%} \\
+		Midterm 1 & \textbf{18\%} & \textbf{22\%} \\
 		Midterm 2 & 22\% & 22\% \\
 		Final Exam & 50\% & 50\% \\
 		Math Quiz & 1\% & 1\% \\
@@ -409,105 +439,116 @@ Notably, the 4 percentage points comes at the expense of the first midterm score
 	\label{gradescheme}
 \end{table}
 
+To improve balance between \textit{Incentive} and \textit{Control} arms and increase statistical power, we assigned students to treatment arms using paired randomization \parencite{ai2017}, matching students by their midterm scores before randomly assigning one member of each pair to \textit{Incentive} and the other to \textit{Control} (Further details on treatment assignment can be found in Appendix \ref{a_randomization}). We emailed each student letting them know their assignment and grading scheme. Students could also find their assignment listed in the online gradebook. To confirm that students correctly knew their assignment, we surveyed students using an in-class attendance quiz, and 94\% of students correctly identified their grading scheme. We emailed the students who responded incorrectly to clarify their assignments.\footnote{11 of 164 \textit{Incentive}, 23 of 167 \textit{Control}, and 10 of 373 \textit{Above median} students did not identify their grading schemes correctly. 146 students did not answer the quiz, many of whom had dropped the course following the first midterm.}
 
+We informed \textit{Incentive} students that they must watch the entire video and only one video at a time to get credit towards their 40 required videos. However, it is impossible to truly verify ``watching" as students could, for example, minimize their browser, walk away from their computer, or otherwise play a video without actively engaging with it. As a proxy for watching, we use the data recorded by the IMVH software, which includes timestamps for when a student opens and closes a video. We define ``duration" as the time between opening and closing a video, and since students could watch a video at up to 2X speed, we required that the duration be at least half of the runtime of the video for the video to count towards the 40 required.
 
-which and there are two unique features of this class. First, many non-majors take the class typically to either satisfy general education requirements or to explore majoring in Economics. Thus there are many students at the margin of majoring in economics in the class and so an important outcome is the likelihood the student takes the second class in the sequence. The other unique feature of this class is the large fraction of transfer students, for whom the class is not only their first experience with upper division coursework, but typically the first time taking a class under the quarter system (community colleges in the state are on the semester system), and their first class at a 4-year research university. Thus, we expect transfer students to have greater information problems.
+We helped students keep track of their progress towards 40 videos by periodically updating the online gradebook with counts determined from the IMVH data. Although most students followed the proscribed protocol, a few students ignored our instructions, opening 40 video links within a matter of a few minutes. These students, after seeing ``0 videos watched" in the gradebook, often emailed the instructional staff claiming they had watched 40 videos, to which we replied with a reminder that videos must be watched completely from start to end to count.
 
-While the experiment was conducted in the first class of the sequence (100A), we also have data from the second class in the sequence (100B). Fortunately, one instructor taught all four of the 100A classes (one of the authors) and another instructor taught all four of the 100B classes. Both instructors created half of the videos lectures for their course.
+Although it is clear that a student cannot gain much from whatever ``watching" may have occurred in the span of the few minutes during which students opened and closed 40 links, to aid in interpretability, we calculate four measures of video watching:
+\begin{enumerate}
+	\item \textit{Videos}: Number of links opened, including duplicates
+	\item \textit{Unique videos}: Number of unique links opened
+	\item \textit{Hours of videos}: Total hours that the video link is open
+	\item \textit{Hours of unique videos}: Total hours counting each video once, keeping the longest duration recorded among duplicates
+\end{enumerate}
 
-Enrollments are high enough that the 100A and 100B instructors both taught two classes back-to-back each quarter but offered all exams at a common time out-of-class. So we treat the two classes in a quarter the same but account for different years in the empirical analysis.
+For the duration measures, we top code duration at the runtime of the video to remove bias from, for example, students leaving a video link open after the video concludes. About 27\% of video durations are top coded.\footnote{17\%, 13\%, and 7\% of durations are longer than 1.5X, 2X, and 3X the runtime of the video, respectively.} Additionally, 43\% of timestamps in the IMVH failed to register an end timestamp. For these videos, we impute duration by multiplying each student's mean percent of runtime watched by the runtime of the video being imputed. 15 students, watching an average of 2.1 videos, have no runtime recorded for any of their videos. For these students, we use the mean percent of runtime watched by students with 3 or fewer videos watched.
 
-The 100A course had an identical structure across all quarters and years. In addition to the textbook and the option to attend a live lecture at either 11-12:30 or 12:30-2:00, students had access to weekly one-hour discussion sections run by graduate TAs who were all Economics PhD candidates (including one of the authors), a tutoring lab staffed by both the graduate TAs (in lieu of office hours) and top undergraduates (some earning course credit for learning how to teach economics and others hired by the Department to help cover the tutoring lab hours, M-Th 5:30-8:30 and Sunday 4-8pm), weekly supplemental instruction sessions offered by an undergraduate majoring in Economics and trained by the university in supplemental instruction, a discussion board (monitored by the instructor as well as the grad and undergrad TAs), four years of the instructor's old exams (no answers provided), weekly ungraded problem sets (with detailed answers), graded online quizzes on Mondays of most weeks that did not include an exam, and a video handbook containing 220 short-ish videos covering the entire 100ABC sequence. This video handbook was created by the two instructors teaching 100A and 100B as well as four other faculty members who also regularly teach in the intermediate microeconomics sequence.
+To ensure fairness, we informed students that final letter grades would \textit{not} be affected by being in the experiment. We accomplished parity between \textit{Control} and \textit{Incentive} arms through curving final grades. First, we applied a curve to the \textit{Control} and \textit{Above median} arms as one group to achieve a grade distribution in line with that of previous cohorts. Second, we curved the \textit{Incentive} arm's scores so that the mean score was equal to that of the \textit{Control} arm after curving in the pervious step. Since course grades are by construction \textit{ex post} equal between the \textit{Control} and \textit{Incentive} arms, we use the second midterm and final exam scores as our primary outcomes of interest. As secondary outcomes of interest, we examine term GPA and number of courses passed, restricting to both econ and non-econ courses. We also examine spillover effects to other forms of studying in Micro A and to video watching and exam scores in Micro B.
 
-Students scoring below the median on midterm 1 were randomly assigned to a ``Videos Required" group where their midterm 1 score was down-weighted to 180 points and 40 points (all or nothing, so no partial credit) was put on watching 40 of the 47 remaining videos. Students were told that final letter grades would not be affected by being in the experiment, so the two key experimental outcomes are the scores on the second midterm and on the final exam. Following [cite], we randomized the students into the experiment by sorting the students by the first midterm score, creating ordered student pairs and then choosing one of students in the pair randomly to be in the experiment.
+% *****************************************************************
+% Empirical Strategy
+% *****************************************************************
 
-Video ``watching" was based on opening the video, leaving it open for at least half the video length, and clicking a link at the end of the video which took students to a Qualtrics survey where they had to record their e-mail address on link at end of the video. Right after random assignment we surveyed students to make sure they knew which group they were in. Twice during the quarter we let students in the experiment know how many videos they had watched.
+\subsection{Empirical strategies} \label{empiricalstrat}
 
-In particular, we use an assessment (exam) to identify students most likely to be struggling with meeting the learning objectives of the course. We require a random sample of students who score below the median on the first midterm to partake in a required (for one's grade) study strategy consisting of watching at least 40 course-relevant supplementary videos. The videos were freely available to all students in the class and the instructor committed to having the course grade distribution identical across treatment and controls. To keep the weights on the second midterm and final exam, our primary outcome measures, the same across the treated and control groups, the first midterm was down-weighted for the treated group and the weight was put on watching 40 videos. Nearly all students in the treated group watched the 40 videos and treatment led to a X percentage point increase in video views relative to the control group. We find the grading policy led to an
+In this paper, we estimate the effect of being assigned to the \textit{Incentive} arm on our outcome variables of interest, Intent To Treat (ITT) effects, as well as the effect of watching videos for those induced by the incentive to watch more videos, a Local Average Treatment Effect (LATE), also referred to as a Complier Average Treatment Effect (CATE) \parencite{ir2015}.
 
+Below we outline the empirical strategies for estimating both the ITTs and LATEs.
 
-% Estimating equations
+\subsubsection{Intention To Treat (ITT)}
 
-We are primarily interested in the causal effect of watching videos on exam grades. The average causal effect of watching videos can be modeled using the potential outcome framework or Rubin Causal Model \parencite{ir2015}:
+In this section, we examine the empirical strategy for estimating the causal effect of being assigned to the \textit{Incentive} arm on outcomes of interest, such as exam scores. These are ITT estimates and not average treatment effect estimates because of two-sided non-compliance: some students in the treatment arm do not watch videos and some students in the control arm do watch videos. Since the incentive itself in our setting is representative of how future instructors may induce their students to watch videos, the ITT estimates are policy-relevant for instructors considering adopting the IMVH or other video-based learning methods in their courses.
 
-\begin{equation}
-	\tau = E[Y_{it}(1) - Y_{it}(0)]
-\end{equation}
-
-where $\tau$ is the average causal effect of watching videos and $Y_{it}(1)$ and $Y_{it}(0)$ are the potential outcomes (e.g exam scores) for a student $i$ in year $t$ who does and does not watch videos, respectively. We can observe treatment assignment for each student, $Z_{it} \in \{0,1\}$, as well as the observed outcome $Y_{it}(Z=z_{it})$ and a vector of pretreatment covariates $X_{it}$.
-
-A student's decision to watch videos is endogenous, so we must rely on an exogenous instrument to calculate an unbiased estimate of $\tau$. By randomly assigning treatment that induces significantly greater video watching, the treatment indicator $Z_{it}$ satisfies the instrument validity and relevancy conditions required to estimate $\tau$ using an instrumental variable approach (citation). We calculate an estimate of $\tau$ using a two-stage least squares approach:
-
-\begin{equation} \label{firststage_spec}
-	v_{it} = \alpha Z_{it} + f(X_{it}) + e_{it}
-\end{equation}
-\begin{equation} \label{secondstage}
-	y_{it} = \tau \hat{v}_{it} + g(X_{it}) + u_{it}
-\end{equation}
-
-where $\hat{v}_{it}$ is instrumented videos watched estimated by Equation \ref{firststage_spec}, $f()$ and $g()$ are generic functions through which $X_{it}$ affects $v_{it}$ and $y_{it}$, respectively, and $e_{it}$ and $u_{it}$ are model residuals assumed to be mean-zero conditional on observables. $\hat{\tau}$ is the estimate of the local average treatment effect (LATE) of watching videos local to those students induced by treatment to watch videos.
-
-Under the assumptions of independence, monotonicity, and non-interference, $\hat{\tau}$ is an unbiased estimate of the LATE \parencite{ai1995}. Independence assumes that outcomes (e.g. grades) are only impacted by treatment through watching videos. This assumption could be violated if, for example, telling a student she is treated were to give her more confidence on subsequent exams during the quarter. Monotonicity, sometimes refered to as the ``no defiers assumption", is required because of two-sided noncompliance and requires that students assigned treatment are weakly more likely to watch videos than if they were assigned control. A violation of this assumption could occur if students get utility from rebelling against their assigned grade scheme. Non-interference, also known as the Stable Unit Treatment Value Assumption (SUTVA), assumes that each student's outcome depends only on their own treatment status and not the treatment status of their peers. Violations of SUTVA may include control students benefiting from having treated students in the same class (and perhaps studying together).
-
-Although we believe excludability\footnote{While this assumption is not testable, we took care in the experimental design to make the treatment and control arms as similar as possible except for the grading schemes} and monotonicity\footnote{Though not testable directly, one testable implication of monotonicity is that the cumulative distribution function of videos watched for each treatment arm should not cross. Indeed, in Appendix Figure \ref{videocdf} shows that the two CDFs do not cross.} are reasonable assumptions, we have more pause about the non-interference assumption because of the potential for spillovers between students in the same class. If we had unlimited resources, a more robust experimental design would assign treatment at the class (or coarser) level, reducing the chance for interactions between treated and control students. However, given our resource constraints, assigning treatment at coarser levels would have resulted in insufficient statistical power to detect large effect sizes. Hence, we proceed acknowledging the potential for spillovers between students. We hypothesize that spillovers likely bias our estimates of the treatment effect \textit{downwards} as we believe control students are more likely to benefit from having well-studied peers than they are to lose from, for example, having peers too busy watching videos to join a study group.
-
-We also estimate the average causal effects of being assigned to the \textit{Incentive} arm, or average Intention To Treat (ITT) effects. These are ITT estimates and not average treatment effect estimates because of non-compliance: some students in the treatment arm do not watch videos and some students in the control arm do watch videos. However, since the incentive itself in our setting is representative of how future instructors may require their students to use the IMVH, the ITT estimates are relevant for an instructor interested in deciding whether to require her students watch videos or simply make them available with no grade incentive.
-
-Following the methods proposed by \textcite{robinson1988} and more recently \textcite{wa2018}, our primary estimating equation is the partially linear model:
-
-\begin{equation}
-	Y_{it} = \beta Z_{it} + f(X_{it}) + \epsilon_{it}
-\end{equation}
-
-where $Y_{it}$ is an outcome of interest (e.g. videos watched or test scores) for student $i$ in year $t$, $Z_{it} \in \{0,1\}$ is a treatment indicator, $f()$ is a generic function through which $X_{it}$, a vector of controls, affects $Y_{it}$, and $\epsilon_{it}$ is an unobserved residual. Following the Neyman-Rubin potential outcomes framework, $Y(Z=1|X) - Y(Z=0|X)$
-
-To identify the causal effect parameter of interest, $\beta$, we make three assumptions: 1) \textit{treatment status unconfounded given controls}: $Z_{it} \perp \!\!\! \perp \Big(Y_{it}(Z=1), Y_{it}(Z=0)\Big) \Big| X_{it}$; 2)\textit{Excludability}: 3) \textit{Non-interference/Stable Unit Treatment Value Assumption (SUTVA)}:
-
-
-% Neyman test of zero avg causal effect
-
-\subsection{ITT}
-
-We are interested in knowing the average effect of being assigned to the \textit{Incentive} arm on exam scores, which we will refer to as the Intent to Treat Effect (ITT). We will test the null hypothesis that being treated has zero effect against the alternative that being treated has a nonzero effect on exam scores. %positive effect?
-
-We will estimate the ITT using Neyman's (\citeyear{neyman1923}) repeated sampling approach, considering each pair (block) a completely randomized experiment and averaging the results. We begin by estimating the point estimate of the ITT as the mean difference in outcomes across pairs:
+Our baseline ITT specification is the partially linear model:
 
 \begin{equation} \label{itt_spec}
-	\hat{\tau} = \frac{1}{J}\sum_{j=1}^{J} \hat{\tau_j} = \frac{1}{J}\sum_{j=1}^{J} y^\text{obs}_{j,I} - y^\text{obs}_{j,C}
+	Y_i = \beta Z_i + f(X_i) + \epsilon_i
 \end{equation}
 
-where $\hat{\tau}$ is the point estimate of the ITT, $J$ is the number of pairs in the sample, and $\hat{\tau_j} = y^{obs}_{j,I} - y^{obs}_{j,C}$ is the observed difference in outcome for pair $j$.
+where $Y_i$ is an outcome of interest (e.g. videos watched or test scores) for student $i$, $Z_i \in \{0,1\}$ is a treatment indicator with those in the \textit{Control} arm having $Z_i=0$ and those in the \textit{Incentive} arm having $Z_i=1$, $f()$ is a generic function through which $X_i$, a vector of controls, affects $Y_i$, and $\epsilon_i$ is an unobserved residual. $\beta$, our parameter of interest, is the causal effect of being assigned to the \textit{Incentive} arm on the outcome of interest $Y$, assumed to be constant across the population.\footnote{Our experiment takes place over two years, and we pool the sample across both years. Out of the 850 student-years, one student repeated the course in both years, and hence there are 849 unique students. For simplicity, we drop the subscript $t$ from our specifications, treating the one repeating student independently across years. Dropping this student from the sample leaves the results virtually unchanged.} Under the assumption of unconfoundedness, $\wh{\beta}$ is an unbiased estimate of the ITT effect \parencite{ir2015}.\footnote{Though we cannot test whether $Z_i$ is confounded by unobservable covariates, we have confidence in this assumption given the random assignment of $Z_i$ and the balance across observable covariates as demonstrated in Table \ref{balance_table_mid2} and \ref{balance_table_final}.}
 
-The point estimate $\hat{\tau}$ is appropriate if treatment is unconfounded by observable or unobservable variables. While this assumption is true in expectation given random assignment of treatment, as a robustness check we estimate specifications that control for differences in observed characteristics, described later in this paper.
+In our baseline estimation of Equation \ref{itt_spec}, we include in $X_i$ year indicators and first midterm score, following the advice of \textcite{bm2009} to control for all covariates used in seeking balance. In a second model, we include additional controls chosen using the Post-Double-Selection (PDS) procedure of \textcite{bch2014a}, explained in detail in Appendix \ref{a_selection}. In a third model, to check that our results are robust to potentially nonrandom attrition by treatment arm, we fit Equation \ref{itt_spec} including pair fixed effects. These fixed effects subsume the year indicator (since pairs were assigned separately across years), so we drop the year indicator but keep midterm 1 score to control for small differences within pairs along that dimension. As entity fixed effects require at least two observations within the entity to be estimable, we drop any students whose matched pair attrited.
 
-Following Neyman's repeated sampling approach, the estimated standard error of $\hat{\tau}$ \citep{imai2008, ir2015, ai2017} is:
+In our results, we present an additional nonparametric estimate using Neyman's (\citeyear{neyman1923}) repeated sampling approach, considering each pair (block) an independent, completely randomized experiment and averaging the results. We estimate the point estimate of the ITT as the mean difference in outcomes across pairs:
 
-\begin{equation} \label{se_block}
-	\hat{SE}(\hat{\tau}) = \Big(\frac{1}{J}\sum_{j=1}^{J} \hat{V}(\hat{\tau_j}) \Big)^\frac{1}{2}
+\begin{equation} \label{neyman_spec}
+	\wh{\tau} = \frac{1}{J}\sum_{j=1}^{J} \wh{\tau_j} = \frac{1}{J}\sum_{j=1}^{J} y^\text{obs}_{j,I} - y^\text{obs}_{j,C}
 \end{equation}
 
-where $\hat{V}(\hat{\tau_j})$ is the estimated variance within block (pair) $j\in \{1,...,J\}$. This within-block variance given one control and one treated unit per block is (\cite{ir2015}, \cite{ai2017}):
+where $\wh{\tau}$ is the point estimate of the ITT, $J$ is the number of pairs in the sample, and $\wh{\tau_j} = y^{obs}_{j,I} - y^{obs}_{j,C}$ is the observed difference in outcome for pair $j$. The estimated standard error of $\wh{\tau}$ \citep{imai2008, ir2015, ai2017} is:
+
+\begin{equation} \label{se_neyman}
+	\wh{SE}(\wh{\tau}) = \Big(\frac{1}{J}\sum_{j=1}^{J} \wh{V}(\wh{\tau_j}) \Big)^\frac{1}{2}
+\end{equation}
+
+where $\wh{V}(\wh{\tau_j})$ is the estimated variance within block (pair) $j\in \{1,...,J\}$. This within-block variance given one control and one treated unit per block is (\cite{ir2015}, \cite{ai2017}):
 
 \begin{equation} \label{v_block}
-	\hat{V}(\hat{\tau_j}) = s_{j, I}^2 + s_{j, C}^2
+	\wh{V}(\wh{\tau_j}) = s_{j, I}^2 + s_{j, C}^2
 \end{equation}
 
-where $s_{j, I}$ and $s_{j, C}$ are the \textit{Incentive} and \textit{Control} sample variances within block $j$, respectively. Unfortunately, these sample variances are not estimable with only one unit in each arm per block. As such, we use the following estimator, which is conservative (confidence intervals wider) if there is heterogeneity in the treatment effect (\cite{imai2008}, \cite{ir2015}, \cite{ai2017}):
+where $s_{j, I}$ and $s_{j, C}$ are the \textit{Incentive} and \textit{Control} sample variances within block $j$, respectively. Unfortunately, these sample variances are not estimable in a matched-pair setting as there is only one unit in each arm per block. As such, we use the following estimator, which is conservative (confidence intervals wider) if there is heterogeneity in the treatment effect (\cite{imai2008}, \cite{ir2015}, \cite{ai2017}):
 
 \begin{equation} \label{se_imai}
-	\hat{SE}(\hat{\tau_j}) = \Big(\frac{1}{J(J-1)}\sum_{j=1}^{J} (\hat{\tau_j} - \hat{\tau})^2 \Big)^\frac{1}{2}
+	\wh{SE}(\wh{\tau_j}) = \Big(\frac{1}{J(J-1)}\sum_{j=1}^{J} (\wh{\tau_j} - \wh{\tau})^2 \Big)^\frac{1}{2}
 \end{equation}
 
-\subsection{Treatment Effects at the Cutoff}
+Similar to the fixed effect model, the Neyman repeated sampling approach is only estimable if we drop all students whose matched pair attrited. This drop in observations increases the width of our confidence intervals, albeit modestly since including only matched pairs reduces unexplained variance in the outcome variables of interest. We present estimates from all four models to demonstrate that the results are generally similar and not sensitive to model specification or choice of control variables.
 
-Because the probability of being assigned to the \textit{Incentive} arm changes discontinuously from 0.5 to 0 at the midterm score cutoff, our setting is appropriate for estimating local treatment effects using a regression discontinuity (RD) design \citep{tc1960, ap2008, il2008}. With this method, we compare students who scored just below the cutoff to those who scored just above the cutoff, two groups similar across pretreatment characteristics but different in treatment status, thereby providing an estimate of the treatment effect local to those who scored near the cutoff.
+\subsubsection{Local Average Treatment Effect (LATE)}
 
-Since RD designs require that agents near the cutoff be similar across covariates except treatment status, a threat to validity is manipulation of the forcing variable (in our study, midterm score), which biases treatment effect estimates by nonrandom selection into treatment. This manipulation can occur if agents behave strategically to target a particular side of the cutoff, for example, scoring slightly higher than a published minimum SAT score for college admission. Since students in our experiment do not know the cutoff \textit{ex ante}, it is unlikely that students attempted to target a particular side of the midterm score cutoff\footnote{It would be surprising for students who value high grades to target the expected median score since any student capable of doing so would likely earn a higher grade in the course by scoring as high as possible on the midterm exam rather than strategically scoring just below the expected median cutoff.}. Ultimately, we must \textit{assume} continuity of the conditional means of the potential outcomes along the midterm score; however, we do not observe a discontinuity in any observable pretreatment covariate at the cutoff, which gives us further confidence that this assumption holds.
+Here we examine the empirical strategies for estimating the causal effect of watching videos on outcomes of interest, exam scores. We discuss Two-Stage Least Squares (2SLS) estimation of LATEs for those students below the median score on the first midterm induced by the incentive to watch videos.
 
-To estimate local treatment effects using a sharp RD, we return to the potential outcomes framework modeling the treatment effect $\tau(c)$ as the difference in expected outcomes at the cutoff $c$ along the forcing variable $x$:
+The average causal effect of watching videos can be modeled using the potential outcome framework or Rubin Causal Model \parencite{ir2015}:
 
-\begin{equation} \label{rd_po}
-	\tau(c) = \lim_{x \uparrow c} \mathbb{E}[Y_{it} | X_{it} = x] - \lim_{x \downarrow c} \mathbb{E}[Y_{it} | X_{it} = x] = \mathbb{E}[Y_{it}(1) | X_{it} = c] - \mathbb{E}[Y_{it}(0) | X_{it} = c]
+\begin{equation}
+	\gamma = \operatorname{E}[Y_i(v_i|Z_i=1) - Y_i(v_i|Z_i=0)]
+\end{equation}
+
+where $\gamma$ is the causal effect of watching videos and $Y_i()$ and $Y_i(0)$ are the potential outcomes (exam scores) for a student $i$ who does and does not watch videos, respectively. We can observe each student's exogenously assigned treatment status $Z_i \in \{0,1\}$, maintaining the notation from Equation \ref{itt_spec}. This instrument affects $Y_i$ by influencing $v_i$, an observed, endogenous quantity of videos watched. We also observe a vector of pretreatment covariates $X_i$ and outcomes $Y_i$.
+
+Because a student's decision to watch videos is endogenous, regressing $Y_i$ on $v_i$ will provide biased estimates of $\gamma$. To calculate unbiased estimates, we rely on variation in $v_i$ induced by exogenous assignment of the instrument $Z_i$. We estimate $\gamma$ using 2SLS:
+
+\begin{equation} \label{firststage_spec}
+	v_i = \alpha Z_i + f(X_i) + e_i
+\end{equation}
+\begin{equation} \label{secondstage_spec}
+	y_i = \gamma \wh{v}_i + g(X_i) + u_i
+\end{equation}
+
+where $\wh{v}_i$ is instrumented videos estimated by Equation \ref{firststage_spec}, $f()$ and $g()$ are generic functions through which $X_i$ affects $v_i$ and $y_i$, respectively, and $e_i$ and $u_i$ are unobserved model residuals assumed to be mean zero conditional on observables. $\gamma$ is the LATE of watching videos, local to those students induced by the incentive to watch videos.
+
+Under the assumptions of excludability, monotonicity, and non-interference, $\wh{\gamma}$ is an unbiased estimate of the LATE \parencite{ai1995}. Excludability assumes that outcomes (grades) are only affected by the instrument (incentive) through watching videos. This assumption could be violated if, for example, telling a student she is treated were to give her more confidence on subsequent exams during the quarter. Monotonicity, sometimes referred to as the ``no defiers" assumption, is necessary because of two-sided noncompliance and requires that students assigned treatment watch weakly more videos than they would if they were assigned control. A violation of this assumption could occur if students get utility from rebelling against their assigned grade scheme. Non-interference, also known as the Stable Unit Treatment Value Assumption (SUTVA), assumes that each student's outcome depends only on their own treatment status and not the treatment status of their peers. Violations of SUTVA may include control students benefiting from having treated students in the same class and, perhaps, studying together.
+
+Although we believe excludability\footnote{While this assumption is not testable, we took care in the experimental design to make the treatment and control arms as similar as possible except for the grading schemes. Of course, watching videos inherently requires time that takes away from some other activity. Hence, the results should be interpreted as the causal effects of more videos and less of whatever else they would have been doing. This subtle point could matter for external validity as a different population of students with zero leisure time may respond differently to the incentive.} and monotonicity\footnote{Though not testable directly, one testable implication of monotonicity is that the cumulative distribution function of videos watched for each treatment arm should not cross. Indeed, Figure \ref{combo_cdf} shows that the two CDFs do not cross.} are reasonable assumptions, we have more concern about non-interference because of the potential for spillovers between students in the same class. If we had unlimited resources, a robust experimental design would assign treatment at the class (or coarser) level, reducing the chance for interactions between treated and control students. However, given our resource constraints, assigning treatment at coarser levels would have resulted in insufficient statistical power to detect reasonable effect sizes. Hence, we proceed acknowledging the potential for spillovers between students. We hypothesize that spillovers likely bias our estimates of the treatment effect \textit{downwards} as we believe control students are more likely to benefit from having well-studied peers than they are to lose from, for example, having peers too busy watching videos to join a study group.\footnote{Although spillovers are possible, we believe the magnitude of the spillovers are likely small given that students have for the most part not yet formed strong social networks. 47\% of students in the \textit{Incentive} or \textit{Control} arms are transfer students in their first term at the university. The remaining students are predominantly sophomores taking their first upper division course. Social dynamics at the university facilitate networks within ``colleges" more than majors for the very reason of encouraging academic diversity among peer groups. One example of a possible positive spillover is the online discussion board where students could ask questions about content covered in the IMVH.}
+
+Similar to our estimates of Equation \ref{itt_spec}, we estimate Equation \ref{secondstage_spec} with three sets of controls: only year and first midterm score, controls chosen using PDS, and a fixed-effect model with controls chosen using PDS. We additionally estimate the LATE using Neyman's repeated sampling approach whose estimators we derive in Appendix \ref{a_neyman_late}.
+
+\subsubsection{Treatment Effects at the Cutoff}
+
+Here we describe estimation of treatment effects at the first midterm score cutoff. Because the probability of being assigned to the \textit{Incentive} arm changes discontinuously from 0.5 to 0 at the midterm score cutoff, our setting is appropriate for estimating local treatment effects using a regression discontinuity (RD) design \citep{tc1960, ap2008, il2008}. With this method, we compare students in the \textit{Incentive} arm who scored just below the cutoff to those in the \textit{Above median} and \textit{Control} arms who scored just above or below the cutoff, respectively. These two groups are similar across pretreatment characteristics but different in treatment status, thereby providing an estimate of the treatment effect local to those who scored near the cutoff.
+
+Since RD designs require that agents near the cutoff be similar across covariates except treatment status, a threat to validity is manipulation of the forcing variable (in our study, midterm score), which biases treatment effect estimates by nonrandom selection into treatment. This manipulation can occur if agents behave strategically to target a particular side of the cutoff, for example, scoring slightly higher than a published minimum SAT score for college admission. Since students in our experiment do not know the cutoff \textit{ex ante}, it is unlikely that students would attempt to target a particular side of the midterm score cutoff\footnote{It would be surprising for students who value high grades to target the expected median score since any student capable of doing so would likely earn a higher grade in the course by scoring as high as possible on the midterm exam rather than strategically scoring just below the expected median cutoff.}. Ultimately, we must \textit{assume} continuity of the conditional means of the potential outcomes along the midterm score; however, we do not observe a discontinuity in any observable pretreatment covariate at the cutoff, which gives us further confidence that this assumption holds.
+
+To estimate local ITT effects using a sharp RD, we return to the potential outcomes framework modeling the treatment effect $\tau(c)$ as the difference in expected outcomes at the cutoff $c$ along the forcing variable $x$ (midterm score):
+
+\begin{equation} \label{rd_spec}
+\begin{split}
+	\tau(c) & = \lim_{x \uparrow c} \operatorname{E}[Y_i | X_i = x] - \lim_{x \downarrow c} \operatorname{E}[Y_i | X_i = x] \\
+	& = \operatorname{E}[Y_i(1) | X_i = c] - \operatorname{E}[Y_i(0) | X_i = c]
+\end{split}
 \end{equation}
 
 We estimate $\tau(c)$ using local low-order polynomials, per the advice of \textcite{gi2019}.
@@ -527,30 +568,32 @@ Sharp RD designs used in the literature frequently do not observe $Y(1)$ and $Y(
 
 In this section, we first establish that \textit{Incentive} and \textit{Control} arms are balanced on observable characteristics both when students were assigned treatment and when they took midterm and final exams. Second, we show that the grade-based encouragement worked, i.e. that students in the \textit{Incentive} arm watched significantly more videos than did their \textit{Control} peers. Third, we present results from the LATE and ITT specifications as described in the previous section. Finally, we estimate spillover effects in other courses during the experiment term as well as we the term following.
 
-\subsection{Balance betweeen treatment arms}
+\subsection{Balance between treatment arms}
 
 \subsection{Relevancy of the encouragement instrument}
 
-As described in the previous section, we use a Two-Stage Least Squares approach to estimate the LATE of watching videos on exam performance. We must check that our instrument is both valid and relevant to ensure this method will produce an unbiased estimate of the LATE \parencite{ir2015}. The validity condition is met by assigning the treatment arm at random conditional on observable characteristics, namely exam score and year of instruction. Additionally, Table \ref{balance_table_final} gives us further confidence that treatment status is uncorrelated with demographics. Next we check relevancy, i.e. whether treatment status generates significantly more video watching. Below in Table \ref{firststage_table} we present estimates from Equation \ref{firststage_spec} and find that being assigned to the \textit{Incentive} arm induces students to watch XX more videos than does being assigned to the \textit{Control} arm. The F-statistic is XX, far greater than 10, the generally accepted minimum value required to consider an instrument relevant.
+As described in the previous section, we use a Two-Stage Least Squares approach to estimate the LATE of watching videos on exam performance. We must check that our instrument is both valid and relevant to ensure this method will produce an unbiased estimate of the LATE \parencite{ir2015}. The validity condition is met by assigning the treatment arm at random conditional on midterm exam score and year of instruction. Balance across pretreatment obserables, as demonstrated in Appendix Tables \ref{balance_table_mid2} and \ref{balance_table_final}, give us further confidence that treatment status is uncorrelated with demographics.
+
+Next we check relevancy, that is, whether treatment status generates significantly more video watching. In Table \ref{firststage_table} we present estimates from Equation \ref{itt_spec} and find that being assigned to the \textit{Incentive} arm induces students to watch between 38.4 - 39.2 more videos and 20.5 - 21.6 unique videos by the final exam than does being assigned to the \textit{Control} arm. By the second midterm, being assigned treatment causes students to watch 9.1 - 10.5 videos and 6.0 - 6.8 unique videos more than being assigned control. Graphically, we depict the distribution of videos watched as a function of treatment in Figure \ref{combo_cdf}. Notably, at every quantity of videos watched in the domain, a greater portion of \textit{Incentive} students watched
+
+Collectively, given the highly significant first stage regression results and monotonic increase in video watching across the sample, we conclude that treatment status meets the relevancy criterion.
+
+Although we code ``watching" as binary, video watching varies significantly in intensity. Some students took notes, pausing and rewatching portions of the video as needed. Other students, we suspect, played videos in the background without absorbing any material. Throughout the remainder of the paper, we
 
 \subsection{Estimation of causal effects}
 
 First, we estimate the causal effect of being assigned to the \textit{Incentive} arm on exam scores (ITT). This estimate is relevant for educators interested in predicting how requiring videos will change exam scores in their classes using the same grade-based incentive implemented in our experiment. Second, we estimate the causal effect of watching videos on exam scores, which is of interest to educators deciding which teaching technologies to provide for their classes as well as to students choosing among different studying tools.
 
-For both the ITTs and LATEs, we examine effects on the second midterm and final exams using both parametric methods (i.e. Equations \ref{itt_spec} and \ref{late_spec}) and nonparametric methods a la the repeated sampling framework of \textcite{neyman1923}% and Generalized Random Forests proposed by \textcite{wa2018}
-. We check that our parametric results are robust to model specification by estimating Equations \ref{itt_spec} and \ref{late_spec} with and without $f(X_{it})$ as a vector of linear control variables chosen via the Post-Double-Selection procedure of \textcite{bch2014a}. To rule out differential attrition across treatment arms as a confounder, we fit the aforementioned models dropping any student whose matched pair attrited before the conclusion of the experiment.
+For both the ITTs and LATEs, we examine effects on the second midterm and final exams using both parametric methods (i.e. Equations \ref{itt_spec} and \ref{secondstage_spec}) and nonparametric methods a la the repeated sampling framework of \textcite{neyman1923}% and Generalized Random Forests proposed by \textcite{wa2018}
+. We check that our parametric results are robust to model specification by estimating Equations \ref{itt_spec} and \ref{secondstage_spec} with and without $f(X_i)$ as a vector of linear control variables chosen via PDS \parencite{bch2014a}. To rule out nonrandom attrition across treatment arms as a confounder, we fit a fixed effect model that drops any student whose matched pair attrited.
 
 \subsubsection{Effect of grade incentive on video watching}
 
-Table \ref{firststage}
+Table \ref{firststage_table}
 
 \subsubsection{Effect of treatment on exam scores}
 
-Table \ref{secondstage}
-
-\subsubsection{Substituion from other forms of studying}
-
-Table \ref{spillover_studying}
+Table \ref{secondstage_table}
 
 \subsection{Spillover effects}
 
@@ -559,6 +602,10 @@ Here we estimate spillover effects to other other courses taken concurrently dur
 \subsubsection{Concurrent courses}
 
 Table \ref{spillover_grades}
+
+\subsubsection{Substituion from other forms of studying}
+
+Table \ref{spillover_studying}
 
 \subsubsection{Subsequent intermediate microeconomics course}
 
@@ -608,9 +655,6 @@ While there are many educational interventions that instructors could offer thei
 %%% TABLES
 
 \clearpage
-\input{../tables/balance_table_final.tex}
-
-\clearpage
 \input{../tables/firststage.tex}
 
 \clearpage
@@ -627,7 +671,27 @@ While there are many educational interventions that instructors could offer thei
 
 %%% PLOTS
 
-% Time series
+% CDFs of videos watched by each treated vs control student
+\clearpage
+\begin{figure}[htb]
+\begin{center}
+\caption{Effect of grade incentive on videos watched}
+\label{combo_cdf}
+\includegraphics[width=1\textwidth, angle=0]{../plots/combo_cdf.pdf}
+\footnotesize Top panels display the percent students in the \textit{Control}
+ and \textit{Incentive} arms that watched at least $X$ unique videos (left) or hours of unique videos (right). Bottom panels display the differences between the two arms in the top panels with 95\% confidence intervals estimated by regressing an indicator for whether on the student watched at least $X\in\{0,...,X_{max}\}$ unique videos (or hours of unique videos) on the student's treatment status.
+\end{center}
+\end{figure}
+
+% Time series: videos over time
+\clearpage
+\begin{figure}[htb]
+\begin{center}
+\caption{Weekly video watching by treatment arm}
+\includegraphics[width=1\textwidth, angle=0]{../plots/tscombo.pdf}
+\footnotesize Dashed lines represent Midterm 1, Midterm 2, and Final exams
+\end{center}
+\end{figure}
 
 % video CDF
 
@@ -643,6 +707,8 @@ While there are many educational interventions that instructors could offer thei
 
 \setcounter{table}{0}
 \renewcommand{\thetable}{A\arabic{table}}
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{A\arabic{table}}
 
 \subsection{Additional experiment details}
 
@@ -655,9 +721,9 @@ Additionally, we were unable to observe most pretreatment covariates until after
 
 We assigned treatment shortly after issuing midterm exam grades, which occured during the fourth week of the quarter. To assign treatment, we ordered the students by exam score, then paired students along this ordering for students below the median. Within pairs, we randomly assigned one student to \textit{Incentive}, the other to \textit{Control}. By construction, these two arms were \textit{ex ante} balanced on midterm exam score, and we verified at time of treatment that the arms were also balanced on math quiz score. Since this randomization was performed independently across year cohorts, by construction, the samples were also balanced on year.
 
-Although our treatment assignment method provides a better chance of balance than does simple random sampling, by random chance and through non-random attrition, it is possible that the two treatment arms vary on \textit{ex post} observable and unobservable covariates that are correlated with the outcomes of interest, thereby confounding our treatment effect estimates. The primary cause of attrition was withdrawing from the course, which reduced our sample by XX students before the second midterm and XX students before the final exam. A XX\% rate of withdraw is in line with the withdraw rates observed in previous quarters. Another cause of attrition, albeit not from the course, is age: four students under the age of 18 during the experiment were removed from the analysis dataset. Additionally, seven students opted out of having their data included in the experiment analysis.
+Although our treatment assignment method provides a better chance of balance than does simple random sampling, by random chance and through non-random attrition, it is possible that the two treatment arms vary on \textit{ex post} observable and unobservable covariates that are correlated with the outcomes of interest, thereby confounding our treatment effect estimates. The primary cause of attrition was withdrawing from the course, which reduced our experiment sample by 35 students before the second midterm and an additional 21 students before the final exam. A 13\% withdraw rate is in line with the withdraw rates observed in previous quarters. Another cause of attrition, albeit not from the course, is age: four students under the age of 18 during the experiment were removed from the analysis dataset. Additionally, seven students opted out of having their data included in the experiment analysis.
 
-Since neither the students' intent to withdraw, age, nor opt-out preferences were observable at the time of treatment assignment, we could not \textit{ex ante} balance this attrition across treatment arms. If students attrited non-randomly, that is, decided to attrite depending on their treatment status, then our treatment effect estimates would be biased. Fortunately, despite XX\% of students attriting before the second midterm and XX\% before the final exam, the two treatment arms below the median are balanced on nearly all observable pretreatment covariates, as shown in Table \ref{balance_table_final}, which gives us confidence that the \textit{Control} arm is a good counterfactual for the \textit{Incentive} arm.
+Since neither the students' intent to withdraw, age, nor opt-out preferences were observable at the time of treatment assignment, we could not \textit{ex ante} balance this attrition across treatment arms. If students attrited non-randomly, that is, decided to attrite depending on their treatment status, then our treatment effect estimates would be biased. Fortunately, despite 8\% attrition before the second midterm and 13\% before the final exam, the two treatment arms below the median are balanced on nearly all observable pretreatment covariates, as shown in Tables \ref{balance_table_final} and \ref{balance_table_mid2}, which gives us confidence that the \textit{Control} arm is a good counterfactual for the \textit{Incentive} arm.
 
 \subsubsection{Selection of control variables} \label{a_selection}
 
@@ -672,30 +738,133 @@ For variables unobservable at time of randomization but observable at time of an
 
 PDS is a two step process in which first, model covariates are selected in an automated, principled fashion, and second, the model coefficients of interest are estimated while controlling for those selected covariates. The first step involves predicting, separately, both the outcome of interest (e.g., videos watched) and treatment status using lasso regression, which shrinks coefficient estimates towards zero. Note that since treatment is randomly assigned, the lasso should shrink most, if not all, of the coefficients towards zero when predicting treatment status. Next, the researcher takes the union of all covariates with non-zero coefficients and includes these covariates as controls in her model. With her control variables selected, she can now estimate treatment effects with reduced bias relative to including controls with less empirical rationale.
 
-In Table \ref{controlvars_desc} below, we describe all covariates observable in our study. In Table \ref{controlvars_selected_itt}, we describe the covariates selected as controls for estimating the effect of treatment on each outcome variable of interest. All models include either pair fixed effects or year and midterm score as controls. To ensure these controls are ``selected" by the PDS procedure, we partialed out these controls from the first step prediction models by residualizing both sides of the equation as described in \textcite{bch2014b}.
+In Table \ref{controlvars_desc}, we describe all covariates observable in our study. In Table \ref{controlvars_selected_itt}, we describe the covariates selected as controls for estimating the effect of treatment on each outcome variable of interest. All models include either pair fixed effects or year and midterm score as controls. To ensure these controls are ``selected" by the PDS procedure, we partialed out these controls from the first step prediction models by residualizing both sides of the equation as described in \textcite{bch2014b}.
+
+\subsection{LATE estimators using Neyman's repeated sampling approach} \label{a_neyman_late}
+
+In this section we derive LATE estimators using the repeated sampling approach of \textcite{neyman1923}, which considers each pair as an independent, completely randomized experiment.
+
+Similar to a Wald estimator, the point estimate of the LATE is the mean within-pair difference in outcome divided by the mean within-pair difference in videos:
+
+\begin{equation} \label{neyman_late_spec}
+	\wh{\gamma} = \frac{\wb{\Delta y}}{\wb{\Delta v}} = \frac{\frac{1}{J}\sum_{j=1}^{J} \Delta y_j }{\frac{1}{J}\sum_{j=1}^{J} \Delta v_j} = \frac{\wb{y_I} - \wb{y_C}}{\wb{v_I} - \wb{v_C}}
+\end{equation}
+
+where $y$ is the outcome of interest (grades) and $v$ is the number of videos, both indexed by pair $j\in J$ and treatment status $C$ or $I$ for \textit{Control} or \textit{Incentive}, respectively.
+
+We use the delta method to calculate the approximate standard error of $\wh{\gamma}$. First, we define the following normally-distributed random variables:
+\begin{equation}
+\begin{split}
+Y = \wb{y_I} - \wb{y_C} \sim \mathcal{N}(\mu_Y, \sigma^2_Y) \\
+V = \wb{v_I} - \wb{v_C} \sim \mathcal{N}(\mu_V, \sigma^2_V)
+\end{split}
+\end{equation}
+
+Using a first-order Taylor expansion and letting $g() = \frac{Y}{V}$, we have:
+\begin{equation}
+\begin{split}
+	\text{Var}(g) & = \operatorname{E}[(g - \operatorname{E}(g))^2] \\
+	& \approx \operatorname{E}[(g(\theta) + (Y-\theta_Y)g'_Y(\theta) + (V-\theta_V)g'_V(\theta) - g(\theta))^2] \\
+	& = \operatorname{E}[(Y-\theta_Y)^2 (g'_Y(\theta))^2 + (V-\theta_V)^2 (g'_V(\theta))^2 + 2(Y-\theta_Y)(V-\theta_V)g'_Y(\theta)g'_V(\theta)] \\
+	& = \text{Var}(Y)(g'_Y(\theta))^2 + \text{Var}(V)(g'_V(\theta))^2 + 2\text{Cov}(Y,V)g'_Y(\theta)g'_V(\theta)
+\end{split}
+\end{equation}
+
+Expanding about $\theta=(\theta_Y,\theta_V)=(\mu_Y,\mu_V)$ and letting $g'_Y(\theta) = \mu_V^{-1}$ and $g'_V(\theta) = \frac{-\mu_Y}{\mu_V^{-2}}$:
+\begin{equation} \label{var_expanded}
+\begin{split}
+	\text{Var}(g) & \approx \frac{1}{\mu_V^2}\text{Var}(Y) + \frac{\mu_Y^2}{\mu_V^4}\text{Var}(V) + 2\frac{-\mu_Y}{\mu_V^{-2}}\text{Cov}(Y,V) \\
+	& = \frac{\mu_Y^2}{\mu_V^2}(\frac{\sigma_Y^2}{\mu_Y^2} + \frac{\sigma_V^2}{\mu_V^2} - 2\frac{\text{Cov}(Y,V)}{\mu_Y \mu_V})
+\end{split}
+\end{equation}
+
+We use the following variance estimators of $Y$ and $V$ from Equation \ref{se_imai}:
+\begin{equation}
+\begin{split}
+\wh{\text{Var}(Y)} & = \wh{\sigma_Y^2} = \frac{1}{J(J-1)}\sum_{j=1}^{J} (\Delta y_j - \wb{\Delta y})^2 \\
+\wh{\text{Var}(V)} & = \wh{\sigma_V^2} = \frac{1}{J(J-1)}\sum_{j=1}^{J} (\Delta v_j - \wb{\Delta v})^2 \\
+\wh{\text{Cov}(Y,V)} & = \wh{\sigma_{YV}} = \frac{1}{J(J-1)}\sum_{j=1}^{J} (\Delta y_j - \wb{\Delta y})(\Delta v_j - \wb{\Delta v})
+\end{split}
+\end{equation}
+
+and the following estimators for the population means of $Y$ and $V$:
+\begin{equation}
+\begin{split}
+\wh{\mu_Y} & = \operatorname{E}(\mu_Y) = \wb{\Delta y} \\
+\wh{\mu_V} & = \operatorname{E}(\mu_V) = \wb{\Delta v}
+\end{split}
+\end{equation}
+
+Substituting these variance and means estimators into the final step of \ref{var_expanded}, we arrive at the standard error estimator for $\wh{\gamma}$:
+
+\begin{equation}
+	\wh{\sigma_{\gamma}} = \frac{\wb{\Delta y}}{\wb{\Delta v}} \sqrt{ \frac{\wh{\sigma_Y^2}}{\wb{\Delta y}^2} + \frac{\wh{\sigma_V^2}}{\wb{\Delta v}^2} - 2 \frac{\wh{\sigma_{YV}}}{\wb{\Delta y} \wb{\Delta v}} }
+\end{equation}
 
 \clearpage
-
 \input{../tables/balance_table_mid2.tex}
 
 \clearpage
+\input{../tables/balance_table_final.tex}
 
+\clearpage
 \input{../tables/controlvars_desc.tex}
 
 \clearpage
-
 \input{../tables/controlvars_selected_itt.tex}
 
 \clearpage
-
 \input{../tables/controlvars_selected_iv.tex}
 
-% \subsubsection{Generalized Random Forests} \label{a_grf}
-%
-% In this section we discuss our implementation of Generalized Random Forests proposed by \textcite{atw2019}
+%%% PLOTS
+
+% Histogram of videos eligible for incentive
+\clearpage
+\begin{figure}[htb]
+\begin{center}
+\caption{Distribution of videos counted towards incentive}
+\includegraphics[width=1\textwidth, angle=0]{../plots/hist_v_incent.pdf}
+\footnotesize This plot includes only videos that would have counted towards the earning the grade incentive. Students were required to watch 40 unique of 48 eligible videos between the first midterm and final exam to earn the grade incentive. 91\% of \textit{Incentive} students met the requirements for the grade incentive versus 11\% of \textit{Control} students.
+\end{center}
+\end{figure}
+
+% Time series: videos over time by exam topic
+% This shows that students watch videos when most useful
+\clearpage
+\begin{figure}[htb]
+\begin{center}
+\caption{Weekly video watching by exam topic}
+\includegraphics[width=1\textwidth, angle=0]{../plots/tscombo_exam.pdf}
+\footnotesize Dashed lines represent Midterm 1, Midterm 2, and Final exams.
+\end{center}
+\end{figure}
+
+% Treatment effects vs Midterm 1 score
+\clearpage
+\begin{figure}[htb]
+\begin{center}
+\caption{Effect of treatment on videos watched and exam scores by Midterm 1 score}
+\includegraphics[width=1\textwidth, angle=0]{../plots/combo_binscatter.pdf}
+\footnotesize Test scores in standard deviation units. Each point comprises 5-percentile bins along the domain. The control points displayed include both \textit{Control} and \textit{Above median} arms.
+\end{center}
+\end{figure}
+
+% Histogram of 'binge watching' - distribution of max(weekly videos watched)
+\clearpage
+\begin{figure}[htb]
+\begin{center}
+\caption{Distribution of max videos watched in one week}
+\includegraphics[width=1\textwidth, angle=0]{../plots/hist_maxweek.pdf}
+\footnotesize These plots help illustrate potential ``binge watching" behavior. Compared to the \textit{Control} students, \textit{Incentive} students are more likely to watch 40 or more unique videos in a week, which occurs in the weeks preceding the final and not the second midterm.
+\end{center}
+\end{figure}
 
 
 
 
 
 \end{document}
+
+% \subsubsection{Generalized Random Forests} \label{a_grf}
+%
+% In this section we discuss our implementation of Generalized Random Forests proposed by \textcite{atw2019}
