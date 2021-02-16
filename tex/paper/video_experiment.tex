@@ -485,7 +485,7 @@ Sharp RD designs used in the literature frequently do not observe $Y(1)$ and $Y(
 
 In this section, we first examine attrition and establish that the \textit{Incentive} and \textit{Control} arms in our analysis sample are balanced on observable characteristics. Second, we show that the grade encouragement worked: students in the \textit{Incentive} arm watched significantly more videos than did their \textit{Control} peers. Third, we estimate the effects of being assigned to the \textit{Incentive} arm (ITT) and the effects of videos (LATE) on grade outcomes. Fourth, to better understand mechanisms, we examine spillovers to other studying methods and grades in other courses taken during the experiment term. Finally, we see whether behavior change persists after exogenous incentives are removed by estimating treatment effects on video watching and grades in the subsequent microeconomics course, Micro B.
 
-\subsection{Attrition and balance}
+\subsection{Attrition and balance} \label{attrition}
 
 At the university where the experiment took place, Micro A is the first upper-division economics course, often taken by students who have not yet declared a major. As such, it has higher withdraw rates than most other economics courses, a product of both challenging course material and updated priors on interest in the field. In Micro A one year before the experiment, 8.5\% and 13.4\% of students who took the first midterm did not take the second midterm and final exam, respectively. Unsurprisingly, the withdrawal rates were greater for students who scored below the median on the first midterm: 14.7\% and 24.2\% of these students did not take the second midterm and final exam, respectively.\footnote{The 2017 statistics are calculated from a sample that differs somewhat in inclusion criteria relative to the 2018 and 2019 samples. We provide these statistics to highlight the historically high rates of attrition and not to make comparisons with the experiment sample.} In the present study, high attrition is not problematic, other than reducing statistical power, if attrition is independent of potential outcomes. If attrition is influenced by treatment status, which could occur, for example, if treatment students believed they were more likely to pass the course,\footnote{As noted earlier, we informed students that final grades would be curved separately between \textit{Control} and \textit{Incentive} arms to remove any advantage treatment may carry towards passing the course.} then the resulting nonrandom selection into our analysis could bias the results.
 
@@ -568,38 +568,36 @@ Next we check instrument relevancy, that is, whether treatment status generates 
 
 Graphically, we depict the distribution of videos watched as a function of treatment in Figure \ref{combo_cdf}. Notably, the gap between treatment and control distributions remains significantly positive at every level of video watching by the final exam. The difference is most pronounced near the required number of videos to earn the grade incentive, after which the difference diminishes towards zero. For the second midterm sample, the difference is smaller but significantly different from zero between zero and 62 videos watched. Collectively, given the highly significant first stage regression results, large first-stage F-statistics, and monotonic increase in video watching across the sample, we have high confidence that our instrument meets the relevancy criterion.
 
-\subsection{Estimation of causal effects}
+\subsection{Effects on exam scores}
 
-First, we estimate the causal effect of being assigned to the \textit{Incentive} arm on exam scores (ITT). This estimate is relevant for educators interested in predicting how requiring videos will change exam scores in their classes using the same grade-based incentive implemented in our experiment. Second, we estimate the causal effect of watching videos on exam scores, which is of interest to educators deciding which teaching technologies to provide for their classes as well as to students choosing among different studying tools.
+In this section, we estimate the causal effects of being assigned to the \textit{Incentive} arm on exam scores (ITT). This estimate is relevant for educators interested in predicting how requiring videos will change exam scores in their classes using the same grade-based incentive implemented in our experiment. Additionally, we estimate the causal effect of watching videos on exam scores, which is of interest to educators deciding which teaching technologies to provide for their classes as well as to students choosing among different studying tools.
 
 For both the ITTs and LATEs, we examine effects on the second midterm and final exams using both parametric methods (i.e. Equations \ref{itt_spec} and \ref{secondstage_spec}) and nonparametric methods a la the repeated sampling framework of \textcite{neyman1923}% and Generalized Random Forests proposed by \textcite{wa2018}
-. We check that our parametric results are robust to model specification by estimating Equations \ref{itt_spec} and \ref{secondstage_spec} with and without $f(X_i)$ as a vector of linear control variables chosen via PDS \parencite{bch2014a}. To rule out nonrandom attrition across treatment arms as a confounder, we fit a fixed effect model that drops any student whose matched pair attrited.
+. We check that our parametric results are robust to model specification by estimating Equations \ref{itt_spec} and \ref{secondstage_spec} with and without $f(X_i)$ as a vector of linear control variables chosen via PDS \parencite{bch2014a}. To rule out nonrandom attrition across treatment arms as a confounder, we fit a fixed effect model that drops any student whose matched pair attrited. These specifications and identification strategies are described in detail in Section \ref{empiricalstrat}.
 
-\subsubsection{Effect of grade incentive on video watching}
+Table \ref{secondstage_table} presents estimates of the effects of treatment on second-midterm and final exam scores. Across our four specifications, we estimate reduced-form (RF) impacts of being assigned to the \textit{Incentive} arm of 0.17 - 0.18 standard deviations on the second midterm. These estimates, along with our first-stage estimates (Table \ref{firststage_table}), imply LATEs of 0.26 - 0.30 standard deviations per 10 unique videos, or 0.16 - 0.18 standard deviations per hour of unique content. For the final exam, we estimate similar ITT effects: being assigned to the \textit{Incentive} arm raises scores by 0.14 - 0.18 standard deviations. However, given the larger first stage effects for the final exam, we estimate smaller LATEs: 0.08 - 0.09 standard deviations per 10 unique videos, or 0.04 - 0.05 standard deviations per hour of unique content.
 
-Table \ref{firststage_table}
+Given the large F-statistics when estimating first-stage effects of our incentive instrument on videos watched, we are not particularly concerned about bias from weak instruments. However, following the advice of \textcite{ass2019}, we report Anderson-Rubin confidence sets, which are efficient regardless of the strength of our instrument. As can be seen in Appendix Table \ref{arci_table}, we find that the weak-instrument-robust confidence intervals are very similar to those presented in Table \ref{secondstage_table}.
 
-\subsubsection{Effect of treatment on exam scores}
+%\subsection{Heterogeneous effects}
 
-Table \ref{secondstage_table}
+% TODO - add to this section, perhaps after estimating GRF
 
-\subsection{Spillover effects}
+\subsection{Spillovers during concurrent term}
 
-Here we estimate spillover effects to other other courses taken concurrently during the term of the experiment. We also estimate spillover effects to Micro B, the subsequent course in the intermediate microeconomics sequence. It is important to examine spillover effects
+We next estimate spillover effects to other courses taken concurrently during the term of the experiment. Although we find positive effects on outcomes in Micro A, it is important to examine spillover effects to understand the complete picture of how treatment affects student achievement. If the gains in Micro A come at the cost of slowed progress in other courses, then treatment may be counterproductive for some students. On the other hand, since the videos cover concepts and methods that could be covered in other courses, treatment may help students outside Micro A.
 
-\subsubsection{Concurrent courses}
+Table \ref{spillover_grades} presents our estimates of Equation \ref{itt_spec} where $Y_i$ is GPA, number of classes passed, or portion of classes taken for a letter grade. We estimate the effects of treatment on term GPA calculated separately for all classes, all classes excluding Micro A, all classes outside of economics, and all economics classes excluding Micro A. In general, we find marginally significant or insignificant but directionally positive spillover effects on GPA.\footnote{At this university, term GPA is affected only by classes taken for a letter grade. Hence, students may not have attrited from the sample but may have taken all courses Pass/No Pass and thus have no term GPA. As such, we report sample sizes for each GPA specification.} We can rule out large negative spillover effects: in our worst-case specification for term GPA, our 95\% confidence interval rules out negative spillover effects larger than -0.02 (on a 4.0 scale), or less than 1\% of the mean term GPA among control students. There is no statistically significant difference between our estimates of spillover effects on GPA when restricting to only economics or non-economics courses.
 
-Table \ref{spillover_grades}
+We additionally estimate the effects of treatment on number of classes passed and find small, insignificant, but directionally positive effects. We find that treatment caused students to pass 0.02 - 0.09 more classes, or about 1\% - 3\% more classes than the control mean. We find no effect of treatment on number of classes not passed or withdrawn. Interestingly, treatment students were somewhat less likely to take Micro A for a letter grade than were control students, but this difference is only marginally significant for one of the four specifications and insignificant for the rest. We find no relationship between treatment and fraction of classes taken for a letter grade versus Pass/No Pass. Across all grade spillovers examined, we find mostly small, directionally positive effects, which gives us confidence that treatment is likely not harmful to academic success outside of Micro A.
 
-\subsubsection{Substituion from other forms of studying}
+Besides estimating spillover effects on other course grades, we also examine spillovers to other studying methods within Micro A. Doing so helps us better understand mechanisms: do students substitute away from other studying when encouraged to watch more videos, or are they more likely to complement their video-watching with other unincentivized studying? In Table \ref{spillover_studying}, we display the results of estimating equation \ref{itt_spec} where $Y_i$ is an alternative form of studying. We find that \textit{Incentive} students are directionally less likely to attend class, though not statistically significantly so. On the other hand, treatment students interacted with the online discussion board more than did control students, but again these estimates are not statistically distinguishable from zero. We do not find any significant relationship between treatment and tutoring attendance.
 
-Table \ref{spillover_studying}
+\subsection{Spillovers to subsequent term}
 
-\subsubsection{Subsequent intermediate microeconomics course}
+While we offered treatment students a grade incentive to watch videos during Micro A, students were not offered a grade incentive during the subsequent course in the intermediate microeconomics sequence, Micro B. However, all students in Micro B maintained access to the IMVH and were verbally encouraged to watch videos as a study method. Fortunately, we are able to observe video watching and grade outcomes in Micro B.
 
-Table \ref{spillover_100b}
-
-
+We present our estimates of spillover effects during the subsequent term in Table \ref{spillover_100b}. In Panel A, we estimate the effect of treatment on videos watched during the subsequent term, for those who took Micro B. We find large and statistically significant effects: treatment caused students to watch 8.1 - 9.9 more unique videos and 1.2 - 1.5 hours of unique content compared to control students. In Panel B, we estimate equation \ref{itt_spec} where $Y_i$ is the first midterm, second midterm, or final exam score. Unfortunately given the small subsample of students who took Micro B, we are underpowered to detect effect sizes consistent with those observed during Micro A. Finally, in Panel C, we estimate the effect of treatment on taking Micro B and the number of classes passed and withdrawn. We find no effects statistically distinguishable from zero, though, as mentioned in section \ref{attrition}, treatment students were directionally less likely to take Micro B than were control students.
 
 % *****************************************************************
 % Discussion
@@ -607,6 +605,7 @@ Table \ref{spillover_100b}
 
 \section{Discussion} \label{discussion}
 
+Here we discuss the findings reported in Section \ref{results}.
 
 Students overwhelmingly report that they find the IMVH useful. But considering psych learning theories, why might videos be effective? The IMVH does not have students use retrieval practice (and example is when students test themselves). However, it is possible the IMVH facilitates interleaving (mixing topics up while studying), spaced practice (attend lecture and watch videos either before or after), learning information from different formats (IMVH presents information both verbally, graphically and algebraically), and using worked examples (IMVH includes worked examples. Again, it is also possible that the inducement to watch the IMVH simply led students to spend more times on the class. Why do the videos not appear effective for students at the median? Not sure unless it is simply consistent with a learning model where students above median already know how to study and the inducement to use the IMVH
 
@@ -794,6 +793,26 @@ Substituting these variance and means estimators into the final step of \ref{var
 
 \clearpage
 \input{../tables/balance_table_final.tex}
+
+\clearpage
+\begin{spacing}{1.0}
+\begin{table} \centering \caption{Anderson-Rubin confidence sets}
+\label{arci_table}
+\begin{threeparttable}
+\begin{tabular}{ ccc }
+\toprule
+Outcome variable & Endogenous variable & Anderson-Rubin CI \\
+\midrule
+Midterm 2 score & 10 unique videos & [-0.001, 0.653] \\
+Midterm 2 score & 1 hour videos & [-0.001, 0.392] \\
+Final exam score & 10 unique videos & [0.000, 0.163] \\
+Final exam score & 1 hour videos & [0.000, 0.102] \\
+\bottomrule
+\end{tabular}
+\Fignote{This table displays Anderson-Rubin confidence sets at the 95\% confidence level for the 2SLS estimator $\hat{\gamma}$ from Equation \ref{secondstage_spec} including year dummies and first midterm score as controls. Outcomes are measured in standard deviations. Instrumented endogenous variables are measured in 10s of unique videos or hours of unique content.}
+\end{threeparttable}
+\end{table}
+\end{spacing}
 
 \clearpage
 \input{../tables/controlvars_desc.tex}
