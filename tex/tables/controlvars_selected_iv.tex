@@ -5,12 +5,12 @@
 \begin{threeparttable} 
 \begin{tabular}{p{.25\linewidth} p{0.3\linewidth} p{0.22\linewidth} p{0.22\linewidth}}
 \toprule
-Dependent Variable &          Instrumented &                        Controls,\newline All Observations & Controls,\newline Fixed Effects \\
+Dependent Variable &          Instrumented &                                           Controls,\newline All Observations & Controls,\newline Fixed Effects \\
 \midrule
-  Final exam score &  Hours videos, unique &     Hours videos\newline Math quiz score\newline Transfer &                    Hours videos \\
-  Final exam score &        Videos, unique &                               Hours videos\newline Videos &     Hours videos\newline Videos \\
-   Midterm 2 score &  Hours videos, unique &  Hours videos\newline Math quiz score\newline PSET visits &                    Hours videos \\
-   Midterm 2 score &        Videos, unique &                               Hours videos\newline Videos &     Hours videos\newline Videos \\
+  Final exam score &  Hours videos, unique &         Hours videos\newline Math quiz score\newline Transfer\newline Videos &     Hours videos\newline Videos \\
+  Final exam score &        Videos, unique &                                                  Hours videos\newline Videos &     Hours videos\newline Videos \\
+   Midterm 2 score &  Hours videos, unique &  Hours videos\newline Math quiz score\newline Tutoring visits\newline Videos &                    Hours videos \\
+   Midterm 2 score &        Videos, unique &                                                  Hours videos\newline Videos &     Hours videos\newline Videos \\
 \bottomrule
 \end{tabular}
 \Fignote{Controls chosen via the PDS procedure of \textcite{bch2014a}. In the \textit{All Observations} model, \textit{Midterm 1 score} and \textit{Year = 2019} are additionally included as controls. In the \textit{Fixed Effects} model, pair fixed effects and \textit{Midterm 1 score} are included. All control variables are measured before the start of the experiment, e.g. \textit{Hours videos} is the hours of videos watched as of the first midterm.} 
