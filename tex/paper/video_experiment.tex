@@ -371,10 +371,10 @@ We informed \textit{Incentive} students that they must watch the entire video an
 	\item \textit{Videos}: Number of links opened, including duplicates
 	\item \textit{Unique videos}: Number of unique video links opened
 	\item \textit{Hours of videos}: Total runtime of video links opened
-	\item \textit{Hours of unique videos}: Total runtime of video links opened with duplicates removed\footnote{We cannot observe the amount of time students spent on each video, so proceed recognizing our time measures likely overestimate true viewing time for most students.}
+	\item \textit{Hours of unique videos}: Total runtime of video links opened with duplicates removed
 \end{enumerate}
 
-For expositional ease, we use ``watching" to refer to the link-opening behavior as defined above. It is also worth mentioning that although we code video watching as binary, watching behavior can vary greatly in intensity. Some students take notes, pausing and rewatching portions of the video as needed. Other students, we suspect, play videos in the background without absorbing much material. Exploring the intensive margin of video watching remains an area for future research that will benefit from new technologies that can quantity video engagement such as interactive content embedded in videos, eye-tracking devices, and more.
+For expositional ease, we use ``watching" to refer to the link-opening behavior as defined above. Although video watching in our data is a binary measure, watching behavior can vary greatly in intensity. Some students take notes, pausing and rewatching portions of the video as needed. Other students, we suspect, play videos in the background without absorbing much material. Exploring the intensive margin of video watching remains an area for future research that will benefit from new technologies that can quantify video engagement including interactive content embedded in videos, eye-tracking devices, and more.
 
 We helped students keep track of their progress towards 40 videos by periodically updating the online gradebook with counts determined from the IMVH data. Although nearly all students followed our instructions to watch videos completely and sequentially,\footnote{The time between timestamps for video links opened in succession was almost always longer than the runtime of the video.} in a few exceptional cases, students opened 40 or more video links within a matter of a few minutes. We manually adjusted their video counts in the gradebook and emailed them a reminder of the requirements for videos to count towards the grade incentive.\footnote{Although additional email communication as a result of treatment could violate the exclusion restriction, the small number of affected students is unlikely to have much (if any) influence on our results.} Though it is doubtful these strategic students gained much from opening so many videos so quickly, to maintain interpretability of our results, we do \textit{not} remove these clicks from our video count measures.\footnote{Our causal effects are per ``links opened" rather than per ``links opened subject to certain qualifying conditions". The cost of this interpretability is likely downward bias on our causal effect estimates.} Our \textit{unique} video measures, however, are less sensitive to this behavior.
 
@@ -471,7 +471,7 @@ To estimate local ITT effects using a sharp RD, we return to the potential outco
 \end{split}
 \end{equation}
 
-We estimate $\tau(c)$ using local low-order polynomials, per the advice of \textcite{gi2019}.
+We estimate $\tau(c)$ using local low-order polynomials (local linear regression), per the advice of \textcite{gi2019}.
 
 Sharp RD designs used in the literature frequently do not observe $Y(1)$ and $Y(0)$ for the same values of $x$. In our setting, however, we observe $Y(0)$ both above and below the cutoff. Hence, we need to assume continuity only for $Y(1)$ as we do not observe any outcomes for treated students scoring above the cutoff but \textit{do} observe outcomes for control students both above and below the cutoff.
 
@@ -579,6 +579,16 @@ For both the ITTs and LATEs, we examine effects on the second midterm and final 
 Table \ref{secondstage_table} presents estimates of the effects of treatment on second-midterm and final exam scores. Across our four specifications, we estimate reduced-form (RF) impacts of being assigned to the \textit{Incentive} arm of 0.17 - 0.18 standard deviations on the second midterm. These estimates, along with our first-stage estimates (Table \ref{firststage_table}), imply LATEs of 0.26 - 0.30 standard deviations per 10 unique videos, or 0.16 - 0.18 standard deviations per hour of unique content. For the final exam, we estimate similar ITT effects: being assigned to the \textit{Incentive} arm raises scores by 0.14 - 0.18 standard deviations. However, given the larger first stage effects for the final exam, we estimate smaller LATEs: 0.08 - 0.09 standard deviations per 10 unique videos, or 0.04 - 0.05 standard deviations per hour of unique content.
 
 Given the large F-statistics when estimating first-stage effects of our incentive instrument on videos watched, we are not particularly concerned about bias from weak instruments. However, following the advice of \textcite{ass2019}, we report Anderson-Rubin confidence sets, which are efficient regardless of the strength of our instrument. As can be seen in Appendix Table \ref{arci_table}, we find that the weak-instrument-robust confidence intervals are very similar to those presented in Table \ref{secondstage_table}.
+
+\subsection{Effects at the incentive cutoff}
+
+Here we present estimates of treatment effects for students at the incentive-eligibility cutoff: the median score on the first midterm. While the primary intended purpose of cutoff was to avoid burdening high-performing students, the discontinuous change in treatment probability allows for identification of LATEs, as we describe in section \ref{empiricalstrat}. Unfortunately, the density of students at the cutoff is not enough to allow for precise identification of treatment effects. For completeness and bounding possible effect sizes, we share our findings.
+
+Before using a regression discontinuity (RD) design in our setting, we must establish that students did manipulate their midterm scores to affect their chances of being treated. Intuitively, it would be surprising to find manipulation as students did not know the median score \textit{ex ante}. Additionally, it would be quite difficult to accurately predict one's midterm score while taking the exam, and those capable of doing so would likely have higher returns scoring higher than the median. Appendix Figure \ref{mid1dist} shows that, as expected, the distribution of midterm scores does not have any unordinary masses on one side of the cutoff.
+
+In most RD designs, the researcher can only observe either treatment or control outcomes on one side of the cutoff. In our setting, however, we can observe control outcomes on \textit{both} sides of the cutoff. As such, we identify treatment effects adjusting the conventional RD approach to account for our increased knowledge of the control group's mean outcome at the cutoff. In practice, this entails differencing treatment and control conditional mean outcomes using local linear regressions where we calculate the control conditional mean using both \textit{Control} and \textit{Above median} observations.
+
+Figures \ref{rdmid2} and \ref{rdfinal} in the Appendix depict the effects of treatment near the cutoff for the second midterm and final exams, respectively. Both Figures show a marked increase in video watching for treatment students at the cutoff. Both figures also show positive point estimates of the effect of treatment on exam scores for those at the cutoff, but neither of these point estimates are statistically distinguishable from zero. Appendix Table \ref{rdtable} summarizes the point estimates and confidence intervals for those at the incentive eligibility cutoff. We find that treatment increases video watching by 9.1 and 24.2 unique videos by the second midterm and final exams, respectively, and we find positive but not statistically significant effects on exam scores. The first-stage effects at the cutoff are in line with the estimated average first-stage effects for those below the median.
 
 %\subsection{Heterogeneous effects}
 
@@ -704,7 +714,7 @@ While there are many educational interventions that instructors could offer thei
 \setcounter{table}{0}
 \renewcommand{\thetable}{A\arabic{table}}
 \setcounter{figure}{0}
-\renewcommand{\thefigure}{A\arabic{table}}
+\renewcommand{\thefigure}{A\arabic{figure}}
 
 \subsection{Additional experiment details}
 
@@ -824,6 +834,37 @@ Final exam score & 1 hour videos & [0.000, 0.102] \\
 \end{spacing}
 
 \clearpage
+\begin{spacing}{1.0}
+\begin{table} \centering \caption{Regression Discontinuity estimates}
+\label{rdtable}
+\begin{threeparttable}
+\begin{tabular}{m{0.35\linewidth} *{3}{>{\centering\arraybackslash}m{0.1\linewidth}}}
+\toprule
+ & Control Mean & (1) & (2) \\
+\midrule
+\multicolumn{4}{l}{\textbf{Panel A}: Midterm 2} \\
+\customlinespace \indentrow{Unique videos} & 22.7 & 9.12 & 9.34 \\
+& & (3.35)\sym{***} & (3.42)\sym{***} \\
+\customlinespace \indentrow{Midterm 2 score} & 0.73 & 0.06 & 0.07 \\
+& & (0.20) & (0.19) \\
+\midrule
+Observations & & 812 & 779 \\
+\midrule
+\multicolumn{4}{l}{\textbf{Panel B}: Final exam} \\
+\customlinespace \indentrow{Unique videos} & 32.0 & 24.16 & 24.95 \\
+& & (2.39)\sym{***} & (2.48)\sym{***} \\
+\customlinespace \indentrow{Final exam score} & 0.78 & 0.11 & 0.14 \\
+& & (0.18) & (0.19) \\
+\midrule
+Observations & & 789 & 747 \\
+\bottomrule
+\end{tabular}
+\Fignote{This table reports coefficients on $\tau(c)$ from Equations \ref{rd_spec}. Panel A includes Midterm 2-takers while Panel B includes Final Exam-takers. Model (1) includes all students while (2) contains only students whose pair did not attrite. Standard errors are in parentheses. ***, **, and * indicate significance at the 1, 5, and 10 percent critical levels, respectively.}
+\end{threeparttable}
+\end{table}
+\end{spacing}
+
+\clearpage
 \input{../tables/controlvars_desc.tex}
 
 \clearpage
@@ -856,14 +897,14 @@ Final exam score & 1 hour videos & [0.000, 0.102] \\
 \end{figure}
 
 % Treatment effects vs Midterm 1 score
-\clearpage
-\begin{figure}[t]
-\begin{center}
-\caption{Effect of treatment on videos watched and exam scores by Midterm 1 score}
-\includegraphics[width=1\textwidth, angle=0]{../plots/combo_binscatter.pdf}
-\footnotesize Test scores in standard deviation units. Each point comprises 5-percentile bins along the domain. The control points displayed include both \textit{Control} and \textit{Above median} arms.
-\end{center}
-\end{figure}
+% \clearpage
+% \begin{figure}[t]
+% \begin{center}
+% \caption{Effect of treatment on videos watched and exam scores by Midterm 1 score}
+% \includegraphics[width=1\textwidth, angle=0]{../plots/combo_binscatter.pdf}
+% \footnotesize Test scores in standard deviation units. Each point comprises 5-percentile bins along the domain. The control points displayed include both \textit{Control} and \textit{Above median} arms.
+% \end{center}
+% \end{figure}
 
 % Histogram of 'binge watching' - distribution of max(weekly videos watched)
 \clearpage
@@ -875,6 +916,38 @@ Final exam score & 1 hour videos & [0.000, 0.102] \\
 \end{center}
 \end{figure}
 
+% Regression discontinuity: no manipulation
+\clearpage
+\begin{figure}[t]
+\begin{center}
+\caption{Distribution of Midterm 1 scores}
+\label{mid1dist}
+\includegraphics[width=1\textwidth, angle=0]{../plots/mid1dist.pdf}
+\footnotesize Midterm scores are measured in control standard deviations. This histogram includes all students who took the final exam. As such, this plot would allow one to observe bunching if treatment caused differential attrition or manipulation of one's midterm score.
+\end{center}
+\end{figure}
+
+% Regression discontinuity: midterm 2 exam scores
+\clearpage
+\begin{figure}[t]
+\begin{center}
+\caption{Regression Discontinuity: effect of treatment on videos watched and second midterm exam scores}
+\label{rdmid2}
+\includegraphics[width=1\textwidth, angle=0]{../plots/lpolymid2.pdf}
+\footnotesize Videos (top) includes unique videos watched before the second midterm exam. Exam scores (bottom) are measured in control standard deviations. Confidence bands represent 95\% confidence intervals of the conditional mean outcome. The left plots includes all students who took the second midterm while the right plots exclude any students whose matched pair attrited.
+\end{center}
+\end{figure}
+
+% Regression discontinuity: final exam scores
+\clearpage
+\begin{figure}[t]
+\begin{center}
+\caption{Regression Discontinuity: effect of treatment on videos watched and final exam scores}
+\label{rdfinal}
+\includegraphics[width=1\textwidth, angle=0]{../plots/lpolyfinal.pdf}
+\footnotesize Videos (top) includes unique videos watched before the final exam. Exam scores (bottom) are measured in control standard deviations. Confidence bands represent 95\% confidence intervals of the conditional mean outcome. The left plots includes all all students who took the final exam while the right plots exclude any students whose matched pair attrited.
+\end{center}
+\end{figure}
 
 
 
