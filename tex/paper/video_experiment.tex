@@ -140,116 +140,6 @@ The rest of the paper is organized as follows. Section \ref{models} presents com
 % Jotting down some thoughts about models below
 % *****************************************************************
 
-\section{Models of Studying Behavior} \label{models}
-
-In this section we consider three models of student studying behavior: a neoclassical model, an imperfect information model, and a behavioral/procrastination model. For all three models, we consider the effects of an instructor's inducement to encourage student use of an effective study method. We do not address the issue that the IMVH is a relatively unique study tool in that, to our knowledge, it is the first instructional book to be created entirely of videos. However, given the availability of close substitutes to the IMVH (lecture capture, for example) we do not explore the added issues of inducing students to use a study tool whose usefulness is not known to the instructor.
-
-Neoclassical models of studying behavior assume that rational agents know their returns to studying using the methods available to them and allocate the optimal study time to each method given their utility function, which is increasing in leisure and grades and decreasing in time spent studying. Since college instructors have little knowledge about student utility functions, they do not know student preferences over performance in other classes and other aspects of their lives that may have large payoffs in the labor and marriage markets and so there is no room for an instructor to increase student well-being by intervening in their study decisions. \textcite{oettinger2002} provides empirical support for the neoclassical model by demonstrating that student effort responds rationally to nonlinear grade incentives. Across 1200 students in a principles of economics class with absolute grading standards, he finds evidence of bunching just above letter grade cutoffs and student performance on the final exam is higher if the student is just below a grade threshold.
-
-\textcite{kow2020} also finds support for the neoclassical model for students at the margin of poor performance. The authors use a regression discontinuity approach to examine the effects of a university policy that required students who performed poorly in their first year to attend at least 70 percent of the tutorials for each class in their second year. In courses where tutorial attendance was not required for all students, the policy increased both tutorial and lecture attendance by over 50 percent, did not increase total study time and reduced grades by 0.16-0.26 standard deviations. The policy had its biggest impact on students who lived far from campus and those who were most likely to miss section in their first year. The authors conclude that the university policy prevented students from using their optimal mix of study methods and so reduced grades.
-
-A key assumption of the neoclassical model is that students possess complete information about the returns across studying methods. However, there is evidence from psychology that college students do not know the return to various study methods\footnote{See, for example, \textcite{mccabe2011}, \textcite{prcc2007}, \textcite{drmnw2013}} and many universities fund ``Teaching and Learning Centers" or ``Academic Skills Centers," part of whose mission is to help undergraduates learn to study more productively.\footnote{All nine University of California campuses have such a center. Examples outside the UC include Dartmouth's Academic Skills Center, Michigan's Center for Research on Teaching and Learning, UNC's Learning Center, and Yale's Teaching and Learning Center.} Further, the ``raison d'etre" of higher education is not only to teach students specific skills but to teach students how to learn. As an alternative to the neoclassical model, we hypothesize that students supply a quantity of study time that is optimal given their information constraints. In this `imperfect information' model, students choose study methods and quantities that are suboptimal relative to those they would have picked in a full information setting. Hence, an intervention by an entity that has more information about returns to studying across various methods (i.e. an instructor) can enhance student utility.
-
-A third model is a behavioral one in which students plan to study more than they end up studying when the time comes. This phenomenon is consistent with two-self models in which a person's ``planner" self, the one who desires high grades at the expense of leisure, is at odds with her ``doer" self who must choose between immediately gratifying leisure and delayed gratification from higher grades. Indeed, survey and experimental data suggest that many students study less than they report they ``should" and finish the term with grades lower than what they had anticipated they would earn at the start of the term,
-\footnote{see, for example, \textcite{ferrari1992}, \textcite{ccog2017} and \textcite{lo2016}.} \textcite{cgpr2020} provide empirical support for this model by finding that setting tasked-based goals helps improve college student performance. As descriptive evidence in support of this model, \textcite{blmo2019} find that students that do much worse than expected in college are those who say they have poor time management or procrastination issues, including a tendency to cram and spending very little time studying.
-
-We consider the testable implications of the three models applied to a setting where students are incentivized to use a time-consuming educational input, say, a set of instructional videos (or attending class, reading the textbook, working on homework, etc.). The incentive is structured such that students who consume the educational input receive a higher grade in the course by consuming a set level of the input. In this simple setting, students gain utility only from leisure and grades. We assume grades, a function of time spent studying, and utility are both continuous, smooth, and increasing and concave in their inputs. Students can choose to study using the incentivized educational input or some outside option that is not directly incentivized (or a combination thereof).
-
-Across all three models, before the first educational input is incentivized, students allocate time to the two studying methods until the marginal benefit of each (through higher grades) is equal to the marginal cost of forgone leisure. Consider the population of students initially consuming below the requisite level to earn the grade incentive. These students must decide if earning the grade incentive is worth forgone leisure and less time allocated to their outside studying option. Next we explore the differences in predictions across the three models.
-
-% For the `compliers' - those for whom the incentive induces greater take-up of the incentivized input -
-
-% Depending on the relative returns to studying and the students' preferences, it is theoretically ambiguous how adding the incentive will affect grades. Next we highlight the primary differences between the models.
-
-% Do we want to write formal models? I think we should...it may be easier for some to see the implications if presented as equations.
-
-\begin{figure}
-\begin{center}
- \begin{tikzpicture}[scale=0.6]
-		% axes
-		\draw [thick,<->] (0,8) node[left]{$v^*(L)$}--(0,0)--(11,0) node[right]{$L$};
-		\node [below left] at (0,0) {$0$};
-
-		% v*
-		\draw (0,5) -- (2,4);
-		\draw (2,4) -- (6,4);
-		\draw (6,4) -- (6,2);
-		\draw (6,2) -- (10,0);
-		\draw [dashed] (2,4) -- (6,2);
-
-		% video incentive threshold
-		\node [left] at (0,4) {$T$};
-		\draw (-0.1,4) -- (0.1, 4);
-		\node [below] at (6,0) {$1-T$};
-		\draw (6,-0.1) -- (6,0.1);
-		%\draw [dashed] (0,4) -- (10,4);
-		%\draw [dashed] (6,0) -- (6,10);
-
-		% points for U1 and U2
-		\draw [fill] (4.4,2.8) circle [radius=.05];
-		\node [below] at (4.4,2.8) {$v_1$};
-		\draw [fill] (3.95,4) circle [radius=.05];
-		\node [above] at (3.95, 4) {$v_2$};
-
- \end{tikzpicture}
-
- \vspace{1\baselineskip}
-
-	% Utility curves
-	\begin{tikzpicture}[scale=0.6]
-	% axis
-	\draw[thick,<->] (0,8) node[left]{$G(v^*,o^*)$}--(0,0)--(11,0) node[right]{$L$};
-	\node [below left] at (0,0) {$0$};
-	% video incentive threshold
-	\node [below] at (6,0) {$1-T$};
-	\draw (6,-0.1) -- (6,0.1);
-
-	% production frontier 1 - not incentivized
-	\draw (10,0)--(10,2);
-	\draw plot [smooth] coordinates {(10,2) (8,4) (6,5) (4,5.6) (2,5.85) (0,6)};
-
-	% production frontier 2 - incentivized
-	\draw plot [smooth] coordinates {(10,0) (8,2) (6,3)};
-	\draw (6,3)--(6,3.75);
-	\draw plot [smooth] coordinates {(6,3.75) (5,4.75) (4,5.3) (2,5.85)};
-
-	% indifference curves
-	% original
-	\draw[blue] (4,5.65) arc[start angle=252, delta angle=15, radius=9cm];
-	\draw[blue] (4,5.65) arc[start angle=252, delta angle=-19, radius=9cm] coordinate (u1);
-	\node[left] at (u1) {\scriptsize $U_1$};
-	% tangency
-	\draw [fill] (4.4,5.52) circle [radius=.05];
-	\node [above] at (4.4,5.52) {$v_1$};
-
-	% new
-	\draw[blue] (4,5.32) arc[start angle=252, delta angle=9, radius=14cm];
-	\draw[blue] (4,5.32) arc[start angle=252, delta angle=-12, radius=14cm] coordinate (u2);
-	\node[left] at (u2) {\scriptsize $U_2$};
-	% tangency
-	\draw [fill] (3.95,5.33) circle [radius=.05];
-	\node [below] at (3.95, 5.33) {$v_2$};
-
-	% grade incentive
-	\node [left] at (0,3.75) {$G(T,0)$};
-	\draw (-0.1,3.75) -- (0.1,3.75);
-	\node [left] at (0,2) {$I(v \geq T)$};
-	\draw (-0.1,2) -- (0.1,2);
-
-
-	\end{tikzpicture}
-
-	\caption{\textit{Above}: Demand curve for video watching as a function of leisure $L$. At $L=1-T$, the student maximizes grades $G(v,0)$ by spending all studying time watching videos, i.e. $v^*=T$. \textit{Below}: Student's utility maximization problem for the neoclassical model. The student maximizes her utility over leisure $L$ and grades $G$, which is a function of time allocated to video watching $v$ and her next best studying option $o$. The grade incentive $I$ is given to the student conditional on watching $T$ hours of videos (inner-time budget constraint) or, in the unincentivized case, given regardless of video watching (outer time-budget constraint).}
-\end{center}
-\end{figure}
-
-In the neoclassical model, the marginal return to grades of the incentivized input is less than that of the outside option for the `compliers', or those induced by the incentive to consume at least a fixed level of the incentivized input. This model predicts bunching at the incentivized level cutoff since compliers would prefer to spend their marginal hours on leisure or studying with their other method. This model predicts a strict increase in video watching and weak decrease in other studying and leisure consumption. It is ambiguous whether cumulative study time increases or decreases as this depends on relative utility benefits of leisure and grades and the returns to studying by each method. However, if cumulative study time remains constant or decreases, then exam performance should strictly decrease since students are now suboptimally allocating study time versus their first-best allocation when considering only marginal returns to studying. On the other hand, if cumulative study time increases, students may earn greater exam grades but achieve lower utility compared to baseline. Importantly, this model predicts that in subsequent quarters students return to their pre-incentive levels of studying.
-
-In the imperfect information model, students' \textit{ex ante} allocations to each studying method are not necessarily first-best. Compliers update their priors about the returns to watching videos as they work towards hitting the minimum required level. At this cutoff, they make a decision whether to continue watching videos depending on their updated perceptions of the marginal benefit. We do not expect bunching in this model unless poorly informed students believe the instructor set the cutoff for the grade incentive at the optimal level or the updated marginal benefit at the cutoff is lower than the marginal benefit of the next best studying option or the marginal utility of leisure. A sharp prediction is that video watching will continue at the incentivized level in the absence of the grade incentive as students have learned an effective study tool. We also expect the treatment effect to be greater for students with more information problems, perhaps students in their first semester/quarter at university.
-
-Finally, in the behavioral model, the instructor's inducement helps students stick to study plans up until the cutoff. As long as total study time does not fall, the inducement will increase exam performance. This model also predicts bunching at the incentivized level cutoff as long as using the incentivized input does not change the student's "planner" and "doer" selves. In the absence of the inducement, i.e., in future classes, a sharp prediction is that video watching will revert to pre-inducement levels.
-
-In the empirical section, we test for the effects of being induced to watch the IMVH on both exam scores and several other study methods students could use to learn microeconomics (lecture attendance, visits to a class-specific tutoring lab, use of a class discussion board, downloads from the class web page). We also compare grades in other classes taken in the same quarter across the treatment and control group. For a subset of our sample we have survey responses on total study time in the quarter and leisure time. Since the experiment was conducted in the first of a required three-class sequence, we examine video watching in the second class. We test whether the effect of the inducement to watch videos is greater for transfer students (assumed to have more information problems) and non-native English speakers (assumed to benefit the most from closed captioning, a key feature of the IMVH). % TODO non native English speakers or non citizens
 
 % *****************************************************************
 % Background
@@ -291,7 +181,7 @@ This study adds to this body of research by examining the effectiveness of an ed
 
 \subsection{Description of the sample and institution}
 
-We conducted the field experiment in an undergraduates intermediate microeconomics course taught during fall 2018 and fall 2019 by one of the authors. The university is a large, diverse and selective public research university in the United States.\footnote{The Carnegie Classification of Institutions of Higher Education classifies the university as an R1 (very high research activity) university. For the 2017-2018 academic year, the undergraduate student body shared the following demographics: 49.1\% female, 50.6\% male; 75.0\% in-state, 5.5\% out-of-state, and 19.5\% international; 59\% students of color; 28.6\% majoring in the social sciences, 26\% of which major in Economics. Among newly admitted students, about one-third were transfer students, and average SAT scores were 652 and 605 for math and critical reading, respectively. About 34\% of students are the first in their family to attend a four-year university.} At this institution, intermediate microeconomics is a three-quarter sequence required for students majoring in Economics. The experiment was conducted in the first course of the sequence, \textit{Micro A}. We also observe grades and video watching in the second course of the sequence, \textit{Micro B}, which was taught by the same instructor during both the winter 2018 and winter 2019 quarters. Both Micro A and B instructors created half of the videos relevant to their course in the IMVH.
+We conducted the field experiment in an undergraduates intermediate microeconomics course taught during fall 2018 and fall 2019 by one of the authors. The university is a large, diverse and selective public research university in the United States.\footnote{The Carnegie Classification of Institutions of Higher Education classifies the university as an R1 (very high research activity) university. For the 2017-2018 academic year, the undergraduate student body shared the following demographics: 49.1\% female, 50.6\% male; 75.0\% in-state, 5.5\% out-of-state, and 19.5\% international; 59\% students of color; 28.6\% majoring in the social sciences, 26\% of which major in Economics. Among newly admitted students, about one-third were transfer students, and average SAT scores were 652 and 605 for math and critical reading, respectively. About 34\% of students are the first in their family to attend a four-year university.} At this institution, intermediate microeconomics is a three-quarter sequence required for students majoring in Economics. The experiment was conducted in the first course of the sequence, \textit{Micro A}. We also observe grades and video watching in the second course of the sequence, \textit{Micro B}, the same instructor during both the winter 2018 and winter 2019 quarters. Both Micro A and B instructors created half of the videos relevant to their course in the IMVH.
 
 % details about students themselves, like demographics?
 
@@ -309,11 +199,11 @@ There are two unique demographic features of the class worth noting. First, many
 
 The Intermediate Microeconomics Video Handbook (IMVH) is a collection of 220 short videos that cover the material in a year-long intermediate microeconomics course sequence.\footnote{A preview of the IMVH can be found at \url{https://iti.ucsd.edu/IMVH_Misc/Promo/IMVHPromo.html}.} The videos, designed to complement or replace a course textbook, include graphical and verbal intuition as well as formal algebraic and calculus-based definitions and proofs.
 
-The videos were created by six UC San Diego faculty members with professional videographer and production support. Many videos utilize the ``learning glass," an innovative presentation technology where instructors write with neon markers on a large sheet of glass that has lights embedded along the glass edge to make the colors pop. The remaining videos feature faculty superimposed in front of slides. Videos are closed captioned and were checked by graduate students for accuracy.
+The videos were created by six UC San Diego faculty members with professional videographer and production support. Many videos utilize the ``learning glass," an innovative presentation technology where instructors write with neon markers on a large sheet of glass that has lights embedded along the glass edge to make the colors pop. The remaining videos feature faculty superimposed in front of slides that are often written on during the presentation. Videos are closed captioned and were checked by graduate students for accuracy.
 
-Given the complexity of the material, a key objective was to keep the web interface clean and simple so as not to distract from the content. The videos are organized by content area (e.g., consumer theory, producer theory, etc.) that help students understand where various topics ``live" in intermediate microeconomics. When considering the design of the platform, one goal was to help students find material quickly. Besides a table of contents and an index, each video contains time stamps of the concepts therein. Another helpful feature is searchable captions, which allow the student to jump to the part of a video containing the searched-for word.
+Given the complexity of the material, the IMVH was developed with several key objectives in mind.  First, the web interface is clean and simple to not distract from the content. Second, to help students find material quickly, videos can be accessed via either the table of contents or the index, each video contains time stamps of the concepts therein and captions are searchable, which allow the student to jump to the part of a video containing the searched-for word. Finally, the videos are organized by content area (e.g., consumer theory, producer theory, etc.) that help students understand where various topics ``live" in intermediate microeconomics. 
 
-While we do not know of another textbook completely comprised of videos, the IMVH is similar to Khan Academy, lecture podcasts, and textbook websites that incorporate instructional videos. Besides the engaging viewable nature, the IMVH differs from a traditional textbook in that the instructors explain, graph, and derive mathematical results in much the same way one would in a conventional lecture. However, the IMVH differs from lectures in that students control the pace: they can rewatch, speed up, or slow down the videos. Another difference is the ability to read captions and the reduced demand on the instructor's time.
+While we do not know of another textbook completely comprised of videos, the IMVH is similar to the Khan Academy web site, lecture podcasts, and textbook websites that incorporate instructional videos. Besides the engaging viewable nature, the IMVH differs from a traditional textbook in that the instructors explain, graph, and derive mathematical results in much the same way one would in a conventional lecture. However, the IMVH differs from lectures in that students control the pace: they can rewatch, speed up, or slow down the videos. Another difference is the ability to read captions and the reduced demand on the instructor's time.
 
 % alternative checkmark option:
 % \def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
@@ -612,6 +502,115 @@ Besides estimating spillover effects on other course grades, we also examine spi
 While we offered treatment students a grade incentive to watch videos during Micro A, students were not offered a grade incentive during the subsequent course in the intermediate microeconomics sequence, Micro B. However, all students in Micro B maintained access to the IMVH and were verbally encouraged to watch videos as a study method. Fortunately, we are able to observe video watching and grade outcomes in Micro B.
 
 We present our estimates of spillover effects during the subsequent term in Table \ref{spillover_100b}. In Panel A, we estimate the effect of treatment on videos watched during the subsequent term, for those who took Micro B. We find large and statistically significant effects: treatment caused students to watch 8.1 - 9.9 more unique videos and 1.2 - 1.5 hours of unique content compared to control students. In Panel B, we estimate equation \ref{itt_spec} where $Y_i$ is the first midterm, second midterm, or final exam score. Unfortunately given the small subsample of students who took Micro B, we are underpowered to detect effect sizes consistent with those observed during Micro A. Finally, in Panel C, we estimate the effect of treatment on taking Micro B and the number of classes passed and withdrawn. We find no effects statistically distinguishable from zero, though, as mentioned in section \ref{attrition}, treatment students were directionally less likely to take Micro B than were control students.
+
+\section{Models of Studying Behavior} \label{models}
+
+To understand our empirical results in the context of economic theory, we discuss three models of student studying behavior (a neoclassical model, an imperfect information model, and a behavioral/ procrastination model) and consider the testable implications of a grade inducement to encourage adoption of a study method.\footnote{For all three models, we do not address the issue that the IMVH is a relatively unique study tool in that, to our knowledge, it is the first instructional book to be created entirely of videos. However, given the availability of close substitutes to the IMVH (lecture capture, for example) we do not explore the added issues of inducing students to use a study tool whose usefulness is not known to the instructor.} Neoclassical models of studying behavior assume that rational agents know their returns to studying using the methods available to them and allocate the optimal study time to each method given their utility function, which is increasing in leisure and grades and decreasing in time spent studying. Since college instructors have little knowledge about student utility functions, they do not know student preferences over performance in other classes or other uses of their time (which may also have large payoffs in the labor or marriage markets) and so there is no room for an instructor to increase student well-being by intervening in their study decisions. \textcite{oettinger2002} finds that student effort responds rationally to nonlinear grade incentives:  across 1200 students in a principles of economics class with absolute grading standards, he finds evidence of bunching just above letter grade cutoffs and student performance on the final exam is higher if the student is just below a grade threshold. \textcite{kow2020} also find support for the neoclassical model. A European university required students who performed poorly in their first year to attend a large fraction of the tutorials for each class in their second year. At the poor performance threshold, both tutorial and lecture attendance increased by over 50 percent with a concomitant decline in self-study hours.  Grades for students at the policy threshold were \textit{lower} by 0.16-0.26 standard deviations.  At least for students at the margin of poor performacne, the requirement to attend tutorials appears to have hurt students by not allowing them to pick their optimal study strategy across self-study, turorials and lectures.
+
+A key assumption of the neoclassical model is that students possess complete information about the returns across studying methods. However, there is evidence from psychology that college students do not know the return to various study options\footnote{See, for example, \textcite{mccabe2011}, \textcite{prcc2007}, and  \textcite{drmnw2013}} and many universities fund ``Teaching and Learning Centers" or ``Academic Skills Centers," part of whose mission is to help undergraduates learn to study more productively.\footnote{All nine University of California campuses have such a center. Examples outside the UC include Dartmouth's Academic Skills Center, Michigan's Center for Research on Teaching and Learning, UNC's Learning Center, and Yale's Teaching and Learning Center.} Further, the ``raison d'etre" of higher education is not only to teach students specific skills but to teach students how to learn. As an alternative to the neoclassical model, we hypothesize that students supply a quantity of study time that is optimal given their information constraints. In this `imperfect information' model, students choose study methods and quantities that are suboptimal relative to those they would have picked in a full information setting. Hence, an intervention by an entity that has more information about returns to studying across various methods (i.e. an instructor) can enhance student utility.
+
+A third model is a behavioral one in which students plan to study more than they end up studying when the time comes. This phenomenon is consistent with two-self models in which a person's ``planner" self, the one who desires high grades at the expense of leisure, is at odds with her ``doer" self who must choose between immediately gratifying leisure and delayed gratification from higher grades. Indeed, survey and experimental data suggest that many students study less than they report they ``should" and finish the term with grades lower than what they had anticipated they would earn at the start of the term.\footnote{See, for example, \textcite{ferrari1992}, \textcite{ccog2017} and \textcite{lo2016}.} \textcite{cgpr2020} provide empirical support for this model by finding that setting tasked-based goals helps improve college student performance. As descriptive evidence in support of this model, \textcite{blmo2019} find that students that do much worse than expected in college are those who say they have poor time management or procrastination issues, including a tendency to cram and spending very little time studying.
+
+We consider the testable implications of the three models applied to a setting where students are incentivized to use a time-consuming educational input, say, a set of instructional videos (or attending class, reading the textbook, working on homework, etc.). The incentive is structured such that students who consume the educational input receive a higher grade in the course by consuming a set level of the input. In this simple setting, students gain utility only from leisure and grades. We assume grades, a function of time spent studying, and utility are both continuous, smooth, and increasing and concave in their inputs. Students can choose to study using the incentivized educational input, v, or some outside option that is not directly incentivized, o, or a combination thereof.
+
+Across all three models, before the first educational input is incentivized, students allocate time to the two studying methods until the marginal benefit of each (through higher grades) is equal to the marginal cost of forgone leisure. Consider the population of students initially consuming below the requisite level to earn the grade incentive. These students must decide if earning the grade incentive is worth forgone leisure and less time allocated to their outside studying option. Next we explore the differences in predictions across the three models.
+
+% For the `compliers' - those for whom the incentive induces greater take-up of the incentivized input -
+
+% Depending on the relative returns to studying and the students' preferences, it is theoretically ambiguous how adding the incentive will affect grades. Next we highlight the primary differences between the models.
+
+% Do we want to write formal models? I think we should...it may be easier for some to see the implications if presented as equations.
+
+\begin{figure}
+	\begin{center}
+		\begin{tikzpicture}[scale=0.6]
+			% axes
+			\draw [thick,<->] (0,8) node[left]{$v^*(L)$}--(0,0)--(11,0) node[right]{$L$};
+			\node [below left] at (0,0) {$0$};
+			
+			% v*
+			\draw (0,5) -- (2,4);
+			\draw (2,4) -- (6,4);
+			\draw (6,4) -- (6,2);
+			\draw (6,2) -- (10,0);
+			\draw [dashed] (2,4) -- (6,2);
+			
+			% video incentive threshold
+			\node [left] at (0,4) {$T$};
+			\draw (-0.1,4) -- (0.1, 4);
+			\node [below] at (6,0) {$1-T$};
+			\draw (6,-0.1) -- (6,0.1);
+			%\draw [dashed] (0,4) -- (10,4);
+			%\draw [dashed] (6,0) -- (6,10);
+			
+			% points for U1 and U2
+			\draw [fill] (4.4,2.8) circle [radius=.05];
+			\node [below] at (4.4,2.8) {$v_1$};
+			\draw [fill] (3.95,4) circle [radius=.05];
+			\node [above] at (3.95, 4) {$v_2$};
+			
+		\end{tikzpicture}
+		
+		\vspace{1\baselineskip}
+		
+		% Utility curves
+		\begin{tikzpicture}[scale=0.6]
+			% axis
+			\draw[thick,<->] (0,8) node[left]{$G(v^*,o^*)$}--(0,0)--(11,0) node[right]{$L$};
+			\node [below left] at (0,0) {$0$};
+			% video incentive threshold
+			\node [below] at (6,0) {$1-T$};
+			\draw (6,-0.1) -- (6,0.1);
+			
+			% production frontier 1 - not incentivized
+			\draw (10,0)--(10,2);
+			\draw plot [smooth] coordinates {(10,2) (8,4) (6,5) (4,5.6) (2,5.85) (0,6)};
+			
+			% production frontier 2 - incentivized
+			\draw plot [smooth] coordinates {(10,0) (8,2) (6,3)};
+			\draw (6,3)--(6,3.75);
+			\draw plot [smooth] coordinates {(6,3.75) (5,4.75) (4,5.3) (2,5.85)};
+			
+			% indifference curves
+			% original
+			\draw[blue] (4,5.65) arc[start angle=252, delta angle=15, radius=9cm];
+			\draw[blue] (4,5.65) arc[start angle=252, delta angle=-19, radius=9cm] coordinate (u1);
+			\node[left] at (u1) {\scriptsize $U_1$};
+			% tangency
+			\draw [fill] (4.4,5.52) circle [radius=.05];
+			\node [above] at (4.4,5.52) {$v_1$};
+			
+			% new
+			\draw[blue] (4,5.32) arc[start angle=252, delta angle=9, radius=14cm];
+			\draw[blue] (4,5.32) arc[start angle=252, delta angle=-12, radius=14cm] coordinate (u2);
+			\node[left] at (u2) {\scriptsize $U_2$};
+			% tangency
+			\draw [fill] (3.95,5.33) circle [radius=.05];
+			\node [below] at (3.95, 5.33) {$v_2$};
+			
+			% grade incentive
+			\node [left] at (0,3.75) {$G(T,0)$};
+			\draw (-0.1,3.75) -- (0.1,3.75);
+			\node [left] at (0,2) {$I(v \geq T)$};
+			\draw (-0.1,2) -- (0.1,2);
+			
+			
+		\end{tikzpicture}
+		
+		\caption{\textit{Above}: $v^*(L)$ is the demand curve for video watching (in hours) as a function of leisure (in hours), $L$. Let $T$ be total study time.  At $L=1-T$, the student maximizes grades $G(v,0)$ by spending all study time watching videos, i.e. $v^*=T$. A grade incentive, $I$, for watching $v_2>T$ videos increases the demand for watching videos as shown.  \textit{Below}: Student's utility maximization problem for the neoclassical model. The student maximizes her utility over leisure $L$ and grades $G$, which are a function of time allocated to video watching $v$ and her next best studying option, $o$. The grade incentive, $I$, is given to the student conditional on watching $T$ hours of videos (inner-time budget constraint) or, in the unincentivized case, given regardless of video watching (outer time-budget constraint).}
+	\end{center}
+\end{figure}
+
+In the neoclassical model, the marginal return to grades of the incentivized input is less than that of the outside option for the `compliers', or those induced by the incentive to consume at least a fixed level of the incentivized input. This model predicts bunching at the incentivized level cutoff since compliers would prefer to spend their marginal hours on leisure or studying with their other method. This model predicts a strict increase in video watching and weak decrease in other studying and leisure consumption. It is ambiguous whether cumulative study time increases or decreases as this depends on relative utility benefits of leisure and grades and the returns to studying by each method. However, if cumulative study time remains constant or decreases, then exam performance should strictly decrease since students are now suboptimally allocating study time versus their first-best allocation when considering only marginal returns to studying. On the other hand, if cumulative study time increases, students may earn greater exam grades but achieve lower utility compared to baseline. Importantly, this model predicts that in subsequent quarters students return to their pre-incentive levels of studying.
+
+In the imperfect information model, students' \textit{ex ante} allocations to each studying method are not necessarily first-best. Compliers update their priors about the returns to watching videos as they work towards hitting the minimum required level for the grade incentive. At this cutoff, they make a decision whether to continue watching videos depending on their updated perceptions of the marginal benefit. We do not expect bunching in this model unless students believe the cutoff for the grade incentive is the optimal level or the updated marginal benefit at the cutoff is lower than the marginal benefit of the next best studying option or the marginal utility of leisure. A sharp prediction is that video watching will continue at the incentivized level in the absence of the grade incentive as students have learned an effective study tool. We also expect the treatment effect to be greater for students with more information problems, perhaps students in their first semester/quarter at university.
+
+Finally, in the behavioral model, the instructor's inducement helps students stick to study plans up to the minimum required level for the grade incentive. As long as total study time does not fall, the inducement will increase exam performance. This model also predicts bunching at the incentivized level cutoff as long as using the incentivized input does not change the student's "planner" and "doer" selves. In the absence of the inducement, i.e., in future classes, a sharp prediction is that video watching will revert to pre-inducement levels.
+
+One empirical difference across the models is whether or not there is bunching at 40 videos, the threshold to get the grade incentive.  We did not find bunching, which is predicted by both the neoclassical and behavioral models.  However, since it was not easy for students to keep track of the videos they had watched, the lack of bunching may simply reflect student uncertainty about whether they had met the 40-video threshold.  More convincing is our finding that treated students continued watching videos in the absence of any grade incentive in Micro B.  This empirical finding leads us to reject both the neoclassical and behavioral models of learning in our setting.
+
+ % TODO non native English speakers or non citizens
+
 
 % *****************************************************************
 % Discussion
