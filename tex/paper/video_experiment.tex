@@ -13,6 +13,7 @@
 \hypersetup{colorlinks,linkcolor=black,urlcolor=blue,citecolor=black}
 \usepackage{amssymb}
 \usepackage{amsmath}
+\usepackage{bbm}
 \usepackage{placeins}
 \usepackage[format=hang,font=normalsize,labelfont=bf]{caption}
 \usepackage[margin=1in]{geometry}
@@ -89,7 +90,7 @@ style=apa]{biblatex}
 \author{Melissa Famulari}
 \author{Zachary A. Goodman\thanks{mfamulari@ucsd.edu and zgoodman@ucsd.edu. The authors thank the students who took intermediate microeconomics in the fall of 2018 and 2019 who consented to the use of their data for this study. We also thank UC San Diego's Teaching and Learning Commons for providing campus data on the students in this study as well as anonymizing the data for analysis. Finally, we thank the applied microeconomics group at UC San Diego for their help with the experimental design. This research was approved under UC San Diego's Human Research Protections Program (IRB approval 170886 in fall 2018 and 2019). The paper investigates the use of Intermediate Microeconomics Video Handbook (IMVH) video lectures by UC San Diego students, some of which were developed by one of the authors, in collaboration with UC San Diego and the UC Office of the President. UC San Diego currently owns the rights to distribute the IMVH. The videos lectures were provided to the subjects at no charge and neither author has a direct financial interest in the distribution of the IMVH at the University of California. As of fall 2020, one of the authors has a financial interest in the distribution of the IMVH outside of the University of California.}}
 \affil{University of California, San Diego}
-\date{This version: February 2020} % TODO: add link to most recent version
+\date{This version: March 2020} % TODO: add link to most recent version
 
 
 % *****************************************************************
@@ -281,7 +282,7 @@ Finally, we review the research on flipped classrooms and lecture capture, both 
 
 % Effect of Setting Goals: \textcite{cgpr2020}, hereafter CGPR, explore the effect of having students set goals on class performance. They find that setting \textit{task-based} goals of completing a specific number of online practice exams improves student performance on exams. Those randomly assigned to set task-based goals completed 0.10 standard deviations more practice exams and increased total course points by 0.07 standard deviations. The authors found no significant effect of setting \textit{performance-based} goals of achieving specific grades in the course or on exams on total course points. In the present study, we set for the students a \textit{task-based} goal of watching a specific number of videos. Our intervention differs from that of CGPR in two important ways. First, the instructor, not the students, set the value of the goal. Second, we motivate students to watch videos through a quantifiable grade incentive instead of appealing to psychological forces such as internal commitment devices.
 
-This study adds to this body of research by examining the effectiveness of an educational innovation in self-study: a video textbook. We randomly assign half the students scoring below the median on the first midterm to a grading scheme which placed 4 percent, or 40 points, of the student's grade on watching 40 videos and down-weighted the first midterm by 4 percent. This experiment allows two empirical strategies to test for causal effects: within class randomization for students scoring below the median on the first exam and a regression discontinuity approach at the median first exam score. We examine a large set of student study behaviors (lecture attendance, homework downloads from course web page, contributions to a discussion board, use of a class-specific tutoring lab) to determine if any of these study methods are substitutes or complements with video watching. We test for spillovers to other classes taken in the same quarter. We test for heterogeneous treatment effects using techniques that are robust to p-hacking. Finally, our research setting allows us to examine video views in the absence of the grade incentive in the next, required intermediate microeconomics class.
+This study adds to this body of research by examining the effectiveness of an educational innovation in self-study: a video textbook. We randomly assign half the students scoring below the median on the first midterm to a grading scheme which placed 4 percent, or 40 points, of the student's grade on watching 40 videos and down-weighted the first midterm by 4 percent. This experiment allows two empirical strategies to test for causal effects: within class randomization for students scoring below the median on the first exam and a regression discontinuity approach at the median first exam score. We test for heterogeneous treatment effects along key demographics to see if some groups benefit from the videos more than others. We examine a set of alternative studying methods (lecture attendance, contributions to a discussion board, use of a class-specific tutoring lab) to understand if any of these are substitutes or complements with video watching. We test for spillovers to other classes taken in the same quarter. Finally, since we can observe video watching in the subsequent intermediate microeconomics class, we look for behavior stickiness in the absence of exogenous incentives.
 
 % *****************************************************************
 % Study design
@@ -459,6 +460,20 @@ Although we believe unconfoundedness,\footnote{Although we randomly assigned tre
 
 Similar to our estimates of Equation \ref{itt_spec}, we estimate Equation \ref{secondstage_spec} with three sets of controls: only year and first midterm score, controls chosen using PDS, and a fixed-effect model with controls chosen using PDS. We additionally estimate the LATE using Neyman's repeated sampling approach whose estimators we derive in Appendix \ref{a_neyman_late}.
 
+\subsubsection{Treatment Effect Heterogeneity}
+
+So far we have estimated average treatment effects across all students below the median score on the first midterm. In this section, we investigate the extent to which treatment effects varied along key demographic variables. In particular, we add an interaction term to Equation \ref{itt_spec}:
+
+\begin{equation} \label{het_spec}
+	Y_i = \beta_1 Z_i + \beta_2 Z_i \mathbbm{1}_{x_i=d} + f(X_i) + \epsilon_i
+\end{equation}
+
+where $Z_i \mathbbm{1}_{x_i=x}$ takes a value of 1 when treatment students have the value $d$ for demographic variable $x \in X$. $\beta_2$ represents the difference in treatment effects for those with demographic $d$ relative to those without. In practice, we estimate Equation \ref{het_spec} including in $X_i$ dummies for year and the demographic of interest as well as first midterm score.
+
+While we observe many demographic variables, we are underpowered to detect reasonable effect sizes after adjusting for multiplicity, given the small sample sizes of our subgroups. As such, we focus on heterogeneity along our blocking variables and covariates we hypothesized \textit{ex ante} may have treatment heterogeneity. We estimate heterogeneity by levels of videos watched pretreatment since it is plausible that those with greater experience watching videos may have greater treatment effects. On the other hand, those who watched many videos pretreatment may have watched many videos during the experiment even if not treated, and hence the incentive may have little effect. As mentioned in Section \ref{studydesign}, nearly all transfer students in the experiment are taking their first term at a four-year university and may not yet have optimized their studying practices. The university achievement gap between underrepresented and majority groups is well documented, including lower GPAs, longer time to graduation, lower graduation rates on average \parencite{bcm2009}. It is important to know how treatment may affect this gap, potentially through mechanisms including reduced disparities in guidance on studying methods and technologies that may help those for whom English is not a native language, such as captions and the ability to reply videos.\footnote{Unfortunately, we are unable to observe native language directly or better proxies such as country of home address or visa status.}
+
+We present our results in Appendix Table \ref{het_table}, which displays the coefficient estimates of $\beta_2$ from Equation \ref{het_spec}. We find no evidence of treatment effect heterogeneity across our blocking variables, year and first midterm score. We are hesitant to make strong conclusions given the width of our confidence intervals, but this finding is consistent with stable treatment effects across the distribution of student abilities and years of the experiment. Next, we find no heterogeneity across levels of videos watched pretreatment in three of four specifications. We find marginally significant positive effects on the second midterm for those with higher levels of pretreatment video watching. Moving to demographic variables, we find marginally significant negative heterogeneous effects for female students on the final exam, but no effect on the second midterm. We find significant negative effects for Asian students and positive effects for White students on the second midterm, but no effect on the final exam. However, after adjusting for multiplicity, either using a Bonferroni correction or the less conservative methods proposed by \textcite{lsx2019}, none of our heterogeneity results remain significant. 
+
 \subsubsection{Treatment Effects at the Cutoff}
 
 Here we describe estimation of treatment effects at the first midterm score cutoff. Because the probability of being assigned to the \textit{Incentive} arm changes discontinuously from 0.5 to 0 at the midterm score cutoff, our setting is appropriate for estimating local treatment effects using a regression discontinuity (RD) design \citep{tc1960, ap2008, il2008}. With this method, we compare students in the \textit{Incentive} arm who scored just below the cutoff to those in the \textit{Above median} and \textit{Control} arms who scored just above or below the cutoff, respectively. These two groups are similar across pretreatment characteristics but different in treatment status, thereby providing an estimate of the treatment effect local to those who scored near the cutoff.
@@ -592,10 +607,6 @@ Before using a regression discontinuity (RD) design in our setting, we must esta
 In most RD designs, the researcher can only observe either treatment or control outcomes on one side of the cutoff. In our setting, however, we can observe control outcomes on \textit{both} sides of the cutoff. As such, we identify treatment effects adjusting the conventional RD approach to account for our increased knowledge of the control group's mean outcome at the cutoff. In practice, this entails differencing treatment and control conditional mean outcomes using local linear regressions where we calculate the control conditional mean using both \textit{Control} and \textit{Above median} observations.
 
 Figures \ref{rdmid2} and \ref{rdfinal} in the Appendix depict the effects of treatment near the cutoff for the second midterm and final exams, respectively. Both Figures show a marked increase in video watching for treatment students at the cutoff. Both figures also show positive point estimates of the effect of treatment on exam scores for those at the cutoff, but neither of these point estimates are statistically distinguishable from zero. Appendix Table \ref{rdtable} summarizes the point estimates and confidence intervals for those at the incentive eligibility cutoff. We find that treatment increases video watching by 9.1 and 24.2 unique videos by the second midterm and final exams, respectively, and we find positive but not statistically significant effects on exam scores. The first-stage effects at the cutoff are in line with the estimated average first-stage effects for those below the median.
-
-%\subsection{Heterogeneous effects}
-
-% TODO - add to this section, perhaps after estimating GRF
 
 \subsection{Spillovers during concurrent term}
 
@@ -736,7 +747,7 @@ Since neither the students' intent to withdraw, age, nor opt-out preferences wer
 
 \subsubsection{Selection of control variables} \label{a_selection}
 
-In this section we discuss how we select control variables included in linear models estimated in this paper.
+In this section we discuss how we select control variables included in our linear models.
 % In our nonparametric estimation strategies that use generalized random forests, the algorithms implicitly select control variables that matter most for treatment heterogeneity and explaining variance in the outcome variables of interest (see Appendix \ref{a_grf}).
 
 Equation \ref{itt_spec} includes a vector of control variables related linearly to the outcomes of interest. Although $d_i$, the treatment indicator is randomly assigned and in expectation $d_i$ is orthogonal to all observed and unobserved pretreatment covariates, in small samples stochastic imbalances can occur, which if controlled for can reduce bias of the treatment effect estimator \parencite{ai2017}. Even if perfect balance is achieved, controlling for orthogonal covariates can improve precision of the treatment effect estimator if the covariates can predict unexplained variance in the outcome.
@@ -836,6 +847,10 @@ Final exam score & 1 hour videos & [0.000, 0.102] \\
 \end{table}
 \end{spacing}
 
+% Treatment effect heterogeneity
+\clearpage
+\input{../tables/het_table.tex}
+
 \clearpage
 \begin{spacing}{1.0}
 \begin{table} \centering \caption{Regression Discontinuity estimates}
@@ -846,16 +861,16 @@ Final exam score & 1 hour videos & [0.000, 0.102] \\
  & Control Mean & (1) & (2) \\
 \midrule
 \multicolumn{4}{l}{\textbf{Panel A}: Midterm 2} \\
-\customlinespace \indentrow{Unique videos} & 22.7 & 9.12 & 9.34 \\
-& & (3.35)\sym{***} & (3.42)\sym{***} \\
+\customlinespace \indentrow{Unique videos} & 22.7 & 9.12\sym{***} & 9.34\sym{***} \\
+& & (3.35) & (3.42) \\
 \customlinespace \indentrow{Midterm 2 score} & 0.73 & 0.06 & 0.07 \\
 & & (0.20) & (0.19) \\
 \midrule
 Observations & & 812 & 779 \\
 \midrule
 \multicolumn{4}{l}{\textbf{Panel B}: Final exam} \\
-\customlinespace \indentrow{Unique videos} & 32.0 & 24.16 & 24.95 \\
-& & (2.39)\sym{***} & (2.48)\sym{***} \\
+\customlinespace \indentrow{Unique videos} & 32.0 & 24.16\sym{***} & 24.95\sym{***} \\
+& & (2.39) & (2.48) \\
 \customlinespace \indentrow{Final exam score} & 0.78 & 0.11 & 0.14 \\
 & & (0.18) & (0.19) \\
 \midrule

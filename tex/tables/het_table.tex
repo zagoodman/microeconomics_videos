@@ -1,0 +1,37 @@
+\begin{spacing}{1.0} 
+\begin{table} \centering \caption{Heterogeneous Effects of Treatment} 
+\label{het_table} 
+\begin{threeparttable} 
+\begin{tabular}{m{0.40\linewidth} *{2}{>{\centering\arraybackslash}m{0.12\linewidth}}}
+\toprule
+        Interaction Variable & Midterm 2 & Final Exam \\
+\midrule
+             \customlinespace Midterm 1 score &     0.009 &      0.002 \\
+                             &   (0.086) &    (0.095) \\
+                 \customlinespace Year = 2019 &     0.068 &      0.017 \\
+                             &   (0.181) &    (0.179) \\
+         \customlinespace Pretreatment videos &     0.011 &     -0.004 \\
+                             &   (0.007) &    (0.007) \\
+ \customlinespace Pretreatment videos, unique &    0.020\sym{*} &      0.001 \\
+                             &   (0.011) &    (0.011) \\
+                    \customlinespace Transfer &    -0.139 &      0.130 \\
+                             &   (0.183) &    (0.178) \\
+                      \customlinespace Female &    -0.208 &    -0.322\sym{*} \\
+                             &   (0.185) &    (0.188) \\
+                       \customlinespace Asian &  -0.402\sym{**} &     -0.215 \\
+                             &   (0.189) &    (0.180) \\
+                      \customlinespace Latinx &     0.237 &      0.022 \\
+                             &   (0.254) &    (0.227) \\
+                       \customlinespace White &   0.638\sym{**} &      0.271 \\
+                             &   (0.260) &    (0.250) \\
+             \customlinespace Other ethnicity &    -0.113 &      0.276 \\
+                             &   (0.307) &    (0.347) \\
+                
+\midrule 
+Observations &       395 &        374 \\
+\bottomrule
+\end{tabular}
+\Fignote{This table reports estimates for $\beta_2$ from Equation \ref{het_spec}. Test scores are measured in standard deviation units. \Regnote} 
+\end{threeparttable}
+\end{table} 
+\end{spacing}
