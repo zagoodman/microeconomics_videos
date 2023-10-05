@@ -433,7 +433,7 @@ In Micro A one year before the experiment, for students who scored below the med
 Since all students below the median on the first midterm had equal probabilities of being assigned to the \textit{Control} and \textit{Incentive} arms, treatment arms are balanced on covariates in expectation.
 In practice, due to chance and nonrandom attrition, treatment arms can be unbalanced on covariates, which can bias estimates if not addressed in the analysis, particularly in small samples~\parencite{ai2017}.
 Appendix Table~\ref{subsubsec:a_attrition} details all sources of attrition and we check for balance on observable characteristics after attrition for both the second midterm and final exam samples.
-As can be seen in Appendix Tables~\ref{balance_table_mid2} and~\ref{balance_table_final}, we find no statistically significant difference between the \textit{Control} and \textit{Incentive} arms in observable covariates including first midterm score, year, previous term's cumulative GPA, videos watched before the first midterm, ethnicity, gender, and transfer status.
+As can be seen in Table~\ref{balance_table_takers}, we find no statistically significant difference between the \textit{Control} and \textit{Incentive} arms in observable covariates including first midterm score, year, previous term's cumulative GPA, videos watched before the first midterm, ethnicity, gender, and transfer status.
 However, as discussed in Section~\ref{subsec:empiricalstrat}, to correct for potential imbalance and to improve precision, we estimate models that include controls chosen via the post-double-selection method of \textcite{bch2014a}.
 
 \subsection{Relevancy of the encouragement instrument}\label{subsec:relevancy}
@@ -441,7 +441,7 @@ However, as discussed in Section~\ref{subsec:empiricalstrat}, to correct for pot
 We use a Two-Stage Least Squares approach to estimate the LATE of watching videos on exam performance, as detailed in the Section~\ref{subsec:empiricalstrat}.
 We must check that our instrument is both valid and relevant to ensure this method will produce an unbiased estimate of the LATE~\parencite{ir2015}.
 The validity condition is met by assigning treatment at random conditional on midterm exam score and year of instruction.
-Balance across pretreatment observables, as demonstrated in Appendix Tables~\ref{balance_table_mid2} and~\ref{balance_table_final}, give us further confidence that treatment status is uncorrelated with demographics.
+Balance across pretreatment observables, as demonstrated in Table~\ref{balance_table_takers}, give us further confidence that treatment status is uncorrelated with demographics.
 
 Next we check instrument relevancy, that is, whether treatment status generates significantly more video watching.
 In Table~\ref{firststage_table} we present estimates from Equation~\ref{eq:itt_spec}.
@@ -835,6 +835,9 @@ It is our hope, as educators ourselves, that more research will be conducted on 
 %%% TABLES
 
 \clearpage
+\input{../tables/balance_table_takers.tex}
+
+\clearpage
 \input{../tables/firststage.tex}
 
 \clearpage
@@ -944,7 +947,7 @@ Additionally, seven students opted out of having their data included in the expe
 
 Since neither the students' intent to withdraw, age, nor opt-out preferences were observable at the time of treatment assignment, we could not \textit{ex ante} balance this attrition across treatment arms.
 If students attrited non-randomly, that is, decided to attrite depending on their treatment status, then our treatment effect estimates would be biased.
-Fortunately, despite 8\% attrition before the second midterm and 13\% before the final exam, the two treatment arms below the median are balanced on nearly all observable pretreatment covariates, as shown in Tables~\ref{balance_table_final} and~\ref{balance_table_mid2}, which gives us confidence that the \textit{Control} arm is a good counterfactual for the \textit{Incentive} arm.
+Fortunately, despite 8\% attrition before the second midterm and 13\% before the final exam, the two treatment arms below the median are balanced on all observable pretreatment covariates, as shown in Table~\ref{balance_table_takers}, which gives us confidence that the \textit{Control} arm is a good counterfactual for the \textit{Incentive} arm.
 
 \subsubsection{Attrition Details} \label{subsubsec:a_attrition}
 
@@ -1108,10 +1111,10 @@ Substituting these variance and means estimators into the final step of~\ref{eq:
 \end{equation}
 
 \clearpage
-\input{../tables/balance_table_mid2.tex}
+\input{../tables/balance_table_all.tex}
 
 \clearpage
-\input{../tables/balance_table_final.tex}
+\input{../tables/balance_table_matched.tex}
 
 \clearpage
 \begin{spacing}{1.0}

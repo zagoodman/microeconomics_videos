@@ -1,0 +1,55 @@
+\begin{spacing}{1.0} 
+\begin{table} \centering \caption{Balance test, full sample} 
+\label{balance_table_all} 
+\resizebox*{!}{\textheight}{%
+\begin{threeparttable} 
+\begin{tabular}{m{0.25\linewidth} *{5}{>{\centering\arraybackslash}m{0.095\linewidth}}}
+\toprule 
+ & \multicolumn{3}{c}{All Students} & P-values & \\ 
+\cmidrule(lr){2-4}
+
+            Variable & Above Median & Control & Incentive & (3) - (2) \\
+\midrule
+     \customlinespace Midterm 1 score &        0.837 &  -1.127 &    -1.167 &     0.671 \\
+                     &      (0.025) & (0.066) &   (0.067) &           \\
+         \customlinespace Year = 2019 &        0.490 &   0.505 &     0.490 &     0.767 \\
+                     &      (0.024) & (0.036) &   (0.035) &           \\
+      \customlinespace Cumulative GPA &        3.445 &   2.931 &     2.941 &     0.890 \\
+                     &      (0.029) & (0.045) &   (0.057) &           \\
+         \customlinespace No cum. GPA &        0.232 &   0.372 &     0.330 &     0.375 \\
+                     &      (0.021) & (0.035) &   (0.033) &           \\
+     \customlinespace Math quiz score &        0.589 &   0.016 &     0.093 &     0.424 \\
+                     &      (0.044) & (0.071) &   (0.065) &           \\
+     \customlinespace Tutoring visits &        0.268 &   0.255 &     0.223 &     0.691 \\
+                     &      (0.042) & (0.058) &   (0.055) &           \\
+      \customlinespace Videos watched &       13.196 &  13.321 &    13.704 &     0.763 \\
+                     &      (0.680) & (0.875) &   (0.915) &           \\
+      \customlinespace Videos, unique &        9.722 &   9.668 &    10.155 &     0.558 \\
+                     &      (0.431) & (0.572) &   (0.602) &           \\
+        \customlinespace Hours videos &        2.470 &   2.522 &     2.576 &     0.824 \\
+                     &      (0.127) & (0.168) &   (0.173) &           \\
+\customlinespace Hours videos, unique &        1.725 &   1.752 &     1.834 &     0.578 \\
+                     &      (0.075) & (0.103) &   (0.106) &           \\
+               \customlinespace Asian &        0.701 &   0.694 &     0.670 &     0.607 \\
+                     &      (0.022) & (0.033) &   (0.033) &           \\
+              \customlinespace Latinx &        0.060 &   0.133 &     0.155 &     0.518 \\
+                     &      (0.012) & (0.024) &   (0.025) &           \\
+               \customlinespace White &        0.151 &   0.117 &     0.121 &     0.902 \\
+                     &      (0.018) & (0.023) &   (0.023) &           \\
+     \customlinespace Other ethnicity &        0.089 &   0.056 &     0.053 &     0.905 \\
+                     &      (0.014) & (0.016) &   (0.016) &           \\
+              \customlinespace Female &        0.392 &   0.337 &     0.393 &     0.241 \\
+                     &      (0.024) & (0.034) &   (0.034) &           \\
+                \customlinespace Male &        0.593 &   0.658 &     0.597 &     0.206 \\
+                     &      (0.024) & (0.034) &   (0.034) &           \\
+            \customlinespace Transfer &        0.273 &   0.485 &     0.447 &     0.445 \\
+                     &      (0.022) & (0.036) &   (0.035) &           \\
+        
+\midrule 
+Observations &          418 &     196 &       206 &           \\
+\bottomrule
+\end{tabular}
+\Fignote{This table includes all students who saw their treatment assignment. Descriptions of each variable can be found in Table \ref{controlvars_desc}. \textit{Female} and \textit{Male} are coded zero for nine students who do not report a gender. \textit{P-values} are reported for the Welch's t-test of equal means between the \textit{Control} and \textit{Incentive} arms. \Regnote} 
+\end{threeparttable}}
+\end{table} 
+\end{spacing}
