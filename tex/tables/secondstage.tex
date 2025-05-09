@@ -4,40 +4,40 @@
 \begin{threeparttable} 
 \begin{tabular}{m{0.35\linewidth} *{4}{>{\centering\arraybackslash}m{0.1\linewidth}}}
 \toprule
-                               &      (1) &      (2) &      (3) &      (4) \\
+ & (1) & (2) & (3) & (4) \\
 \midrule
-                 
+
 \multicolumn{5}{l}{\textbf{Panel A}: Midterm 2 score} \\ 
 
-\customlinespace \indentrow{RF: Incentive} &   0.176\sym{*} &   0.183\sym{*} &   0.176\sym{*} &   0.174\sym{*} \\
-                               &  (0.090) &  (0.094) &  (0.090) &  (0.096) \\
-               
-\customlinespace \indentrow{2SLS: 10 videos} &   0.266\sym{*} &   0.270\sym{*} &  0.300\sym{**} &  0.293\sym{**} \\
-                               &  (0.146) &  (0.150) &  (0.151) &  (0.145) \\
-        
-\customlinespace \indentrow{2SLS: 1 hour of videos} &   0.160\sym{*} &   0.163\sym{*} &  0.181\sym{**} &   0.170\sym{*} \\
-                               &  (0.087) &  (0.090) &  (0.090) &  (0.095) \\
-                  
+\customlinespace \indentrow{RF: Incentive} & 0.138 & 0.183\sym{*} & 0.189\sym{**} & 0.187\sym{*} \\
+ & (0.090) & (0.094) & (0.090) & (0.096) \\
+
+\customlinespace \indentrow{2SLS: 10 videos} & 0.212 & 0.276\sym{*} & 0.313\sym{**} & 0.308\sym{**} \\
+ & (0.141) & (0.154) & (0.147) & (0.142) \\
+
+\customlinespace \indentrow{2SLS: 1 hour of videos} & 0.128 & 0.166\sym{*} & 0.189\sym{**} & 0.179\sym{*} \\
+ & (0.085) & (0.092) & (0.088) & (0.095) \\
+
 \midrule 
-Observations &      395 &      362 &      395 &      362 \\
-                 
+Observations & 402 & 362 & 393 & 360 \\
+
 \midrule 
 \multicolumn{5}{l}{\textbf{Panel B}: Final exam score} \\ 
 
-\customlinespace \indentrow{RF: Incentive} &  0.175\sym{**} &   0.174\sym{*} &  0.175\sym{**} &    0.138 \\
-                               &  (0.089) &  (0.103) &  (0.088) &  (0.103) \\
-               
-\customlinespace \indentrow{2SLS: 10 videos} &  0.081\sym{**} &   0.082\sym{*} &  0.082\sym{**} &   0.087\sym{*} \\
-                               &  (0.041) &  (0.049) &  (0.041) &  (0.046) \\
-        
-\customlinespace \indentrow{2SLS: 1 hour of videos} &  0.051\sym{**} &   0.052\sym{*} &  0.052\sym{**} &    0.043 \\
-                               &  (0.026) &  (0.031) &  (0.026) &  (0.031) \\
-                  
+\customlinespace \indentrow{RF: Incentive} & 0.069 & 0.174\sym{*} & 0.172\sym{*} & 0.141 \\
+ & (0.090) & (0.103) & (0.089) & (0.104) \\
+
+\customlinespace \indentrow{2SLS: 10 videos} & 0.033 & 0.085\sym{*} & 0.081\sym{*} & 0.087\sym{*} \\
+ & (0.043) & (0.051) & (0.041) & (0.046) \\
+
+\customlinespace \indentrow{2SLS: 1 hour of videos} & 0.021 & 0.053\sym{*} & 0.051\sym{*} & 0.044 \\
+ & (0.027) & (0.032) & (0.026) & (0.031) \\
+
 \midrule 
-Observations &      374 &      332 &      374 &      332 \\
- Treatment assignment controls &      Yes &       No &      Yes &      Yes \\
-          Demographic controls &       No &       No &      Yes &      Yes \\
-            Pair Fixed Effects &       No &       No &       No &      Yes \\
+Observations & 402 & 332 & 372 & 330 \\
+Treatment assignment controls & Yes & No & Yes & Yes \\
+Demographic controls & No & No & Yes & Yes \\
+Pair Fixed Effects & No & No & No & Yes \\
 \bottomrule
 \end{tabular}
 \Fignote{This table reports coefficients on $Incentive_i$ from Equation \ref{itt_spec} (Reduced Form, \textit{RF}) and $\hat{Video_i}$ from Equation \ref{secondstage_spec} (Two-Stage Least Squares, \textit{2SLS}). Test scores are measured in standard deviation units. Model (1) contains linear controls for midterm 1 score and year; (2) is the difference in means and standard errors calculated using the repeated sampling framework of Neyman (1923); (3) and (4) use the post-double-selection (PDS) procedure of \textcite{bch2014a} to select control variables then estimate treatment effects and standard errors. The control variables selected using PDS are listed in Table \ref{controlvars_selected_itt}. Models (2) and (4) include only students whose matched-pair did not attrite from the experiment. \Regnote} 
