@@ -14,4 +14,5 @@ dependencies = [
     "pandas-flavor",
     "scipy",
     "torch",
+    "nbautoexport",
 ]

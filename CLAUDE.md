@@ -42,9 +42,18 @@ pdflatex video_experiment.tex
 - **Stata**: Used for all econometric analysis (IV estimation, heterogeneous effects, spillover analysis)
 - **LaTeX**: BibLaTeX with APA style (custom `apa.bbx`/`apa.cbx`)
 
+## Exporting Notebooks
+
+Notebooks are auto-exported as scripts on save via [nbautoexport](https://github.com/drivendataorg/nbautoexport). Config lives in `jupyter/.nbautoexport`. Exported scripts go to `jupyter/script/`. To manually export all notebooks:
+
+```bash
+uv run nbautoexport export jupyter/
+```
+
 ## Repository Conventions
 
 - Data files (`.xlsx`, `.xls`, `.csv`, `.dta`) are gitignored — never commit raw data
 - Generated outputs (plots as PDFs, tables as `.tex`) are committed to version control
+- Exported notebook scripts in `jupyter/script/` are committed to version control
 - HTML notebook renders in `jupyter/html_renders/` are marked as vendored in `.gitattributes`
 - No formal test suite; validation is done through notebook execution and exploratory outputs
