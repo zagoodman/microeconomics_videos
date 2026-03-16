@@ -29,11 +29,7 @@ Raw data is private and excluded from the repo via `.gitignore` — must be down
 ## Compiling the Paper
 
 ```bash
-cd tex/paper
-pdflatex video_experiment.tex
-biber video_experiment
-pdflatex video_experiment.tex
-pdflatex video_experiment.tex
+./tex/paper/build.sh
 ```
 
 ## Key Dependencies
@@ -57,3 +53,7 @@ uv run nbautoexport export jupyter/
 - Exported notebook scripts in `jupyter/script/` are committed to version control
 - HTML notebook renders in `jupyter/html_renders/` are marked as vendored in `.gitattributes`
 - No formal test suite; validation is done through notebook execution and exploratory outputs
+
+## Post-Change Checklist
+
+After every change, check whether CLAUDE.md or other documentation needs to be updated to reflect the change. This includes changes to the pipeline, build process, dependencies, conventions, or project structure.
