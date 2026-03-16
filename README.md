@@ -26,3 +26,9 @@ We are unable to post the data used because of privacy restrictions. However, th
 
 * [Description of IMVH](https://economics.ucsd.edu/undergraduate-program/video-handbooks/index.html)
 * [CAMSEE Research Plan](https://camsee.ucsd.edu/_files/170886_2019_07_08_Revised_Research_Plan_clean.pdf)
+
+## Environment setup
+
+1. Set up jupyter
+1. Set up Stata kernel within jupyter [link](https://kylebarron.dev/stata_kernel/)
+1. Download data (from Drive folder) and add to /data directory
