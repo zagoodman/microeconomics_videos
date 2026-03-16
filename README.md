@@ -29,6 +29,8 @@ We are unable to post the data used because of privacy restrictions. However, th
 
 ## Environment setup
 
-1. Set up jupyter
+1. Install [uv](https://docs.astral.sh/uv/getting-started/installation/)
+1. Install dependencies: `uv sync`
 1. Set up Stata kernel within jupyter [link](https://kylebarron.dev/stata_kernel/)
 1. Download data (from Drive folder) and add to /data directory
+1. Run notebooks: `uv run jupyter lab`

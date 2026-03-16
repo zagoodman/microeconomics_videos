@@ -19,8 +19,7 @@ The final paper is compiled from `tex/paper/video_experiment.tex` which includes
 ## Environment Setup
 
 ```bash
-pipenv install --python 3.9
-pipenv shell
+uv sync
 ```
 
 Stata kernel must be installed separately for `analyze_data.ipynb`. Required Stata packages: `avar`, `binsreg`, `binscatter2`.
