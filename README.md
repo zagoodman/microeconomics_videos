@@ -34,3 +34,24 @@ We are unable to post the data used because of privacy restrictions. However, th
 1. Set up Stata kernel within jupyter [link](https://kylebarron.dev/stata_kernel/)
 1. Download data (from Drive folder) and add to /data directory
 1. Run notebooks: `uv run jupyter lab`
+
+## LaTeX setup
+
+Install BasicTeX (macOS):
+
+```bash
+brew install --cask basictex
+```
+
+Restart your terminal, then install required packages:
+
+```bash
+sudo tlmgr update --self
+sudo tlmgr install scalerel doublestroke cmathbb placeins preprint threeparttable threeparttablex multirow csquotes epigraph biblatex biber biblatex-apa environ nextpage xstring
+```
+
+## Compiling the paper
+
+```bash
+./tex/paper/build.sh
+```

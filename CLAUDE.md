@@ -26,6 +26,21 @@ Stata kernel must be installed separately for `analyze_data.ipynb`. Required Sta
 
 Raw data is private and excluded from the repo via `.gitignore` — must be downloaded separately into `data/`.
 
+## LaTeX Setup
+
+Install BasicTeX (minimal TeX distribution for macOS):
+
+```bash
+brew install --cask basictex
+```
+
+After installing, restart your terminal or run `eval "$(/usr/libexec/path_helper)"`, then update `tlmgr` and install required packages:
+
+```bash
+sudo tlmgr update --self
+sudo tlmgr install scalerel doublestroke cmathbb placeins preprint threeparttable threeparttablex multirow csquotes epigraph biblatex biber biblatex-apa environ nextpage xstring
+```
+
 ## Compiling the Paper
 
 ```bash
