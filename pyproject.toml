@@ -13,6 +13,7 @@ dependencies = [
     "pandas",
     "pandas-flavor",
     "scipy",
-    "torch",
+    "stata-kernel",
     "nbautoexport",
+    "setuptools<81",
 ]

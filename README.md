@@ -31,7 +31,8 @@ We are unable to post the data used because of privacy restrictions. However, th
 
 1. Install [uv](https://docs.astral.sh/uv/getting-started/installation/)
 1. Install dependencies: `uv sync`
-1. Set up Stata kernel within jupyter [link](https://kylebarron.dev/stata_kernel/)
+1. Register the Stata kernel: `uv run python -m stata_kernel.install`
+1. Verify `stata_path` in `~/.stata_kernel.conf` points to your Stata executable (e.g. `/Applications/Stata/StataSE.app/Contents/MacOS/stata-se`)
 1. Download data (from Drive folder) and add to /data directory
 1. Run notebooks: `uv run jupyter lab`
 
