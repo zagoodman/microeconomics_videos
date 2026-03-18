@@ -26,3 +26,33 @@ We are unable to post the data used because of privacy restrictions. However, th
 
 * [Description of IMVH](https://economics.ucsd.edu/undergraduate-program/video-handbooks/index.html)
 * [CAMSEE Research Plan](https://camsee.ucsd.edu/_files/170886_2019_07_08_Revised_Research_Plan_clean.pdf)
+
+## Environment setup
+
+1. Install [uv](https://docs.astral.sh/uv/getting-started/installation/)
+1. Install dependencies: `uv sync`
+1. Register the Stata kernel: `uv run python -m stata_kernel.install`
+1. Verify `stata_path` in `~/.stata_kernel.conf` points to your Stata executable (e.g. `/Applications/Stata/StataSE.app/Contents/MacOS/stata-se`)
+1. Download data (from Drive folder) and add to /data directory
+1. Run notebooks: `uv run jupyter lab`
+
+## LaTeX setup
+
+Install BasicTeX (macOS):
+
+```bash
+brew install --cask basictex
+```
+
+Restart your terminal, then install required packages:
+
+```bash
+sudo tlmgr update --self
+sudo tlmgr install scalerel doublestroke cmathbb placeins preprint threeparttable threeparttablex multirow csquotes epigraph biblatex biber biblatex-apa environ nextpage xstring
+```
+
+## Compiling the paper
+
+```bash
+./tex/paper/build.sh
+```

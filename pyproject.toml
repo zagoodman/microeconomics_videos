@@ -1,0 +1,19 @@
+[project]
+name = "microeconomics-videos"
+version = "0.1.0"
+description = "Replication materials for 'The Effect of Supplementary Videos on University Educational Outcomes'"
+requires-python = ">=3.9"
+dependencies = [
+    "jupyter-http-over-ws",
+    "jupyterlab",
+    "matplotlib",
+    "nodeenv",
+    "notebook",
+    "numpy",
+    "pandas",
+    "pandas-flavor",
+    "scipy",
+    "stata-kernel",
+    "nbautoexport",
+    "setuptools<81",
+]

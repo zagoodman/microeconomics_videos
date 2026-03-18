@@ -1,0 +1,98 @@
+\documentclass[12pt]{article}
+\linespread{1.5}
+\pdfminorversion=6
+
+\usepackage[format=hang,font=normalsize,labelfont=bf]{caption}
+\usepackage[american]{babel}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{float,xcolor}
+\usepackage{graphicx,scalerel}
+\usepackage{amsmath}
+\usepackage{dsfont}
+\usepackage{cmathbb}
+\usepackage{placeins}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\newcommand{\Rho}{\mathrm{P}}
+\usepackage{authblk}
+\usepackage[flushleft]{threeparttable}
+\usepackage{longtable}
+\usepackage{threeparttablex}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{tikz}
+\usepackage{csquotes}
+
+\usepackage{epigraph}
+\setlength \epigraphwidth {\linewidth}
+\setlength \epigraphrule {0pt}
+\AtBeginDocument{\renewcommand {\epigraphflush}{center}}
+\renewcommand {\sourceflush} {center}
+
+\usepackage{hyperref}
+\usepackage{bookmark}
+\hypersetup{colorlinks,linkcolor=black,urlcolor=blue,citecolor=black}
+
+% Bibliography stuff
+\usepackage[
+hyperref=true,
+giveninits=true, % render first and middle names as initials
+uniquename=init,
+maxcitenames=3,
+maxbibnames=99,
+dashed=false, % re-print recurring author names in bibliography
+natbib=true,
+useprefix=true, % for inclusion of `de' `da' in surname
+%urldate=long,
+backend=biber,
+style=apa]{biblatex}
+\addbibresource{bibliography.bib}
+
+% Scale hats and bars (e.g. \wh{x})
+\newcommand\wh[1]{\hstretch{2}{\hat{\hstretch{.5}{#1}}}}
+\newcommand\wb[1]{\hstretch{2}{\bar{\hstretch{.5}{#1}}}}
+
+% custom table functions
+% indents second level entries
+\newcommand{\indentrow}[1]{\quad #1}
+
+% adds space above row
+\newcommand{\customlinespace}{\addlinespace[.1cm]}
+
+% command for all table/figure notes
+\newcommand{\Fignote}[1]{
+	\begin{tablenotes}[para,flushleft]\footnotesize
+		\textit{Note}: #1
+	\end{tablenotes}
+}
+
+% stars
+\newcommand{\sym}[1]{\rlap{#1}}
+
+% note addendem for regression tables
+\newcommand{\Regnote}{Standard errors in parentheses are robust to heteroskedasticity. ***, **, and * indicate significance at the 1, 5, and 10 percent critical levels, respectively.}
+
+% Flowchart helpers
+\usetikzlibrary{shapes, arrows, positioning, trees}
+
+
+% *****************************************************************
+% Title page stuff
+% *****************************************************************
+
+\title{The effects of supplementary videos on learning in intermediate microeconomics: estimates from a field experiment}
+\author{Melissa Famulari}
+\author{Zachary A. Goodman\thanks{mfamulari@ucsd.edu and zgoodman@ucsd.edu.
+The authors thank the students who took intermediate microeconomics in the fall of 2018 and 2019 for participating in this study.
+We thank UC San Diego's Teaching + Learning Commons for providing the anonymized data used for analysis.
+We gratefully recognize Jessica Morales, Yingjia Zhang, and Shuli Zhu for outstanding research assistance.
+We thank the applied microeconomics group at UC San Diego for their help with the experimental design.
+We thank Julian Betts, Julie Cullen, Gordon Dahl, Simone Galperti, Craig McIntosh, Katherine Meckel and Jennifer Murdock for their suggestions which greatly improved the paper.
+This research was approved under UC San Diego's Human Research Protections Program (IRB approval 170886 in fall 2018 and 2019).
+The paper investigates the use of Intermediate Microeconomics Video Handbook (IMVH) video lectures by UC San Diego students, some of which were developed by one of the authors, in collaboration with UC San Diego and the UC Office of the President.
+UC San Diego currently owns the rights to distribute the IMVH.
+The videos were provided to the students at no charge and neither author has a direct financial interest in the distribution of the IMVH within the University of California.
+As of fall 2020, one of the authors has a financial interest in the distribution of the IMVH outside of the University of California.}}
+\affil{University of California, San Diego}
+\date{This version: March 2026} % TODO: add link to most recent version
