@@ -119,7 +119,7 @@ The authors find a positive but non-linear effect of video watching on exam perf
 \textcite{savage2009} improves on \textcite{fs2007} by comparing outcomes across two classes taught in the same semester, one with access to lecture recordings and the other without and finds no significant differences in either lecture attendance or exam scores across classes.
 A disadvantage of the study design in both papers is that it is challenging to control for class-specific, time-varying factors that impact student performance, including sample selection issues that arise when students register for classes based on unobserved characteristics.
 Further, \textcite{savage2009} may underestimate the effect lecture recordings because they could be downloaded and shared with the control class.
-By randomizing within a class and making the IMVH available to all students, our study design avoids both of these issues.\footnote{\cite{Cl2012} use student fixed effects to examine whether points on an exam question are related to whether the student attended the relevant lecture or watched the lecture recording and find a significant, 4 percentage point increase in question scores if students access the relevant online video.
+By randomizing within a class and making the IMVH available to all students, our study design avoids both of these issues.\footnote{\cite{cl2012} use student fixed effects to examine whether points on an exam question are related to whether the student attended the relevant lecture or watched the lecture recording and find a significant, 4 percentage point increase in question scores if students access the relevant online video.
 Fixed effects are unlikely to uncover the causal effect of a study method given substantial evidence that students change their study strategies after an exam shock, see \textcite{oettinger2002}, \textcite{ko2005}, \textcite{ss2008}, \textcite{bo2012} and \textcite{bo2015}.}
 
 The rest of the paper is organized as follows.
@@ -1009,6 +1009,7 @@ Bars are in order of control group watch rates separately for each week the corr
 \end{figure}
 
 
+
 % *****************************************************************
 % Appendix
 % *****************************************************************
@@ -1144,10 +1145,20 @@ Substituting these variance and means estimators into the final step of~\ref{eq:
 \end{equation}
 
 \clearpage
-\input{../tables/balance_table_all.tex}
+\input{../tables/attrite_chart.tex}
+
+%These two tables have been reformated from previous version.
+%The first table now shows balance for all individuals in the mid2 and final samples.
+%The second table restricts to the matched pairs for each sample.
+%Previously the first table was the mid2 sample for both everyone and the matched pairs while the second table was the final sample
+
+\clearpage
+\input{../tables/balance_table_takers}
+%\input{../tables/balance_table_final}
 
 \clearpage
 \input{../tables/balance_table_matched.tex}
+%\input{../tables/balance_table_mid2}
 
 \clearpage
 \begin{spacing}{1.0}
@@ -1164,7 +1175,7 @@ Final exam score & 10 unique videos & [0.000, 0.163] \\
 Final exam score & 1 hour videos & [0.000, 0.102] \\
 \bottomrule
 \end{tabular}
-\Fignote{This table displays Anderson-Rubin confidence sets at the 95\% confidence level for the 2SLS estimator $\hat{\gamma}$ from Equation~\ref{eq:secondstage_spec} including year dummies and first midterm score as controls. Outcomes are measured in standard deviations. Instrumented endogenous variables are measured in 10s of unique videos or hours of unique content.}
+\Fignote{This table displays Anderson-Rubin confidence sets at the 95\% confidence level for the 2SLS estimator $\hat{\gamma}$ from Equation \ref{secondstage_spec} including year dummies and first midterm score as controls. Outcomes are measured in standard deviations. Instrumented endogenous variables are measured in 10s of unique videos or hours of unique content.}
 \end{threeparttable}
 \end{table}
 \end{spacing}
@@ -1186,10 +1197,8 @@ Final exam score & 1 hour videos & [0.000, 0.102] \\
 \begin{center}
 \caption{Distribution of videos counted towards incentive}
 \label{hist_incent}
-\includegraphics[width=1\textwidth, angle=0]{../plots/hist_v_incent}
-\footnotesize This plot includes only videos that would have counted towards the earning the grade incentive.
-Students were required to watch 40 unique of 48 eligible videos between the first midterm and final exam to earn the grade incentive.
-91\% of \textit{Incentive} students met the requirements for the grade incentive versus 11\% of \textit{Control} students.
+\includegraphics[width=1\textwidth, angle=0]{../plots/hist_v_incent.pdf}
+\footnotesize This plot includes only videos that would have counted towards the earning the grade incentive. Students were required to watch 40 unique of 48 eligible videos between the first midterm and final exam to earn the grade incentive. 91\% of \textit{Incentive} students met the requirements for the grade incentive versus 11\% of \textit{Control} students.
 \end{center}
 \end{figure}
 
@@ -1200,7 +1209,7 @@ Students were required to watch 40 unique of 48 eligible videos between the firs
 \begin{center}
 \caption{Weekly video watching by exam topic}
 \label{timeseries_by_exam} % TODO add reference in paper
-\includegraphics[width=1\textwidth, angle=0]{../plots/tscombo_exam}
+\includegraphics[width=1\textwidth, angle=0]{../plots/tscombo_exam.pdf}
 \footnotesize Dashed lines represent Midterm 1, Midterm 2, and Final exams.
 \end{center}
 \end{figure}
@@ -1211,26 +1220,19 @@ Students were required to watch 40 unique of 48 eligible videos between the firs
 \begin{center}
 \caption{Effects of treatment along first midterm score, by midterm 2}
 \label{locallin_mid2}
-\includegraphics[width=1\textwidth, angle=0]{../plots/lpolymid2}
-\footnotesize Videos (top) includes unique videos watched before the second midterm exam.
-Exam scores (bottom) are measured in control standard deviations.
-Confidence bands represent 95\% confidence intervals of the conditional mean outcome.
-The left plots includes all students who took the second midterm while the right plots exclude any students whose matched pair attrited.
+\includegraphics[width=1\textwidth, angle=0]{../plots/lpolymid2.pdf}
+\footnotesize Videos (top) includes unique videos watched before the second midterm exam. Exam scores (bottom) are measured in control standard deviations. Confidence bands represent 95\% confidence intervals of the conditional mean outcome. The left plots includes all students who took the second midterm while the right plots exclude any students whose matched pair attrited.
 \end{center}
 \end{figure}
 
 % Local smoothing: final exam scores
-%same comment as above
 \clearpage
 \begin{figure}[t]
 \begin{center}
 \caption{Effects of treatment along first midterm score, by final}
 \label{locallin_final}
-\includegraphics[width=1\textwidth, angle=0]{../plots/lpolyfinal}
-\footnotesize Videos (top) includes unique videos watched before the final exam.
-Exam scores (bottom) are measured in control standard deviations.
-Confidence bands represent 95\% confidence intervals of the conditional mean outcome.
-The left plots includes all students who took the final exam while the right plots exclude any students whose matched pair attrited.
+\includegraphics[width=1\textwidth, angle=0]{../plots/lpolyfinal.pdf}
+\footnotesize Videos (top) includes unique videos watched before the final exam. Exam scores (bottom) are measured in control standard deviations. Confidence bands represent 95\% confidence intervals of the conditional mean outcome. The left plots includes all students who took the final exam while the right plots exclude any students whose matched pair attrited.
 \end{center}
 \end{figure}
 
@@ -1240,9 +1242,8 @@ The left plots includes all students who took the final exam while the right plo
 \begin{center}
 \caption{Distribution of max videos watched in one week}
 \label{hist_binge}
-\includegraphics[width=1\textwidth, angle=0]{../plots/hist_maxweek}
-\footnotesize These plots help illustrate potential ``binge watching'' behavior.
-Compared to the \textit{Control} students, \textit{Incentive} students are more likely to watch 40 or more unique videos in a week, which occurs in the weeks preceding the final and not the second midterm.
+\includegraphics[width=1\textwidth, angle=0]{../plots/hist_maxweek.pdf}
+\footnotesize These plots help illustrate potential ``binge watching" behavior. Compared to the \textit{Control} students, \textit{Incentive} students are more likely to watch 40 or more unique videos in a week, which occurs in the weeks preceding the final and not the second midterm.
 \end{center}
 \end{figure}
 
@@ -1252,9 +1253,8 @@ Compared to the \textit{Control} students, \textit{Incentive} students are more 
 \begin{center}
 \caption{Video watch rates by video and treatment arm, grouped by incentive, ordered by video duration}
 \label{video_cdf_duration}
-\includegraphics[width=1\textwidth, angle=0]{../plots/bar_uviews_duration}
-\footnotesize Each bar represents the fraction of the treatment arm that watched a particular video.
-Bars are in order of video duration separately for incentivized and non-incentivized videos.
+\includegraphics[width=1\textwidth, angle=0]{../plots/bar_uviews_duration.pdf}
+\footnotesize Each bar represents the fraction of the treatment arm that watched a particular video. Bars are in order of video duration separately for incentivized and non-incentivized videos.
 \end{center}
 \end{figure}
 
