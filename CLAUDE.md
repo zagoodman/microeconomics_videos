@@ -44,7 +44,7 @@ sudo tlmgr install scalerel doublestroke cmathbb placeins preprint threeparttabl
 ## Compiling the Paper
 
 ```bash
-./tex/paper/build.sh
+./tex/build.sh
 ```
 
 ## Key Dependencies
