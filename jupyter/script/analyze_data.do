@@ -71,14 +71,14 @@ program clean_data
 
 * define function that loads student-year level data
 program get_idyearlevel
-    import delimited ./data/generated/id-year_level_data.csv, clear varnames(1)
+    import delimited ./data/generated/student_analysis_sample.csv, clear varnames(1)
     clean_data
     end
 
 * merge gpa/units/class data from subsequent quarter
 program merge_winter_gpa
     preserve
-    import delimited ./data/generated/dem_nextquarter.csv, clear varnames(1)
+    import delimited ./data/generated/student_demographics_winter.csv, clear varnames(1)
     local renamevars units_letter units_pnp units_w ///
         gpa_letter gpa_letter_sansecon gpa_letter_sans100a gpa_econ_sans100a ///
         nclass_letter nclass_np nclass_pnp nclass_p nclass_w
@@ -95,7 +95,7 @@ program merge_winter_gpa
 * merge demographic data
 program merge_dem
     preserve
-    import delimited ./data/generated/dem_concurrent.csv, clear varnames(1)
+    import delimited ./data/generated/student_demographics_fall.csv, clear varnames(1)
     tempfile temp
     save `temp'
     restore
