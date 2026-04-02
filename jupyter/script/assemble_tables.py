@@ -4,20 +4,21 @@
 # <h1>Table of Contents<span class="tocSkip"></span></h1>
 # <div class="toc"><ul class="toc-item"><li><span><a href="#Stuff-shared-across-tables" data-toc-modified-id="Stuff-shared-across-tables-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Stuff shared across tables</a></span><ul class="toc-item"><li><span><a href="#Import-data" data-toc-modified-id="Import-data-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>Import data</a></span></li><li><span><a href="#Variable-descriptions" data-toc-modified-id="Variable-descriptions-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>Variable descriptions</a></span></li><li><span><a href="#Common-captions" data-toc-modified-id="Common-captions-1.3"><span class="toc-item-num">1.3&nbsp;&nbsp;</span>Common captions</a></span></li><li><span><a href="#Common-funtions" data-toc-modified-id="Common-funtions-1.4"><span class="toc-item-num">1.4&nbsp;&nbsp;</span>Common funtions</a></span></li></ul></li><li><span><a href="#Covariate-balance" data-toc-modified-id="Covariate-balance-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Covariate balance</a></span></li><li><span><a href="#Post-double-selection-control-variable-selection" data-toc-modified-id="Post-double-selection-control-variable-selection-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>Post-double-selection control variable selection</a></span><ul class="toc-item"><li><span><a href="#Table:-description-of-eligible-control-vars" data-toc-modified-id="Table:-description-of-eligible-control-vars-3.1"><span class="toc-item-num">3.1&nbsp;&nbsp;</span>Table: description of eligible control vars</a></span></li><li><span><a href="#Table:-control-variables-for-ITT-PDS" data-toc-modified-id="Table:-control-variables-for-ITT-PDS-3.2"><span class="toc-item-num">3.2&nbsp;&nbsp;</span>Table: control variables for ITT PDS</a></span></li><li><span><a href="#Table:-control-variables-for-LATE-PDS" data-toc-modified-id="Table:-control-variables-for-LATE-PDS-3.3"><span class="toc-item-num">3.3&nbsp;&nbsp;</span>Table: control variables for LATE PDS</a></span></li></ul></li><li><span><a href="#Coefficient-estimates---below-cutoff-experiment" data-toc-modified-id="Coefficient-estimates---below-cutoff-experiment-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>Coefficient estimates - below cutoff experiment</a></span><ul class="toc-item"><li><span><a href="#Table:-first-stage" data-toc-modified-id="Table:-first-stage-4.1"><span class="toc-item-num">4.1&nbsp;&nbsp;</span>Table: first stage</a></span></li><li><span><a href="#Table:-second-stage" data-toc-modified-id="Table:-second-stage-4.2"><span class="toc-item-num">4.2&nbsp;&nbsp;</span>Table: second stage</a></span></li><li><span><a href="#Table:-spillovers-to-grades" data-toc-modified-id="Table:-spillovers-to-grades-4.3"><span class="toc-item-num">4.3&nbsp;&nbsp;</span>Table: spillovers to grades</a></span></li><li><span><a href="#Table:-spillovers-to-studying" data-toc-modified-id="Table:-spillovers-to-studying-4.4"><span class="toc-item-num">4.4&nbsp;&nbsp;</span>Table: spillovers to studying</a></span></li><li><span><a href="#Table:-spillovers-to-subsequent-quarter" data-toc-modified-id="Table:-spillovers-to-subsequent-quarter-4.5"><span class="toc-item-num">4.5&nbsp;&nbsp;</span>Table: spillovers to subsequent quarter</a></span></li></ul></li><li><span><a href="#Other-tables" data-toc-modified-id="Other-tables-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>Other tables</a></span><ul class="toc-item"><li><span><a href="#Table:-heterogeneity" data-toc-modified-id="Table:-heterogeneity-5.1"><span class="toc-item-num">5.1&nbsp;&nbsp;</span>Table: heterogeneity</a></span></li></ul></li></ul></div>
 
-import torch
+
 
 
 # ## Stuff shared across tables
 
 # ### Import data
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 
 pd.options.display.max_columns = 50
 pd.options.display.max_rows = 100
 pd.options.display.max_colwidth = 100
 import re
+
 from scipy.stats import t
 
 
@@ -90,8 +91,8 @@ name_dict = {
     "nclass_pnp": "Num. classes taken P/NP",
     "nclass_w": "Num. classes withdrawn",
     "pass100b": "Pass Micro B",
-    "pclass_letter": "\% classes taken for letter",
-    "pclass_pnp": "\% classes taken P/NP",
+    "pclass_letter": r"\% classes taken for letter",
+    "pclass_pnp": r"\% classes taken P/NP",
     "piazza_answers": "Discussion board answers",
     "piazza_daysonline": "Discussion board days online",
     "piazza_questions": "Discussion board questions asked",
@@ -116,8 +117,8 @@ name_dict = {
     "winter_nclass_p": "Num. classes passed",
     "winter_nclass_pnp": "Num. classes taken P/NP",
     "winter_nclass_w": "Num. classes withdrawn",
-    "winter_pclass_letter": "\% classes taken for letter",
-    "winter_pclass_pnp": "\% classes taken P/NP",
+    "winter_pclass_letter": r"\% classes taken for letter",
+    "winter_pclass_pnp": r"\% classes taken P/NP",
     "winter_units_letter": "Num. units taken for letter grade",
     "winter_units_pnp": "Num. units taken P/NP",
     "winter_units_w": "Num. units withdrawn",
@@ -205,9 +206,7 @@ table_dict = {
 
 # notes on model specification
 
-note_ittspec = (
-    "This table reports coefficients on $Incentive_i$ from Equations \\ref{itt_spec}."
-)
+note_ittspec = "This table reports coefficients on $Incentive_i$ from Equations \\ref{itt_spec}."
 
 note_bothspec = (
     "This table reports coefficients on $Incentive_i$ from Equation \\ref{itt_spec} "
@@ -287,7 +286,7 @@ def convert_to_latex(
 
     - stars          if True, wraps * in \\sym{}
 
-    - regnote        if True, adds \Regnote to note. Ignored if longtable.
+    - regnote        if True, adds \\Regnote to note. Ignored if longtable.
     """
     assert isinstance(dft, pd.core.frame.DataFrame)
     for var in [column_format, caption, label, note]:
@@ -311,7 +310,7 @@ def convert_to_latex(
             + "} \n"
         )
         if scalewidth:
-            addendum += "\\resizebox{\linewidth}{!}{% \n"
+            addendum += "\\resizebox{\\linewidth}{!}{% \n"
         addendum += "\\begin{threeparttable} \n"
         t = addendum + t
 
@@ -441,17 +440,13 @@ def get_dfb(roundn):
     #                           if x['depvar'][:6] != 'videos' \
     #                           else '{:.2f}'.format(x['1_beta']), 1)
     dfb["1beta"] = dfb["1beta"] + dfb.stars.apply(lambda x: "*" * x)
-    dfb["2stderr"] = dfb["2stderr"].apply(
-        lambda x: "({n:.{d}f})".format(d=str(roundn), n=x)
-    )
+    dfb["2stderr"] = dfb["2stderr"].apply(lambda x: "({n:.{d}f})".format(d=str(roundn), n=x))
     dfb["3mean"] = dfb["3mean"].apply(lambda x: "{n:.{d}f}".format(d=str(roundn), n=x))
     dfb["4N"] = dfb["4N"].apply(lambda x: str(int(x)))
     dfb = dfb.drop(columns=["stars"])
 
     # reshape long (stack beta, stderr, mean, N)
-    dfb = dfb.melt(id_vars=["depvar", "model"]).sort_values(
-        ["depvar", "model", "variable"]
-    )
+    dfb = dfb.melt(id_vars=["depvar", "model"]).sort_values(["depvar", "model", "variable"])
     dfb.rename(columns={"variable": "stat"}, inplace=True)
     # display(dfb.head())
 
@@ -479,7 +474,7 @@ def sig_digs(num, n=3):
     """
     assert n > 0, "n must be > 0"
     if num == 0:
-        return str("0.0")
+        return "0.0"
     power = int(np.ceil(np.log10(abs(num))))
     # return integer if number does not have digits behind decimal
     if power >= n:
@@ -613,7 +608,7 @@ def insert_panel(table, colnum, letter, title, var, first=True):
             + "} \\\\ \n"
         )
 
-    assert idx > -1, "Error: {} not found in table.".format(var)
+    assert idx > -1, f"Error: {var} not found in table."
 
     return table[:idx] + insert + table[idx:]
 
@@ -632,13 +627,7 @@ def add_indents(table, varlist):
         for i in idx[::-1]:
             if v[0] == "\\":
                 i -= 1
-            table = (
-                table[:i]
-                + "\n\\customlinespace \\indentrow{"
-                + v
-                + "}"
-                + table[i + len(v) :]
-            )
+            table = table[:i] + "\n\\customlinespace \\indentrow{" + v + "}" + table[i + len(v) :]
 
     return table
 
@@ -666,16 +655,16 @@ def star_p(x):
     Adds stars to p, a p-value. This is used in the balance table.
     """
     if x > 0.1:
-        return "{:.3f}".format(x)
+        return f"{x:.3f}"
     elif x > 0.05:
-        return "{:.3f}*".format(x)
+        return f"{x:.3f}*"
     elif x > 0.01:
-        return "{:.3f}**".format(x)
+        return f"{x:.3f}**"
     elif x > 0.001:
-        return "{:.3f}***".format(x)
+        return f"{x:.3f}***"
     else:
         print("check your work")
-        return "{:.3f}***".format(x)
+        return f"{x:.3f}***"
 
 
 # ## Covariate balance
@@ -687,9 +676,7 @@ def star_p(x):
 dfbal = pd.read_csv("../data/generated/balance_table_data.csv")
 
 # stack mean, stderr, N
-dfbal = dfbal.melt(
-    ["exam", "depvar", "arm", "bothpairs"], var_name="stat", value_name="value"
-)
+dfbal = dfbal.melt(["exam", "depvar", "arm", "bothpairs"], var_name="stat", value_name="value")
 dfbal.stat.replace({"mean": "1mean", "stderr": "2stderr", "N": "3N"}, inplace=True)
 
 # widen using combinations of arm-bothpairs within exam-depvar
@@ -738,9 +725,7 @@ sorterIndex = dict(zip(sorter, range(len(sorter))))
 # Generate a rank column
 dfbal["depvar_rk"] = dfbal.depvar.map(sorterIndex)
 # sort
-dfbal.sort_values(
-    ["exam", "depvar_rk", "stat"], ascending=[False, True, True], inplace=True
-)
+dfbal.sort_values(["exam", "depvar_rk", "stat"], ascending=[False, True, True], inplace=True)
 
 # insert p-value columns
 dfbal.insert(6, "p_all", 0)
@@ -762,9 +747,7 @@ for i in range(int(len(dfbal) / 3)):
 
 # get stars
 for k in samples:
-    dfbal["p_" + k] = dfbal.apply(
-        lambda x: star_p(x["p_" + k]) if x["stat"] == "1mean" else "", 1
-    )
+    dfbal["p_" + k] = dfbal.apply(lambda x: star_p(x["p_" + k]) if x["stat"] == "1mean" else "", 1)
 
 # Remove all N's except last one for each exam
 keepidx = dfbal.groupby("exam", as_index=False).stat.nth(-1).index
@@ -781,10 +764,10 @@ dfbal.loc[dfbal.stat == "3N", "depvar"] = "Observations"
 # stringify stat values
 for v in col_list:
     dfbal.loc[dfbal.stat == "1mean", v] = dfbal.loc[dfbal.stat == "1mean", v].apply(
-        lambda x: "{:.3f}".format(x)
+        lambda x: f"{x:.3f}"
     )
     dfbal.loc[dfbal.stat == "2stderr", v] = dfbal.loc[dfbal.stat == "2stderr", v].apply(
-        lambda x: "({:.3f})".format(x)
+        lambda x: f"({x:.3f})"
     )
     dfbal.loc[dfbal.stat == "3N", v] = dfbal.loc[dfbal.stat == "3N", v].apply(
         lambda x: str(int(x))
@@ -817,18 +800,18 @@ display(dfbal)
 
 btable_taker = dfbal.iloc[:, np.r_[0:2, 6:10]].copy()
 cols = btable_taker.columns[1:]
-btable_taker = pd.concat([
-    btable_taker.loc[btable_taker.exam == "mid2", cols].reset_index(drop=True),
-    btable_taker.loc[btable_taker.exam == "final", cols].reset_index(drop=True),
-    ], axis=1
+btable_taker = pd.concat(
+    [
+        btable_taker.loc[btable_taker.exam == "mid2", cols].reset_index(drop=True),
+        btable_taker.loc[btable_taker.exam == "final", cols].reset_index(drop=True),
+    ],
+    axis=1,
 ).iloc[:, np.r_[0:5, 6:10]]
 btable_taker.columns = btable_taker.columns[:-1].tolist() + ["(6) - (5)"]
 
 # convert to latex
 
-column_format = (
-    "m{0.25\\linewidth} *{8}{>{\\centering\\arraybackslash}m{0.095\\linewidth}}"
-)
+column_format = "m{0.25\\linewidth} *{8}{>{\\centering\\arraybackslash}m{0.095\\linewidth}}"
 caption = "Balance test, exam taker sample"
 label = "balance_table_takers"
 note = (
@@ -865,9 +848,7 @@ btable_all = dfbal.loc[dfbal.exam == "mid2"].drop(columns=["exam"]).iloc[:, 0:5]
 
 # convert to latex
 
-column_format = (
-    "m{0.25\\linewidth} *{5}{>{\\centering\\arraybackslash}m{0.095\\linewidth}}"
-)
+column_format = "m{0.25\\linewidth} *{5}{>{\\centering\\arraybackslash}m{0.095\\linewidth}}"
 caption = "Balance test, full sample"
 label = "balance_table_all"
 note = (
@@ -904,21 +885,19 @@ with open("../tex/tables/" + label + ".tex", "w") as tf:
 
 btable_matched = dfbal.iloc[:, np.r_[0:2, 10:13]].copy()
 cols = btable_matched.columns[1:]
-btable_matched = pd.concat([
-    btable_matched.loc[btable_matched.exam == "mid2", cols].reset_index(drop=True),
-    btable_matched.loc[btable_matched.exam == "final", cols].reset_index(drop=True),
-    ], axis=1
+btable_matched = pd.concat(
+    [
+        btable_matched.loc[btable_matched.exam == "mid2", cols].reset_index(drop=True),
+        btable_matched.loc[btable_matched.exam == "final", cols].reset_index(drop=True),
+    ],
+    axis=1,
 ).iloc[:, np.r_[0:4, 5:8]]
-btable_matched = btable_matched.rename(columns={
-    "(5) - (4)": "(2) - (1)"
-})
+btable_matched = btable_matched.rename(columns={"(5) - (4)": "(2) - (1)"})
 btable_matched.columns = btable_matched.columns[:-1].tolist() + ["(4) - (3)"]
 
 # convert to latex
 
-column_format = (
-    "m{0.25\\linewidth} *{6}{>{\\centering\\arraybackslash}m{0.095\\linewidth}}"
-)
+column_format = "m{0.25\\linewidth} *{6}{>{\\centering\\arraybackslash}m{0.095\\linewidth}}"
 caption = "Baseline balance test, matched pairs"
 label = "balance_table_matched"
 note = (
@@ -973,14 +952,12 @@ ctrls = [
     "Transfer",
 ]
 
-dfc = pd.DataFrame(
-    data={"Variable": ctrls, "Description": [ctrl_dict.get(x) for x in ctrls]}
-)
+dfc = pd.DataFrame(data={"Variable": ctrls, "Description": [ctrl_dict.get(x) for x in ctrls]})
 display(dfc.head())
 
 # translate to tex
 
-column_format = "p{0.3\linewidth} p{0.6\linewidth}"
+column_format = r"p{0.3\linewidth} p{0.6\linewidth}"
 caption = "Candidate control variables for post-double-selection"
 label = "controlvars_desc"
 note = (
@@ -1006,12 +983,7 @@ with open("../tex/tables/controlvars_desc.tex", "w") as tf:
 # ### Table: control variables for ITT PDS
 
 # first reshape wide
-dfw = (
-    df[["depvar", "model", "ctrls"]]
-    .set_index(["depvar", "model"])
-    .unstack()
-    .reset_index()
-)
+dfw = df[["depvar", "model", "ctrls"]].set_index(["depvar", "model"]).unstack().reset_index()
 dfw.columns = dfw.columns.droplevel(0)
 dfw.columns = [
     "Dependent Variable",
@@ -1053,7 +1025,7 @@ for i in range(0, 3):
 # 4 - spillovers to study methods
 # 5 - spillovers to following quarter
 
-dfw["Table"] = dfw.og.apply(lambda x: "Table {}".format(str(table_dict.get(x))))
+dfw["Table"] = dfw.og.apply(lambda x: f"Table {table_dict.get(x)!s}")
 dfw.sort_values(["Table", dfw.columns[0]], inplace=True)
 
 # set Table 'index' as first column
@@ -1082,8 +1054,8 @@ display(table1.head())
 # convert to latex
 
 column_format = (
-    "p{0.07\linewidth} >{\hangindent=1em}p{0.38\linewidth} "
-    + "p{0.22\linewidth} p{0.22\linewidth}"
+    r"p{0.07\linewidth} >{\hangindent=1em}p{0.38\linewidth} "
+    + r"p{0.22\linewidth} p{0.22\linewidth}"
 )
 caption = "ITT model controls selected via post-double-selection"
 label = "controlvars_selected_itt"
@@ -1110,9 +1082,7 @@ table1 = convert_to_latex(
 
 # add horizontal lines betweeen groups
 for i in range(2, 6):
-    table1 = table1.replace(
-        "Table {}".format(str(i)), "\\midrule \nTable {}".format(str(i)), 1
-    )
+    table1 = table1.replace(f"Table {i!s}", f"\\midrule \nTable {i!s}", 1)
 
 # write to tex file
 with open("../tex/tables/controlvars_selected_itt.tex", "w") as tf:
@@ -1160,9 +1130,7 @@ for i in range(0, 4):
     dfw.iloc[:, i] = dfw.iloc[:, i].apply(lambda x: ("\newline ").join(x))
 
 # sort by publishable name
-dfw.sort_values(
-    ["Dependent Variable", "Instrumented"], ascending=["False", "True"], inplace=True
-)
+dfw.sort_values(["Dependent Variable", "Instrumented"], ascending=["False", "True"], inplace=True)
 
 dfw.head()
 
@@ -1183,9 +1151,7 @@ display(table.head())
 
 # convert to latex
 
-column_format = (
-    "p{.25\linewidth} p{0.3\linewidth} " + "p{0.22\linewidth} p{0.22\linewidth}"
-)
+column_format = r"p{.25\linewidth} p{0.3\linewidth} " + r"p{0.22\linewidth} p{0.22\linewidth}"
 caption = "LATE model controls selected via post-double-selection"
 label = "controlvars_selected_iv"
 note = (
@@ -1245,7 +1211,7 @@ rename_dict = {
     "Hours videos": "Hours of videos",
     "Hours unique": "Hours of unique videos",
 }
-for v in rename_dict.keys():
+for v in rename_dict:
     dfsub.iloc[dfsub.iloc[:, 0].str.contains(v), 0] = rename_dict.get(v)
 
 dfsub
@@ -1253,9 +1219,7 @@ dfsub
 
 # translate to tex
 
-column_format = (
-    "m{0.35\\linewidth} *{5}{>{\\centering\\arraybackslash}m{0.1\\linewidth}}"
-)
+column_format = "m{0.35\\linewidth} *{5}{>{\\centering\\arraybackslash}m{0.1\\linewidth}}"
 caption = "Effects of Grade Incentive on Video Watching"
 label = "firststage_table"
 note = combine_notes([note_4models, note_ctrlmean])
@@ -1315,9 +1279,7 @@ def get_dfl(roundn):
     dfl["1beta"] = dfl["1beta"].apply(
         lambda x: "{n:.{d}f}".format(d=str(roundn), n=x)
     ) + dfl.stars.apply(lambda x: "*" * x)
-    dfl["2stderr"] = dfl["2stderr"].apply(
-        lambda x: "({n:.{d}f})".format(d=str(roundn), n=x)
-    )
+    dfl["2stderr"] = dfl["2stderr"].apply(lambda x: "({n:.{d}f})".format(d=str(roundn), n=x))
     dfl["3mean"] = dfl["3mean"].apply(lambda x: "{n:.{d}f}".format(d=str(roundn), n=x))
     dfl["4N"] = dfl["4N"].apply(lambda x: str(int(x)))
     dfl = dfl.drop(columns=["stars"])
@@ -1334,9 +1296,7 @@ def get_dfl(roundn):
     dfl.rename(columns={"variable": "stat"}, inplace=True)
 
     # reshape wide (side by side models)
-    dfl = dfl.pivot(
-        index=["depvar", "Instrumented", "stat"], columns="model"
-    ).reset_index()
+    dfl = dfl.pivot(index=["depvar", "Instrumented", "stat"], columns="model").reset_index()
     dfl.columns = dfl.columns.droplevel(0)
     dfl.columns = ["depvar", "Instrumented", "stat", "Neyman", "All", "FEs", "ITT"]
     dfl = dfl[["depvar", "Instrumented", "stat", "ITT", "Neyman", "All", "FEs"]]
@@ -1365,9 +1325,7 @@ dfsub = dfsub.drop(columns=["ctrlmean"])
 # combine the two dfs and sort, drop mean
 dfsub = pd.concat([dfsub, dfl])
 dfsub = dfsub.loc[dfsub.stat != "3mean"]
-dfsub.sort_values(
-    ["depvar", "Instrumented", "stat"], ascending=[False, False, True], inplace=True
-)
+dfsub.sort_values(["depvar", "Instrumented", "stat"], ascending=[False, False, True], inplace=True)
 
 # drop intermediate N within each exam
 keepidx = dfsub.groupby("og", as_index=False).stat.nth(-1).index
@@ -1382,9 +1340,9 @@ dfsub.Instrumented.replace(
 
 # remove Instrumented duplicates and unnecessary cols
 for v in dfsub.og.unique():
-    dfsub.loc[dfsub.og == v, "Instrumented"] = dfsub.loc[
-        dfsub.og == v
-    ].Instrumented.mask(dfsub.loc[dfsub.og == v].Instrumented.duplicated(), "")
+    dfsub.loc[dfsub.og == v, "Instrumented"] = dfsub.loc[dfsub.og == v].Instrumented.mask(
+        dfsub.loc[dfsub.og == v].Instrumented.duplicated(), ""
+    )
 dfsub = dfsub.drop(column=["depvar", "stat", "og"])
 
 # rename cols
@@ -1410,9 +1368,7 @@ dfsub
 
 # translate to tex
 
-column_format = (
-    "m{0.35\\linewidth} *{4}{>{\\centering\\arraybackslash}m{0.1\\linewidth}}"
-)
+column_format = "m{0.35\\linewidth} *{4}{>{\\centering\\arraybackslash}m{0.1\\linewidth}}"
 caption = "Effects of Videos on Grades"
 label = "secondstage_table"
 note = combine_notes([note_bothspec, note_scorestd, note_4models])
@@ -1463,9 +1419,7 @@ dfsub
 
 # translate to tex
 
-column_format = (
-    "m{0.35\\linewidth} *{5}{>{\\centering\\arraybackslash}m{0.1\\linewidth}}"
-)
+column_format = "m{0.35\\linewidth} *{5}{>{\\centering\\arraybackslash}m{0.1\\linewidth}}"
 caption = "Spillover Effects of Incentive on Other Course Grades"
 label = "spillover_grades"
 note = combine_notes([note_ittspec, note_gpa, note_4models, note_ctrlmean])
@@ -1481,9 +1435,7 @@ for i in idx[3::-1]:
 
 # add panel labels
 table = insert_panel(table, 6, "A", "Effects on Term GPA", "All classes")
-table = insert_panel(
-    table, 6, "B", "Effects on classes passed", "Num. classes passed", False
-)
+table = insert_panel(table, 6, "B", "Effects on classes passed", "Num. classes passed", False)
 table = insert_panel(
     table, 6, "C", "Effects on class grade type", "Letter grade in Micro A", False
 )
@@ -1532,14 +1484,10 @@ dfsub
 
 # translate to tex
 
-column_format = (
-    "m{0.39\\linewidth} *{5}{>{\\centering\\arraybackslash}m{0.09\\linewidth}}"
-)
+column_format = "m{0.39\\linewidth} *{5}{>{\\centering\\arraybackslash}m{0.09\\linewidth}}"
 caption = "Spillover Effects of Incentive on Other Studying"
 label = "spillover_studying"
-note = combine_notes(
-    [note_ittspec, note_attend, note_pset, note_4models, note_ctrlmean]
-)
+note = combine_notes([note_ittspec, note_attend, note_pset, note_4models, note_ctrlmean])
 
 table = convert_to_latex(
     dfsub, column_format, caption, label, note, scalewidth=False, observations=True
@@ -1585,9 +1533,7 @@ dfsub
 
 # translate to tex
 
-column_format = (
-    "m{0.35\\linewidth} *{5}{>{\\centering\\arraybackslash}m{0.1\\linewidth}}"
-)
+column_format = "m{0.35\\linewidth} *{5}{>{\\centering\\arraybackslash}m{0.1\\linewidth}}"
 caption = "Spillover Effects during Subsequent Quarter"
 label = "spillover_100b"
 notex = (
@@ -1607,9 +1553,7 @@ for i in idx[3:0:-1]:
     table = table[:i] + table[i + len("Observations") :]
 
 # add panel labels
-table = insert_panel(
-    table, 6, "A", "Videos during subsequent quarter", name_dict.get("videos_b")
-)
+table = insert_panel(table, 6, "A", "Videos during subsequent quarter", name_dict.get("videos_b"))
 table = insert_panel(
     table, 6, "B", "Effects on classes passed", name_dict.get("mid1bscorestd"), False
 )
@@ -1654,9 +1598,7 @@ dfh.head()
 dfht = dfh.copy()
 
 # get stars and prepare to order stats
-dfht.rename(
-    columns={"interactbeta": "1beta", "stderr": "2stderr", "N": "3N"}, inplace=True
-)
+dfht.rename(columns={"interactbeta": "1beta", "stderr": "2stderr", "N": "3N"}, inplace=True)
 dfht["stars"] = 0
 dfht.loc[(abs(dfht["1beta"]) - dfht["2stderr"] * 1.645) > 0, "stars"] = 1
 dfht.loc[(abs(dfht["1beta"]) - dfht["2stderr"] * 1.96) > 0, "stars"] = 2
@@ -1670,9 +1612,7 @@ dfht["3N"] = dfht["3N"].apply(lambda x: str(int(x)))
 dfht = dfht.drop(columns=["stars"])
 
 # reshape and rename columns
-dfht = dfht.melt(id_vars=["depvar", "interactvar"]).sort_values(
-    ["interactvar", "variable"]
-)
+dfht = dfht.melt(id_vars=["depvar", "interactvar"]).sort_values(["interactvar", "variable"])
 dfht.rename(columns={"variable": "stat"}, inplace=True)
 dfht = dfht.pivot(index=["interactvar", "stat"], columns="depvar").reset_index()
 dfht.columns = dfht.columns.droplevel(0)
@@ -1720,9 +1660,7 @@ dfht
 
 # translate to tex
 
-column_format = (
-    "m{0.40\\linewidth} *{2}{>{\\centering\\arraybackslash}m{0.12\\linewidth}}"
-)
+column_format = "m{0.40\\linewidth} *{2}{>{\\centering\\arraybackslash}m{0.12\\linewidth}}"
 caption = "Heterogeneous Effects of Treatment"
 label = "het_table"
 
@@ -1735,9 +1673,7 @@ table = convert_to_latex(
 )
 
 # space out variables
-for v in [
-    x for x in dfht["Interaction Variable"].unique() if x not in ["", "Observations"]
-]:
+for v in [x for x in dfht["Interaction Variable"].unique() if x not in ["", "Observations"]]:
     table = table.replace(v + " &", "\\customlinespace " + v + " &")
 
 # write to tex file
