@@ -52,8 +52,12 @@ covariates_outcome <- c(
 
 # Outcome variables and their raw names in the data
 outcomes <- list(
-  list(depvar = "videos_b_u",   col = "videos_b_u"),
-  list(depvar = "duration_b_u", col = "duration_b_u"),
+  list(depvar = "videos_b",      col = "videos_b"),
+  list(depvar = "videos_b_u",    col = "videos_b_u"),
+  list(depvar = "duration_b",    col = "duration_b"),
+  list(depvar = "duration_b_u",  col = "duration_b_u"),
+  list(depvar = "mid1_100bstd",  col = "mid1_100bstd"),
+  list(depvar = "mid2_100bstd",  col = "mid2_100bstd"),
   list(depvar = "final_100bstd", col = "final_100bstd")
 )
 
