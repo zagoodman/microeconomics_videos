@@ -34,7 +34,7 @@ which weakiv
 which weakivtest
 
 
-global ctrl_vars mathquizstd videos_mid1_u duration_mid1_u pset_pre ///
+global ctrl_vars mathquizstd mathquiz_unobs videos_mid1_u duration_mid1_u pset_pre ///
     transfer prev_cumgpa prev_cumgpa_unobs female ///
     asian latx white
 
@@ -66,6 +66,7 @@ program clean_data
         replace bothpairs_`v' = bothpairs_`v' >= 2
     }
     rename (bothpairs_mid2 bothpairs_final) (bothpairs_mid2 bothpairs_final)
+    gen mathquiz_unobs = mi(mathquiz)
     replace mathquiz = 0 if mi(mathquiz)
     end
 
@@ -1304,8 +1305,8 @@ program pds_iv
     local meany = r(mean)
 
     * estimate IV using PDS with FEs, video counts
-    ivlasso `y' (y2019 mid1scorestd $ctrl_vars) (videos_`exam'_u=treated), ///
-        partial(y2019 mid1scorestd treated) robust noisily
+    ivlasso `y' (mid1scorestd $ctrl_vars) (videos_`exam'_u=treated), ///
+        partial(mid1scorestd treated) fe robust noisily
     frame post results ("`y'") (`meany') (_b[videos_`exam'_u]) (_se[videos_`exam'_u]) ///
         (e(N)) ("`e(xselected)'") ("PDS_IVFE_v")
 
