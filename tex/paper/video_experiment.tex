@@ -571,25 +571,28 @@ While we offered treatment students a grade incentive to watch videos during Mic
 However, all students in Micro B maintained access to the IMVH, were given direction on which videos to watch each week in the syllabus, and were verbally encouraged to watch videos as a study method.
 Fortunately, we are able to observe video watching and grade outcomes in Micro B.
 
-We present our estimates of spillover effects in the subsequent term in Table~\ref{tab:spillover_100b}.
+We present our estimates of spillover effects in the subsequent term in Tables~\ref{tab:spillover_100b} and~\ref{tab:microb_results}.
 An empirical challenge is that Micro B outcomes are not observed for students who do not enroll in Micro B in the subsequent quarter; some may never enroll, while others may in a later quarter.
-% TODO: swap spillover_100b panel order to be C, A, B
-In Panel C, we estimate the effect of treatment on taking Micro B and the number of classes passed and withdrawn.
+In Panel C of Table~\ref{tab:spillover_100b}, we estimate the effect of treatment on taking Micro B and the number of classes passed and withdrawn.
 We find no effects statistically distinguishable from zero, except, as mentioned in section \ref{subsec:attrition}, treatment students were directionally less likely to take Micro B than were control students.
-In one specification this difference is significant at the 10\% level.      
+In one specification this difference is significant at the 10\% level.
 
-In Panels A and B, we examine the effects of treatment on video watching and exam scores in Micro B among students who choose to take Micro B the next quarter.
+In Panels A and B of Table~\ref{tab:spillover_100b}, we examine the effects of treatment on video watching and exam scores in Micro B among students who choose to take Micro B the next quarter.
 These comparisons may be biased due to differential selection into Micro B by treatment status as suggested by the results in Panel C.
+We address this selection problem in Table~\ref{tab:microb_results} using two approaches.
 
-Under the monotonicity assumption that treatment only reduces enrollment in Micro B, Lee bounds imply an effect size between X and Y.
-However, we view monotonicity as questionable in this context; while treatment improved performance on Micro A exams, which is likely to increase the probability of taking Micro B, treatment also appears to have increased time spent on Micro A with no effect on student's course grade, which seems likely to reduce the probability of taking Micro B.
-Thus, we use inverse probability weights to obtain a treated group in Micro B that is more reflective of treatment at baseline (i.e., in Micro A).
+First, we compute generalized Lee bounds \parencite{semenova2025}, which relax the standard monotonicity assumption of \textcite{lee2009} to conditional monotonicity: treatment may increase Micro B enrollment for some students (e.g., those whose Micro A performance improved) while decreasing it for others (e.g., those who spent more time on Micro A with no grade benefit), as long as the direction is consistent within covariate subgroups.
+This is precisely the structure suggested by our data; treatment improved Micro A exam scores, which is likely to increase the probability of taking Micro B, but treatment also increased time spent on Micro A with no effect on course grades, which seems likely to reduce the probability of taking Micro B.
+Following \textcite{heiler2024}, we condition on baseline covariates to tighten the bounds.
+
+Second, we use inverse probability weights (IPW) to reweight Micro B takers to resemble the full experimental sample on observable baseline characteristics.
+The IPW results should be interpreted with caution, as they correct for selection on observables but cannot address unobserved demoralization or other latent selection channels.
 
 As a supplementary analysis, we compare outcomes within matched pairs in which both students enrolled in Micro B the next quarter.
 Because this conditions on a post-treatment event, this analysis estimates the treatment effect only for the subset of pairs with both immediate takers and may be subject to selection bias.
 Nevertheless it provides useful information about treatment effects among immediate takers.
 
-In Panel A, we estimate the effect of treatment on videos watched during the subsequent term, for those who took Micro B.
+In Panel A of Table~\ref{tab:spillover_100b}, we estimate the effect of treatment on videos watched during the subsequent term, for those who took Micro B.
 We find large and statistically significant effects: treatment caused students to watch 8.1 - 9.9 more unique videos and 1.2 - 1.5 hours of unique content compared to control students.
 In Panel B, we estimate equation~\ref{eq:itt_spec} where $Y_i$ is the first midterm, second midterm, or final exam score.
 Unfortunately given the small subsample of students who took Micro B, we are underpowered to detect effect sizes consistent with those observed during Micro A.
@@ -967,6 +970,9 @@ It is our hope, as educators ourselves, that more research will be conducted on 
 
 \clearpage
 \input{../tables/spillover_100b.tex}
+
+\clearpage
+\input{../tables/table9_microb.tex}
 
 \clearpage
 \input{../tables/het_table.tex}

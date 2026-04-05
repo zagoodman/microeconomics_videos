@@ -1,0 +1,24 @@
+\begin{spacing}{1.0} 
+\begin{table} \centering \caption{Treatment Effects on Micro B Outcomes} 
+\label{tab:microb_results} 
+\resizebox{\linewidth}{!}{% 
+\begin{threeparttable} 
+\begin{tabular}{lcccc}
+\toprule
+Outcome & Control Mean & (1) Selected ITT & (2) Semenova Bounds & (3) IPW \\
+\midrule
+Num. unique videos & 19.77 & 9.87\sym{***} & [5.14, 14.19] & 11.33\sym{***} \\
+ &  & (3.03) & \{-1.42, 20.21\} & (3.19) \\
+Hours unique videos & 2.90 & 1.51\sym{***} & [0.84, 2.15] & 1.74\sym{***} \\
+ &  & (0.45) & \{-0.13, 3.05\} & (0.47) \\
+Final exam score (SD) & -0.00 & 0.12 & [-0.23, 0.42] & 0.13 \\
+ &  & (0.14) & \{-0.55, 0.72\} & (0.15) \\
+
+\midrule 
+Observations &  & 211 & 211 & 211 \\
+\bottomrule
+\end{tabular}
+\Fignote{Column (1) reports OLS coefficients on $Incentive_i$ estimated on the selected sample of Micro B takers (selection-biased benchmark). Column (2) reports generalized Lee (2009) bounds following \textcite{semenova2025}; point estimates are shown as [lower, upper] and 95\% confidence regions are shown in curly braces. Column (3) reports IPW-weighted OLS, where weights are the inverse probability of enrolling in Micro B conditional on baseline covariates. IPW corrects for selection on observables but cannot correct for unobserved demoralization effects. Test scores are measured in standard deviation units.} 
+\end{threeparttable}}
+\end{table} 
+\end{spacing}
