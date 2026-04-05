@@ -36,6 +36,7 @@ df <- read.csv("data/generated/semenova_sample.csv")
 
 # Covariates for selection model (all baseline controls)
 covariates_selection <- c(
+  "y2019",
   "mid1scorestd", "mathquizstd", "mathquiz_unobs",
   "transfer", "prev_cumgpa", "prev_cumgpa_unobs",
   "female", "asian", "latx", "white"
@@ -45,6 +46,7 @@ covariates_selection <- c(
 # (mathquiz_unobs ~3% missing, prev_cumgpa_unobs) to avoid singular design matrix
 # when Semenova interacts all covariates with treatment
 covariates_outcome <- c(
+  "y2019",
   "mid1scorestd", "mathquizstd",
   "transfer", "prev_cumgpa",
   "female", "asian", "latx", "white"
