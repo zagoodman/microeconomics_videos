@@ -8,10 +8,10 @@
 # Also requires the vsemenova/leebounds repo cloned locally.
 #
 # Usage:
-#   Rscript jupyter/script/semenova_bounds.R <path-to-leebounds-repo>
+#   Rscript jupyter/modules/semenova_bounds.R <path-to-leebounds-repo>
 #
 # Example:
-#   Rscript jupyter/script/semenova_bounds.R ~/github/leebounds
+#   Rscript jupyter/modules/semenova_bounds.R ~/github/leebounds
 
 library(dplyr)
 library(expm)
