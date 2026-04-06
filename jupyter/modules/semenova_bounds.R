@@ -72,7 +72,7 @@ rhoN <- N^(-1/4) * log(N)^(-1)
 p0 <- 1 - rhoN
 p1 <- 1 + rhoN
 
-N_bootstrap <- 500
+N_bootstrap <- 2000
 
 # --- Run bounds for each outcome ---
 results <- data.frame(
