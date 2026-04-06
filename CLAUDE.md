@@ -65,7 +65,8 @@ uv run nbautoexport export jupyter/
 
 - Data files (`.xlsx`, `.xls`, `.csv`, `.dta`) are gitignored — never commit raw data
 - Generated outputs (plots as PDFs, tables as `.tex`) are committed to version control
-- Exported notebook scripts in `jupyter/script/` are committed to version control
+- Exported notebook scripts in `jupyter/script/` are committed to version control — these are **auto-generated** by nbautoexport from the `.ipynb` files and should never be edited directly. Always read/edit the `.ipynb` source notebooks, not the exported scripts.
+- `jupyter/modules/semenova_bounds.R` is a standalone R script that computes generalized Lee bounds.
 - HTML notebook renders in `jupyter/html_renders/` are marked as vendored in `.gitattributes`
 - No formal test suite; validation is done through notebook execution and exploratory outputs
 

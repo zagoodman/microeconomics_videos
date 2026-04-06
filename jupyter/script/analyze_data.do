@@ -1,6 +1,6 @@
 * Set working directory to base directory
 * cd "C:\Users\Zack\Documents\GitHub\microeconomics_videos"
-cd "~/github/zack/microeconomics_videos"
+cd "/Users/zack/github/microeconomics_videos"
 
 * set more off to show all output
 set more off
@@ -34,7 +34,7 @@ which weakiv
 which weakivtest
 
 
-global ctrl_vars mathquizstd videos_mid1_u duration_mid1_u pset_pre ///
+global ctrl_vars mathquizstd mathquiz_unobs videos_mid1_u duration_mid1_u pset_pre ///
     transfer prev_cumgpa prev_cumgpa_unobs female ///
     asian latx white
 
@@ -66,19 +66,20 @@ program clean_data
         replace bothpairs_`v' = bothpairs_`v' >= 2
     }
     rename (bothpairs_mid2 bothpairs_final) (bothpairs_mid2 bothpairs_final)
+    gen mathquiz_unobs = mi(mathquiz)
     replace mathquiz = 0 if mi(mathquiz)
     end
 
 * define function that loads student-year level data
 program get_idyearlevel
-    import delimited ./data/generated/id-year_level_data.csv, clear varnames(1)
+    import delimited ./data/generated/student_analysis_sample.csv, clear varnames(1)
     clean_data
     end
 
 * merge gpa/units/class data from subsequent quarter
 program merge_winter_gpa
     preserve
-    import delimited ./data/generated/dem_nextquarter.csv, clear varnames(1)
+    import delimited ./data/generated/student_demographics_winter.csv, clear varnames(1)
     local renamevars units_letter units_pnp units_w ///
         gpa_letter gpa_letter_sansecon gpa_letter_sans100a gpa_econ_sans100a ///
         nclass_letter nclass_np nclass_pnp nclass_p nclass_w
@@ -95,7 +96,7 @@ program merge_winter_gpa
 * merge demographic data
 program merge_dem
     preserve
-    import delimited ./data/generated/dem_concurrent.csv, clear varnames(1)
+    import delimited ./data/generated/student_demographics_fall.csv, clear varnames(1)
     tempfile temp
     save `temp'
     restore
@@ -297,67 +298,6 @@ ttest miss, by(arm) unequal
 reg took100b treated mid1scorestd y2019 if arm > 0
 
 restore
-
-* Estimate RDs
-
-eststo clear
-
-di "RD for treated vs above median (not including control below median):"
-qui sum mid1scorestd if arm == 2
-local cutoff = r(max)
-capture drop attrite
-gen attrite = mi(finalscore)
-rdrobust attrite mid1scorestd if arm != 1, c(`cutoff') ///
-    p(2) kernel(tri)
-eststo m1
-
-// check whole sample in case being in experiment itself affected attrition
-di "RD for whole sample (including control below median):"
-rdrobust attrite mid1scorestd, c(`cutoff') p(2) kernel(tri)
-eststo m2
-
-di "RD for midterm 2, treated vs above median (not including control):"
-qui sum mid1scorestd if arm == 2
-local cutoff = r(max)
-capture drop attrite
-gen attrite = mi(mid2score)
-rdrobust attrite mid1scorestd if arm != 1, c(`cutoff') ///
-    p(2) kernel(tri)
-eststo m3
-
-// check whole sample in case being in experiment itself affected attrition
-di "RD for whole sample (including control below median):"
-rdrobust attrite mid1scorestd, c(`cutoff') p(2) kernel(tri)
-eststo m4
-
-* plot RD
-
-local filename = "attriterd"
-qui sum mid1scorestd if arm == 2
-local cutoff = r(max)
-rdplot attrite mid1scorestd if arm != 1, ///
-    c(`cutoff') p(2) kernel(tri) ci(95) shade nbins(5) ///
-    graph_options(name(`filename', replace) ///
-    title("Probablility of Attrition before Final") ///
-    yline(0, lpattern("dash") lcol("black")) ///
-    legend(off) xtitle("Normalized Midterm 1 score") ytitle("Probability"))
-
-export_img `filename'
-
-
-* midterm 2
-
-local filename = "attriterd"
-qui sum mid1scorestd if arm == 2
-local cutoff = r(max)
-rdplot attrite mid1scorestd if arm != 1, ///
-    c(`cutoff') p(2) kernel(tri) ci(95) shade nbins(5) ///
-    graph_options(name(`filename', replace) ///
-    title("Probablility of Attrition before Final") ///
-    yline(0, lpattern("dash") lcol("black")) ///
-    legend(off) xtitle("Normalized Midterm 1 score") ytitle("Probability"))
-
-export_img `filename'
 
 * get data and merge demographic vars
 
@@ -800,6 +740,74 @@ frame results: li
 * Export the results data for publication
 
 frame results: export delimited "./data/generated/itt_coeffs.csv", replace
+
+
+* Export sample for Semenova (2025) generalized Lee Bounds (computed in R)
+* and IPW estimation
+* Sample: all randomized students who completed Micro A (saw treatment assignment)
+* Selection indicator: took100b (enrolled in Micro B)
+preserve
+keep if !mi(assigned_grade) & arm > 0
+export delimited treated took100b y2019 ///
+    videos_b videos_b_u duration_b duration_b_u ///
+    mid1_100bstd mid2_100bstd final_100bstd ///
+    mid1scorestd mathquizstd mathquiz_unobs ///
+    transfer prev_cumgpa prev_cumgpa_unobs ///
+    female asian latx white ///
+    using "./data/generated/semenova_sample.csv", replace
+restore
+
+
+* IPW estimates for Micro B outcomes
+* Reweight Micro B takers to look like the full experimental sample
+
+capture frame drop ipw_results
+frame create ipw_results str32 depvar meanctrl treatbeta stderr N str32 model
+
+capture program drop est_ipw
+program define est_ipw
+    args y
+    preserve
+
+    * full sample: all randomized who completed Micro A
+    keep if !mi(assigned_grade) & arm > 0
+
+    * estimate propensity score: P(took100b=1 | X)
+    logit took100b treated mid1scorestd mathquizstd mathquiz_unobs ///
+        transfer prev_cumgpa prev_cumgpa_unobs ///
+        female asian latx white y2019
+    predict phat, pr
+
+    * restrict to Micro B takers, generate IPW weights
+    keep if took100b == 1
+    gen ipw = 1 / phat
+
+    * trim extreme weights at 1st/99th percentiles
+    _pctile ipw, p(1 99)
+    replace ipw = r(r1) if ipw < r(r1)
+    replace ipw = r(r2) if ipw > r(r2)
+
+    * control mean (unweighted, among Micro B takers)
+    qui sum `y' if arm == 1
+    local meanctrl = r(mean)
+
+    * IPW-weighted regression
+    reg `y' treated mid1scorestd y2019 [pweight=ipw], robust
+
+    * post results
+    frame post ipw_results ("`y'") (`meanctrl') (_b[treated]) (_se[treated]) (e(N)) ("ipw")
+
+    restore
+end
+
+* Run IPW for each Micro B outcome
+foreach v in videos_b videos_b_u duration_b duration_b_u mid1_100bstd mid2_100bstd final_100bstd {
+    qui est_ipw `v'
+}
+
+frame ipw_results: li
+frame ipw_results: export delimited "./data/generated/ipw_100b.csv", replace
+
 
 * We'll use ivregress for the base model and a custom function for the Neyman model
 
@@ -1304,8 +1312,8 @@ program pds_iv
     local meany = r(mean)
 
     * estimate IV using PDS with FEs, video counts
-    ivlasso `y' (y2019 mid1scorestd $ctrl_vars) (videos_`exam'_u=treated), ///
-        partial(y2019 mid1scorestd treated) robust noisily
+    ivlasso `y' (mid1scorestd $ctrl_vars) (videos_`exam'_u=treated), ///
+        partial(mid1scorestd treated) fe robust noisily
     frame post results ("`y'") (`meany') (_b[videos_`exam'_u]) (_se[videos_`exam'_u]) ///
         (e(N)) ("`e(xselected)'") ("PDS_IVFE_v")
 
@@ -2279,8 +2287,6 @@ qui merge_winter_gpa
 qui merge_dem
 qui clean_dem
 qui label_vars
-
-
 
 * random number generated from random.org
 

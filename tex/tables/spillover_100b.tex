@@ -1,68 +1,33 @@
 \begin{spacing}{1.0} 
-\begin{table} \centering \caption{Spillover Effects during Subsequent Quarter} 
+\begin{table} \centering \caption{Effects of Treatment on Subsequent Quarter Enrollment and Course Outcomes} 
 \label{tab:spillover_100b} 
-\resizebox{0.8\linewidth}{!}{% 
+\resizebox{\linewidth}{!}{% 
 \begin{threeparttable} 
 \begin{tabular}{m{0.35\linewidth} *{5}{>{\centering\arraybackslash}m{0.1\linewidth}}}
 \toprule
-                               & Control Mean &       (1) &     (2) &       (3) &     (4) \\
+ & Control Mean & (1) & (2) & (3) & (4) \\
 \midrule
-                
-\multicolumn{6}{l}{\textbf{Panel A}: Videos during subsequent quarter} \\ 
 
-\customlinespace \indentrow{Num. of videos} &        25.46 &  14.00\sym{***} &  12.78\sym{*} &  11.70\sym{***} &   11.35 \\
-                               &              &    (4.45) &  (6.74) &    (4.24) &  (7.08) \\
-            
-\customlinespace \indentrow{Num. unique videos} &        19.77 &   9.87\sym{***} &  8.85\sym{**} &   8.25\sym{***} &  8.07\sym{**} \\
-                               &              &    (3.03) &  (4.04) &    (2.92) &  (4.12) \\
-               
-\customlinespace \indentrow{Hours of videos} &         3.82 &   2.14\sym{***} &   1.88\sym{*} &   1.79\sym{***} &    1.70 \\
-                               &              &    (0.68) &  (1.03) &    (0.64) &  (1.08) \\
-           
-\customlinespace \indentrow{Hours unique videos} &         2.90 &   1.51\sym{***} &  1.33\sym{**} &   1.27\sym{***} &  1.22\sym{**} \\
-                               &              &    (0.45) &  (0.60) &    (0.44) &  (0.61) \\
-                  
-\midrule 
-Observations &              &       211 &     108 &       211 &     108 \\
-               
-\midrule 
-\multicolumn{6}{l}{\textbf{Panel B}: Effects on classes passed} \\ 
+\customlinespace \indentrow{Took Micro B} & 0.61 & -0.07 & -0.07 & -0.07 & -0.08 \\
+ &  & (0.05) & (0.05) & (0.05) & (0.06) \\
 
-\customlinespace \indentrow{Midterm 1 score} &              &     -0.04 &   -0.24 &     -0.04 &   -0.30 \\
-                               &              &    (0.13) &  (0.18) &    (0.13) &  (0.19) \\
-                   &              &       213 &     112 &       213 &     112 \\
-               
-\customlinespace \indentrow{Midterm 2 score} &              &      0.00 &   -0.04 &      0.00 &    0.03 \\
-                               &              &    (0.13) &  (0.20) &    (0.13) &  (0.21) \\
-                   &              &       214 &     112 &       214 &     112 \\
-              
-\customlinespace \indentrow{Final exam score} &              &      0.12 &    0.00 &      0.12 &    0.23 \\
-                               &              &    (0.14) &  (0.18) &    (0.14) &  (0.23) \\
-                   &              &       211 &     108 &       211 &     108 \\
-                  
-\midrule 
-\multicolumn{6}{l}{\textbf{Panel C}: Effects on class grade type} \\ 
+\customlinespace \indentrow{Num. classes passed} & 3.46 & -0.07 & -0.05 & -0.07 & -0.04 \\
+ &  & (0.11) & (0.12) & (0.11) & (0.12) \\
 
-\customlinespace \indentrow{Took Micro B} &         0.61 &     -0.07 &   -0.07 &     -0.07 &   -0.08 \\
-                               &              &    (0.05) &  (0.05) &    (0.05) &  (0.06) \\
-           
-\customlinespace \indentrow{Num. classes passed} &         3.46 &     -0.07 &   -0.05 &     -0.07 &   -0.04 \\
-                               &              &    (0.11) &  (0.12) &    (0.11) &  (0.12) \\
-       
-\customlinespace \indentrow{Num. classes not passed} &         0.23 &      0.07 &    0.08 &      0.07 &    0.07 \\
-                               &              &    (0.06) &  (0.06) &    (0.06) &  (0.06) \\
-        
-\customlinespace \indentrow{Num. classes withdrawn} &         0.06 &      0.04 &    0.04 &      0.04 &    0.03 \\
-                               &              &    (0.03) &  (0.03) &    (0.03) &  (0.03) \\
-                  
+\customlinespace \indentrow{Num. classes not passed} & 0.23 & 0.07 & 0.08 & 0.07 & 0.07 \\
+ &  & (0.06) & (0.06) & (0.06) & (0.06) \\
+
+\customlinespace \indentrow{Num. classes withdrawn} & 0.06 & 0.04 & 0.04 & 0.04 & 0.03 \\
+ &  & (0.03) & (0.03) & (0.03) & (0.03) \\
+
 \midrule 
-Observations &              &       374 &     332 &       374 &     332 \\
- Treatment assignment controls &              &       Yes &      No &       Yes &     Yes \\
-          Demographic controls &              &        No &      No &       Yes &     Yes \\
-            Pair Fixed Effects &              &        No &      No &        No &     Yes \\
+Observations &  & 374 & 332 & 374 & 332 \\
+Treatment assignment controls &  & Yes & No & Yes & Yes \\
+Demographic controls &  & No & No & Yes & Yes \\
+Pair Fixed Effects &  & No & No & No & Yes \\
 \bottomrule
 \end{tabular}
-\Fignote{This table reports coefficients on $Incentive_i$ from Equations \ref{eq:itt_spec}. Panel A restricts the sample to those who completed both the first and second microeconomics courses (Micro A and B). Panel C includes those who completed the first microeconomics course (Micro A). Test scores are measured in standard deviation units. Model (1) contains linear controls for midterm 1 score and year; (2) is the difference in means and standard errors calculated using the repeated sampling framework of Neyman (1923); (3) and (4) use the post-double-selection (PDS) procedure of \textcite{bch2014a} to select control variables then estimate treatment effects and standard errors. The control variables selected using PDS are listed in Table \ref{tab:controlvars_selected_itt}. Models (2) and (4) include only students whose matched-pair did not attrite from the experiment. \textit{Control Mean} is the mean for the Control students included in models (1) and (3), which is nearly identical to the mean for the Control students included in models (2) and (4). \Regnote}
+\Fignote{This table reports coefficients on $Incentive_i$ from Equations \ref{eq:itt_spec}. Sample includes all students who completed Micro A (saw treatment assignment). Took Micro B is an indicator for enrolling in the subsequent course in the quarter following the experiment. Model (1) contains linear controls for midterm 1 score and year; (2) is the difference in means and standard errors calculated using the repeated sampling framework of Neyman (1923); (3) and (4) use the post-double-selection (PDS) procedure of \textcite{bch2014a} to select control variables then estimate treatment effects and standard errors. The control variables selected using PDS are listed in Table \ref{tab:controlvars_selected_itt}. \textit{Control Mean} is the mean for the Control students included in models (1) and (3), which is nearly identical to the mean for the Control students included in models (2) and (4). \Regnote} 
 \end{threeparttable}}
 \end{table} 
 \end{spacing}
