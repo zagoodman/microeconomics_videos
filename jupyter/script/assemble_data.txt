@@ -1,5 +1,6 @@
 import sys
 
+import numpy as np
 from matplotlib import pyplot as plt
 
 sys.path.insert(0, ".")
@@ -19,6 +20,7 @@ from modules.loaders import (
     load_video_data,
 )
 from modules.video_agg import (
+    add_credit_flag,
     add_exam_period_flags,
     aggregate_counts,
     aggregate_duration,
@@ -136,6 +138,49 @@ for c in cnt_100a.columns[2:]:
     df_main[c] = df_main[c].astype(int)
 
 log_shape(df_main, "after 100a merge")
+
+# --- 100A video aggregates restricted to credit-eligible opens (referee point 4) ---
+# A video open earns credit only if the student did not open another video before this one
+# could have been watched in full (see modules.video_agg.add_credit_flag). Applied to all arms.
+
+dfv = add_credit_flag(dfv)
+print(f"Share of all opens earning credit: {dfv.credit.mean():.3f}")
+print("\nShare of relevant opens earning credit, by arm and period:")
+_tmp = dfv.query("relevant_100a > 0").copy()
+_tmp["period"] = np.select(
+    [_tmp.b4_mid1 == 1, _tmp.b4_mid2 == 1, _tmp.b4_final == 1],
+    ["pre_mid1", "mid1_to_mid2", "mid2_to_final"],
+    "after_final",
+)
+print(_tmp.groupby(["arm", "period"]).credit.mean().unstack().round(3))
+
+dfr_cr = dfv.query("relevant_100a > 0").copy()
+cr_flags = []
+for f in ["b4_mid1", "b4_mid2", "b4_final"]:
+    dfr_cr[f"{f}_cr"] = dfr_cr[f] * dfr_cr["credit"]
+    cr_flags.append(f"{f}_cr")
+
+cr_rename = {}
+for e in ["mid1", "mid2", "final"]:
+    cr_rename[f"duration_b4_{e}_cr"] = f"duration_{e}_cr"
+    cr_rename[f"duration_b4_{e}_cr_u"] = f"duration_{e}_cr_u"
+    cr_rename[f"videos_b4_{e}_cr"] = f"videos_{e}_cr"
+    cr_rename[f"videos_b4_{e}_cr_u"] = f"videos_{e}_cr_u"
+
+dur_cr = aggregate_duration(dfr_cr, MERGE_KEYS, period_flags=cr_flags, to_hours=True)
+cnt_cr = aggregate_counts(dfr_cr, MERGE_KEYS, count_flags=cr_flags)
+video_agg_cr = dur_cr.merge(cnt_cr, on=MERGE_KEYS).rename(columns=cr_rename)
+df_main = df_main.merge(video_agg_cr, on=MERGE_KEYS, how="left")
+for c in video_agg_cr.columns[2:]:
+    df_main[c] = df_main[c].fillna(0)
+for c in [c for c in video_agg_cr.columns[2:] if c.startswith("videos_")]:
+    df_main[c] = df_main[c].astype(int)
+
+print("\nMean video measures (all opens vs credit-eligible), randomized students:")
+_cols = ["videos_mid2_u", "videos_mid2_cr_u", "videos_final_u", "videos_final_cr_u"]
+print(df_main.loc[df_main.arm > 0].groupby("arm")[_cols].mean().round(2))
+log_shape(df_main, "after credit merge")
+
 
 # --- 100B video aggregates ---
 
