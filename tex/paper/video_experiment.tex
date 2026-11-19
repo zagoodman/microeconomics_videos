@@ -283,6 +283,7 @@ Though it is doubtful these strategic students gained much from quickly opening 
 }
 Our \textit{unique} video measures are less sensitive to repeated opening of the same video, but are equally affected by rapid sequential opening of different videos, the behavior we observe among the small number of strategic students described above.
 We rely primarily on unique video measures throughout, while noting that both measures are subject to this limitation for the affected students.
+As a robustness check, Appendix Tables~\ref{tab:firststage_credit} and~\ref{tab:secondstage_credit} re-estimate Tables~\ref{tab:firststage_table} and~\ref{tab:secondstage_table} counting only credit-eligible video openings, i.e., excluding any video for which the student opened another video before it could have been watched in full.
 
 To ensure fairness, we informed students that final letter grades would \textit{not} be affected by being in the experiment.
 We accomplished parity between \textit{Control} and \textit{Incentive} arms through curving final letter grades.
@@ -446,7 +447,7 @@ Finally, we see whether behavior change persists after exogenous incentives are 
 
 High attrition is not problematic for this study, other than reducing statistical power, as long as attrition is independent of potential outcomes.
 If attrition is influenced by treatment status, then the resulting nonrandom selection into our analysis could bias the results.
-We show attrition at each stage of the experiment in Figure~\ref{fig:attritchart}.
+We show attrition at each stage of the experiment in Figure~\ref{fig:attritchart}, and separately for each year, within which treatment was randomized, in Appendix Figure~\ref{fig:attritchart_year}.
 After removing minors and opt-outs per IRB requirement, our sample consists of 215 \textit{Control} and 215 textit{Incentive} students.
 \footnote{In total, five \textit{Above median}, three \textit{Control}, and three \textit{Incentive} students were removed for age or opting-out.}
 Thirty students dropped the course before learning their treatment assignment --- two \textit{Above median}, 19 \textit{Control} and nine \textit{Incentive} --- and additional students attrited before the second midterm and final exam.
@@ -455,7 +456,8 @@ We find no statistically significant difference in attrition before the second m
 However, we do find a significant difference in enrollment rates in Micro B in the quarter following the experiment: treatment students were 9.7 percentage points \textit{less} likely to enroll in Micro B the next quarter than were control students.
 Given the potential for selection bias, we perform several robustness checks when exploring the effect of treatment on Micro B outcomes in Section~\ref{subsec:spillovers_micro_b}.
 
-As can be seen in Appendix Tables~\ref{tab:balance_table_takers} and~\ref{tab:balance_table_matched}, we find no statistically significant difference between the \textit{Control} and \textit{Incentive} arms in observable covariates including first midterm score, year, previous term's cumulative GPA, videos watched before the first midterm, ethnicity, gender, and transfer status.
+Appendix Table~\ref{tab:exam_stats_by_year} reports the mean, median, and standard deviation of raw scores on each exam by year and arm.
+As can be seen in Appendix Tables~\ref{tab:balance_table_takers} and~\ref{tab:balance_table_matched} (and by year in Appendix Tables~\ref{tab:balance_table_takers_2018} and~\ref{tab:balance_table_takers_2019}), we find no statistically significant difference between the \textit{Control} and \textit{Incentive} arms in observable covariates including first midterm score, year, previous term's cumulative GPA, videos watched before the first midterm, ethnicity, gender, and transfer status.
 To correct for potential imbalance and to improve precision, we estimate models that include controls chosen via the post-double-selection method of \textcite{bch2014a}.
 
 \subsection{Relevancy of the encouragement instrument}\label{subsec:relevancy}
@@ -865,6 +867,9 @@ Substituting these variance and means estimators into the final step of~\ref{eq:
 \clearpage
 \input{../tables/attrite_chart.tex}
 
+\clearpage
+\input{../tables/attrite_chart_by_year.tex}
+
 %These two tables have been reformated from previous version.
 %The first table now shows balance for all individuals in the mid2 and final samples.
 %The second table restricts to the matched pairs for each sample.
@@ -873,6 +878,15 @@ Substituting these variance and means estimators into the final step of~\ref{eq:
 \clearpage
 \input{../tables/balance_table_takers}
 %\input{../tables/balance_table_final}
+
+\clearpage
+\input{../tables/balance_table_takers_2018.tex}
+
+\clearpage
+\input{../tables/balance_table_takers_2019.tex}
+
+\clearpage
+\input{../tables/exam_stats_by_year.tex}
 
 \clearpage
 \input{../tables/balance_table_matched.tex}
@@ -900,6 +914,12 @@ Substituting these variance and means estimators into the final step of~\ref{eq:
 		\end{threeparttable}
 	\end{table}
 \end{spacing}
+
+\clearpage
+\input{../tables/firststage_credit.tex}
+
+\clearpage
+\input{../tables/secondstage_credit.tex}
 
 \clearpage
 \input{../tables/controlvars_desc.tex}
