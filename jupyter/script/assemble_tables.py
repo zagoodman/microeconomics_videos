@@ -137,6 +137,7 @@ name_dict = {
     "latx": "Latinx",
     "male": "Male",
     "mathquizstd": "Math quiz score",
+    "mathquiz_unobs": "No math quiz",
     "mid1scorestd": "Midterm 1 score",
     "othereth": "Other ethnicity",
     "prev_cumgpa": "Cumulative GPA",
@@ -218,7 +219,7 @@ note_ittspec = "This table reports coefficients on $Incentive_i$ from Equations 
 
 note_bothspec = (
     "This table reports coefficients on $Incentive_i$ from Equation \\ref{eq:itt_spec} "
-    + "(Reduced Form, \\textit{RF}) and $\\hat{Video_i}$ from Equation \\ref{secondstage_spec} "
+    + "(Reduced Form, \\textit{RF}) and $\\hat{Video_i}$ from Equation \\ref{eq:secondstage_spec} "
     + "(Two-Stage Least Squares, \\textit{2SLS})."
 )
 
@@ -336,7 +337,7 @@ dfbal = pd.read_csv("../data/generated/balance_table_data.csv")
 
 # stack mean, stderr, N
 dfbal = dfbal.melt(["exam", "depvar", "arm", "bothpairs"], var_name="stat", value_name="value")
-dfbal.stat.replace({"mean": "1mean", "stderr": "2stderr", "N": "3N"}, inplace=True)
+dfbal["stat"] = dfbal["stat"].replace({"mean": "1mean", "stderr": "2stderr", "N": "3N"})
 
 # widen using combinations of arm-bothpairs within exam-depvar
 dfbal["combo"] = (dfbal.bothpairs + 1) * 10 + dfbal.arm
@@ -387,9 +388,9 @@ dfbal["depvar_rk"] = dfbal.depvar.map(sorterIndex)
 dfbal.sort_values(["exam", "depvar_rk", "stat"], ascending=[False, True, True], inplace=True)
 
 # insert p-value columns
-dfbal.insert(6, "p_all", 0)
-dfbal.insert(10, "p_takers", 0)
-dfbal.insert(13, "p_both", 0)
+dfbal.insert(6, "p_all", np.nan)
+dfbal.insert(10, "p_takers", np.nan)
+dfbal.insert(13, "p_both", np.nan)
 
 samples = ["all", "takers", "both"]
 
@@ -421,6 +422,7 @@ dfbal.loc[dropidx, "depvar"] = ""
 dfbal.loc[dfbal.stat == "3N", "depvar"] = "Observations"
 
 # stringify stat values
+dfbal[col_list] = dfbal[col_list].astype(object)
 for v in col_list:
     dfbal.loc[dfbal.stat == "1mean", v] = dfbal.loc[dfbal.stat == "1mean", v].apply(
         lambda x: f"{x:.3f}"
@@ -475,7 +477,7 @@ caption = "Balance test, exam taker sample"
 label = "balance_table_takers"
 note = (
     "This table includes all students who completed the second midterm and final exams. "
-    + "Descriptions of each variable can be found in Table \\ref{controlvars_desc}. "
+    + "Descriptions of each variable can be found in Table \\ref{tab:controlvars_desc}. "
     + "\\textit{Female} and \\textit{Male} are coded zero for nine students who do not report "
     + "a gender. \\textit{P-values} are reported for the Welch's t-test of equal means between "
     + "the \\textit{Control} and \\textit{Incentive} arms."
@@ -512,7 +514,7 @@ caption = "Balance test, full sample"
 label = "balance_table_all"
 note = (
     "This table includes all students who saw their treatment assignment. "
-    + "Descriptions of each variable can be found in Table \\ref{controlvars_desc}. "
+    + "Descriptions of each variable can be found in Table \\ref{tab:controlvars_desc}. "
     + "\\textit{Female} and \\textit{Male} are coded zero for nine students who do not report "
     + "a gender. \\textit{P-values} are reported for the Welch's t-test of equal means between "
     + "the \\textit{Control} and \\textit{Incentive} arms."
@@ -531,6 +533,9 @@ k = k.replace(
 # space out variables
 for v in [x for x in dfbal.Variable.unique() if x not in ["", "Observations"]]:
     k = k.replace(v + " &", "\\customlinespace " + v + " &")
+
+# scale to page height; the table is too tall for \linewidth scaling
+k = k.replace("\\resizebox{\\linewidth}{!}{% \n", "\\resizebox*{!}{\\textheight}{%\n", 1)
 
 # write to tex file
 with open("../tex/tables/" + label + ".tex", "w") as tf:
@@ -562,7 +567,7 @@ label = "balance_table_matched"
 note = (
     "This table includes all matched pairs who both complete the second midterm "
     + "or final exams. "
-    + "Descriptions of each variable can be found in Table \\ref{controlvars_desc}. "
+    + "Descriptions of each variable can be found in Table \\ref{tab:controlvars_desc}. "
     + "\\textit{Female} and \\textit{Male} are coded zero for nine students who do not report "
     + "a gender. \\textit{P-values} are reported for the Welch's t-test of equal means between "
     + "the \\textit{Control} and \\textit{Incentive} arms."
@@ -646,8 +651,8 @@ dfw = df[["depvar", "model", "ctrls"]].set_index(["depvar", "model"]).unstack().
 dfw.columns = dfw.columns.droplevel(0)
 dfw.columns = [
     "Dependent Variable",
-    "Controls,\newline Fixed Effects",
-    "Controls,\newline All Observations",
+    "Controls,\\newline Fixed Effects",
+    "Controls,\\newline All Observations",
 ]
 dfw = dfw.iloc[:, [0, 2, 1]]
 dfw["og"] = dfw.iloc[:, 0].copy()
@@ -669,10 +674,10 @@ ctrls
 
 for i in range(0, 3):
     print(i)
-    dfw.iloc[:, i] = dfw.iloc[:, i].apply(
-        lambda x: sorted([name_dict.get(k) or "None" for k in str(x).split(" ")]) or x
+    col = dfw.columns[i]
+    dfw[col] = dfw[col].apply(
+        lambda x: ("\\newline ").join(sorted(name_dict.get(k) or "None" for k in str(x).split(" ")))
     )
-    dfw.iloc[:, i] = dfw.iloc[:, i].apply(lambda x: ("\newline ").join(x))
 
 
 # Add Table labels
@@ -770,12 +775,12 @@ dfw.columns = dfw.columns.droplevel(0)
 dfw.columns = [
     "Dependent Variable",
     "Instrumented",
-    "Controls,\newline Fixed Effects",
-    "Controls,\newline All Observations",
+    "Controls,\\newline Fixed Effects",
+    "Controls,\\newline All Observations",
 ]
 
 # rename instruments
-dfw.Instrumented.replace({"d": "duration_mid1_u", "v": "videos_mid1_u"}, inplace=True)
+dfw["Instrumented"] = dfw["Instrumented"].replace({"d": "duration_mid1_u", "v": "videos_mid1_u"})
 
 # order columns, copy og varnames
 dfw = dfw.iloc[:, [0, 1, 3, 2]]
@@ -783,13 +788,13 @@ dfw["og"] = dfw.iloc[:, 0].copy()
 
 # replace varnames with publishable names
 for i in range(0, 4):
-    dfw.iloc[:, i] = dfw.iloc[:, i].apply(
-        lambda x: sorted([name_dict.get(k) or "None" for k in str(x).split(" ")]) or x
+    col = dfw.columns[i]
+    dfw[col] = dfw[col].apply(
+        lambda x: ("\\newline ").join(sorted(name_dict.get(k) or "None" for k in str(x).split(" ")))
     )
-    dfw.iloc[:, i] = dfw.iloc[:, i].apply(lambda x: ("\newline ").join(x))
 
 # sort by publishable name
-dfw.sort_values(["Dependent Variable", "Instrumented"], ascending=["False", "True"], inplace=True)
+dfw.sort_values(["Dependent Variable", "Instrumented"], ascending=[True, True], inplace=True)
 
 dfw.head()
 
@@ -912,7 +917,11 @@ def get_dfl(roundn):
     """
     Combines pds_iv_coeffs (dfiv) and lates_coeffs (dflate), formats for table output.
     """
-    dfl = pd.concat([dfiv.copy().drop(columns=["ctrls"]), dflate.copy()])
+    # late_*_with_zeros (zero-imputed attriters) is a robustness check reported elsewhere
+    dfl = pd.concat([
+        dfiv.copy().drop(columns=["ctrls"]),
+        dflate.loc[~dflate.model.str.contains("with_zeros")].copy(),
+    ])
     dfl.rename(columns={"treatbeta": "1beta", "stderr": "2stderr", "meanctrl": "3mean", "N": "4N"}, inplace=True)
     dfl = stringify_stats(add_stars(dfl), roundn)
 
@@ -959,9 +968,8 @@ dfsub = dfsub.loc[(dfsub.stat != "4N") | (dfsub.index.isin(keepidx))]
 dfsub.loc[dfsub.stat == "4N", "Instrumented"] = "Observations"
 
 # name instruments
-dfsub.Instrumented.replace(
-    {"z": "RF: Incentive", "v": "2SLS: 10 videos", "d": "2SLS: 1 hour of videos"},
-    inplace=True,
+dfsub["Instrumented"] = dfsub["Instrumented"].replace(
+    {"z": "RF: Incentive", "v": "2SLS: 10 videos", "d": "2SLS: 1 hour of videos"}
 )
 
 # remove Instrumented duplicates and unnecessary cols
@@ -969,7 +977,7 @@ for v in dfsub.og.unique():
     dfsub.loc[dfsub.og == v, "Instrumented"] = dfsub.loc[dfsub.og == v].Instrumented.mask(
         dfsub.loc[dfsub.og == v].Instrumented.duplicated(), ""
     )
-dfsub = dfsub.drop(column=["depvar", "stat", "og"])
+dfsub = dfsub.drop(columns=["depvar", "stat", "og"])
 
 # rename cols
 dfsub.rename(
@@ -1434,7 +1442,7 @@ caption = "Heterogeneous Effects of Treatment"
 label = "het_table"
 
 # table notes
-note_het = "This table reports estimates for $\\beta_2$ from Equation \\ref{het_spec}."
+note_het = "This table reports estimates for $\\beta_2$ from Equation \\ref{eq:het_spec}."
 note = combine_notes([note_het, note_scorestd])
 
 table = convert_to_latex(

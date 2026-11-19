@@ -14,6 +14,15 @@ The project follows a three-stage pipeline, each driven by a Jupyter notebook:
 2. **Statistical Analysis** (`jupyter/analyze_data.ipynb`) — Stata kernel ([stata_kernel](https://kylebarron.dev/stata_kernel/)). Runs IV regressions, balance checks, attrition analysis. Generates PDF plots to `tex/plots/`.
 3. **Table Generation** (`jupyter/assemble_tables.ipynb`) — Python kernel. Reads coefficient estimates, formats publication-ready LaTeX tables to `tex/tables/`.
 
+Referee-revision analyses (JEE, 2026) run as a Python side-pipeline after stage 1:
+
+- `jupyter/referee_analysis.ipynb` — attrition/balance by year, exam score summary stats, and Tables 4–5 with credit-eligible video counts (`*_cr` columns, built in `assemble_data.ipynb` via `modules/video_agg.add_credit_flag`). Writes CSVs to `data/generated/`.
+- `jupyter/assemble_referee_tables.ipynb` — turns those CSVs into `tex/tables/*_by_year.tex`, `balance_table_takers_{2018,2019}.tex`, `*_credit.tex`.
+
+These use `modules/estimators.py` (numpy ports of the Stata OLS/2SLS/Neyman/`pdslasso`/`ivlasso` estimators) and `modules/analysis_data.py` (port of the Stata data prep). Written because the Stata license expired; `referee_analysis.ipynb` asserts that the ports reproduce the existing Stata output CSVs before computing anything new. Known gap: `ivlasso` with pair fixed effects selects different controls in 2 of 4 cases.
+
+`assemble_tables.ipynb` no longer runs cleanly under current pandas (it writes malformed balance tables, then errors). Fix it before re-running, or revert the `tex/tables/` files it overwrites.
+
 The final paper is compiled from `tex/paper/video_experiment.tex` which includes the generated tables and plots.
 
 ## Environment Setup

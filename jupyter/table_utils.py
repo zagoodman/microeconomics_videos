@@ -71,6 +71,10 @@ def convert_to_latex(
         assert isinstance(var, bool)
     assert not (longtable and scalewidth)
 
+    # the paper references tables as tab:<name>
+    if not label.startswith("tab:"):
+        label = "tab:" + label
+
     if not longtable:
         t_str = dft.to_latex(index=False, escape=False, column_format=column_format)
         addendum = (
@@ -116,20 +120,23 @@ def convert_to_latex(
             + "\\footnotesize \n \\begin{longtable}"
         )
         t_str = t_str.replace("\\begin{longtable}", addendum)
-        t_str = t_str.replace("\\endhead", "\\endfirsthead")
 
         ncols = len(dft.columns)
-        startidx = t_str.find("\\endfirsthead")
-        addendum = (
-            "\\endfirsthead \n"
-            + "\\multicolumn{"
-            + str(ncols)
-            + "}{r}{{Table \\ref{"
-            + label
-            + "} (continued)}} \\\\"
-            + "\n\\toprule \n \\endhead"
+        continued = (
+            "\\multicolumn{" + str(ncols) + "}{r}{{Table \\ref{" + label + "} (continued)}} \\\\\n"
         )
-        t_str = t_str[:startidx] + addendum + t_str[startidx + 13:]
+        repeated_caption = "\\caption[]{" + caption + "} \\\\\n"
+        if repeated_caption in t_str:
+            # pandas >= 2 already writes a first head (\endfirsthead) and a continuation head
+            # that repeats the caption; swap the repeated caption for a "(continued)" line
+            t_str = t_str.replace(repeated_caption, continued, 1)
+        else:
+            # older pandas writes a single \endhead; make it the first head and add a
+            # continuation head
+            t_str = t_str.replace("\\endhead", "\\endfirsthead")
+            startidx = t_str.find("\\endfirsthead")
+            addendum = "\\endfirsthead \n" + continued + "\\toprule \n \\endhead"
+            t_str = t_str[:startidx] + addendum + t_str[startidx + 13:]
 
         startidx = t_str.find("\\endlastfoot")
         t_str = t_str[:startidx] + "\\insertTableNotes \n" + t_str[startidx:]
