@@ -1,0 +1,100 @@
+\begin{figure}[p]
+	\begin{center}
+		\caption{Attrition by treatment arm and year}
+		\label{fig:attritchart_year}
+		\footnotesize
+		\textbf{Panel A: 2018}\\[1mm]
+		\begin{tikzpicture}[
+			node distance=0mm, level distance=10mm,
+			every node/.style = {shape=rectangle, draw=none, text width = 30mm, minimum height = 1em, align=center},
+			pval/.style = {shape=rectangle, draw=none, inner sep=0mm, outer sep=0mm, minimum height=1em, align=left, text width=20mm},
+			cmnt/.style = {shape=rectangle, draw=none, inner sep=0mm, outer sep=0mm, minimum height=1em, align=right},
+			level 1/.style = {sibling distance=50mm},
+			level 2/.style = {sibling distance=35mm}, edge from parent fork down, edge from parent/.style = {draw, semithick, -latex},
+			]
+			\node [text width = 50mm] (L1) {Midterm 1 takers, 2018}
+			child {node (L2) {Above median}
+child {node (L3) {\textit{Above median}}
+child {node (L4) {214}
+child {node (L45) {213 (100\%)}
+child {node (L5) {212 (99.5\%)}
+child {node (L6) {212 (99.5\%)}
+child {node (L7) {137 (64.3\%)}
+}}}}}}}
+			child {node {Below or equal to median: 222}
+child {node (C3) {\textit{Control}: 111}
+child {node (C4) {110}
+child {node (C45) {97 (100\%)}
+child {node (C5) {94 (96.9\%)}
+child {node (C6) {89 (91.8\%)}
+child {node (C7) {44 (45.4\%)}
+}}}}}}
+child {node (R3) {\textit{Incentive}: 111}
+child {node (R4) {109}
+child {node (R45) {105 (100\%)}
+child {node (R5) {101 (96.2\%)}
+child {node (R6) {95 (90.5\%)}
+child {node (R7) {47 (44.8\%)}
+}}}}}}};
+			\node[cmnt] (l7) [left=3mm of L7] {Took Micro B};
+			\node[cmnt] (l6) [left=3mm of L6] {Took Final Exam};
+			\node[cmnt] (l5) [left=3mm of L5] {Took Midterm 2};
+			\node[cmnt] (l45) [left=3mm of L45] {Observed \\ treatment status};
+			\node[cmnt] (l4) [left=3mm of L4] {Opt-in and \\ 18 or older};
+			\node[cmnt] (l3) [left=3mm of L3] {Treatment arm};
+			\node[cmnt] (l2) [left=of l3.east |- L2.west] {Midterm score};
+			\node[pval] (r5) [right=3mm of R5] {$p=0.78$};
+			\node[pval] (r6) [right=3mm of R6] {$p=0.75$};
+			\node[pval] (r7) [right=3mm of R7] {$p=0.93$};
+		\end{tikzpicture}
+
+		\bigskip
+
+		\textbf{Panel B: 2019}\\[1mm]
+		\begin{tikzpicture}[
+			node distance=0mm, level distance=10mm,
+			every node/.style = {shape=rectangle, draw=none, text width = 30mm, minimum height = 1em, align=center},
+			pval/.style = {shape=rectangle, draw=none, inner sep=0mm, outer sep=0mm, minimum height=1em, align=left, text width=20mm},
+			cmnt/.style = {shape=rectangle, draw=none, inner sep=0mm, outer sep=0mm, minimum height=1em, align=right},
+			level 1/.style = {sibling distance=50mm},
+			level 2/.style = {sibling distance=35mm}, edge from parent fork down, edge from parent/.style = {draw, semithick, -latex},
+			]
+			\node [text width = 50mm] (L1) {Midterm 1 takers, 2019}
+			child {node (L2) {Above median}
+child {node (L3) {\textit{Above median}}
+child {node (L4) {206}
+child {node (L45) {205 (100\%)}
+child {node (L5) {205 (100.0\%)}
+child {node (L6) {203 (99.0\%)}
+child {node (L7) {147 (71.7\%)}
+}}}}}}}
+			child {node {Below or equal to median: 214}
+child {node (C3) {\textit{Control}: 107}
+child {node (C4) {105}
+child {node (C45) {99 (100\%)}
+child {node (C5) {99 (100.0\%)}
+child {node (C6) {95 (96.0\%)}
+child {node (C7) {70 (70.7\%)}
+}}}}}}
+child {node (R3) {\textit{Incentive}: 107}
+child {node (R4) {106}
+child {node (R45) {101 (100\%)}
+child {node (R5) {101 (100.0\%)}
+child {node (R6) {95 (94.1\%)}
+child {node (R7) {53 (52.5\%)}
+}}}}}}};
+			\node[cmnt] (l7) [left=3mm of L7] {Took Micro B};
+			\node[cmnt] (l6) [left=3mm of L6] {Took Final Exam};
+			\node[cmnt] (l5) [left=3mm of L5] {Took Midterm 2};
+			\node[cmnt] (l45) [left=3mm of L45] {Observed \\ treatment status};
+			\node[cmnt] (l4) [left=3mm of L4] {Opt-in and \\ 18 or older};
+			\node[cmnt] (l3) [left=3mm of L3] {Treatment arm};
+			\node[cmnt] (l2) [left=of l3.east |- L2.west] {Midterm score};
+			\node[pval] (r5) [right=3mm of R5] {no attrition};
+			\node[pval] (r6) [right=3mm of R6] {$p=0.54$};
+			\node[pval] (r7) [right=3mm of R7] {$p=0.01$};
+		\end{tikzpicture}
+
+		\Fignote{Treatment was randomized separately within each year using matched pairs. Assigned \textit{Control} and \textit{Incentive} counts are the number of matched pairs in each year. Pre-anonymization counts of \textit{Above median} students by year are not available; across both years, five \textit{Above median} students were removed for age or opting out (see Figure~\ref{fig:attritchart}). Percentages in parentheses are the portion of students who observed their treatment status and took the second midterm, final exam, and enrolled in Micro B, calculated separately for each treatment arm and year. The p-values are from a two-sample t-test (unequal variances) of the equality of attrition rates between the \textit{Control} and \textit{Incentive} arms at each stage within year. In 2019, no \textit{Control} or \textit{Incentive} student who observed their treatment status missed the second midterm.}
+	\end{center}
+\end{figure}

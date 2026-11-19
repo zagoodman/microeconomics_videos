@@ -1,0 +1,40 @@
+\begin{spacing}{1.0} 
+\begin{table} \centering \caption{Effects of Grade Incentive on Credit-Eligible Video Watching} 
+\label{tab:firststage_credit} 
+\begin{threeparttable} 
+\begin{tabular}{m{0.35\linewidth} *{5}{>{\centering\arraybackslash}m{0.1\linewidth}}}
+\toprule
+ & Control Mean & (1) & (2) & (3) & (4) \\
+\midrule
+\multicolumn{6}{l}{\textbf{Panel A}: By Midterm 2} \\ 
+\customlinespace \indentrow{Videos} & 27.82 & 7.43\sym{***} & 7.57\sym{***} & 6.50\sym{***} & 6.82\sym{***} \\
+ &  & (2.33) & (2.48) & (1.61) & (1.66) \\
+\customlinespace \indentrow{Unique videos} & 20.55 & 5.50\sym{***} & 5.57\sym{***} & 4.89\sym{***} & 5.09\sym{***} \\
+ &  & (1.44) & (1.54) & (0.92) & (0.99) \\
+\customlinespace \indentrow{Hours of videos} & 4.71 & 1.21\sym{***} & 1.23\sym{***} & 1.05\sym{***} & 1.10\sym{***} \\
+ &  & (0.40) & (0.43) & (0.28) & (0.29) \\
+\customlinespace \indentrow{Hours of unique videos} & 3.38 & 0.90\sym{***} & 0.91\sym{***} & 0.79\sym{***} & 0.83\sym{***} \\
+ &  & (0.24) & (0.25) & (0.15) & (0.16) \\
+\midrule 
+Observations & & 395 & 362 & 395 & 362 \\
+\midrule 
+\multicolumn{6}{l}{\textbf{Panel B}: By Final Exam} \\ 
+\customlinespace \indentrow{Videos} & 42.68 & 28.32\sym{***} & 28.81\sym{***} & 27.76\sym{***} & 27.52\sym{***} \\
+ &  & (3.27) & (3.45) & (2.60) & (2.79) \\
+\customlinespace \indentrow{Unique videos} & 29.95 & 18.89\sym{***} & 19.13\sym{***} & 18.60\sym{***} & 18.41\sym{***} \\
+ &  & (1.62) & (1.68) & (1.24) & (1.27) \\
+\customlinespace \indentrow{Hours of videos} & 7.03 & 4.46\sym{***} & 4.54\sym{***} & 4.36\sym{***} & 4.30\sym{***} \\
+ &  & (0.55) & (0.58) & (0.43) & (0.46) \\
+\customlinespace \indentrow{Hours of unique videos} & 4.83 & 2.97\sym{***} & 3.01\sym{***} & 2.92\sym{***} & 2.89\sym{***} \\
+ &  & (0.26) & (0.27) & (0.20) & (0.21) \\
+\midrule 
+Observations & & 374 & 332 & 374 & 332 \\
+Treatment assignment controls & & Yes & No & Yes & Yes \\
+Demographic controls & & No & No & Yes & Yes \\
+Pair Fixed Effects & & No & No & No & Yes \\
+\bottomrule
+\end{tabular}
+\Fignote{This table replicates Table~\ref{tab:firststage_table} using credit-eligible video measures. Video measures count only credit-eligible video openings: a video counts only if the student did not open another video before this one could have been watched in its entirety (allowing one minute for timestamp rounding), the condition \textit{Incentive} students were told was required for credit. The rule is applied identically to all arms. Model (1) contains linear controls for midterm 1 score and year; (2) is the difference in means and standard errors calculated using the repeated sampling framework of Neyman (1923); (3) and (4) use the post-double-selection (PDS) procedure of \textcite{bch2014a} to select control variables then estimate treatment effects and standard errors. Models (2) and (4) include only students whose matched-pair did not attrite from the experiment. \textit{Control Mean} is the mean for the Control students included in models (1) and (3). \Regnote}
+\end{threeparttable}
+\end{table} 
+\end{spacing}
