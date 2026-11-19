@@ -1,11 +1,10 @@
 #!/usr/bin/env python
-
-# Thin orchestration script for the data assembly pipeline.
-# Equivalent to jupyter/assemble_data.ipynb.
-
-# %% Cell 1 — Imports and paths
+# coding: utf-8
 
 import sys
+
+import numpy as np
+from matplotlib import pyplot as plt
 
 sys.path.insert(0, ".")
 
@@ -24,6 +23,7 @@ from modules.loaders import (
     load_video_data,
 )
 from modules.video_agg import (
+    add_credit_flag,
     add_exam_period_flags,
     aggregate_counts,
     aggregate_duration,
@@ -33,7 +33,8 @@ from modules.video_agg import (
 DATA_RAW = "../data/raw"
 DATA_GEN = "../data/generated"
 
-# %% Cell 2 — Demographics
+
+# --- Demographics ---
 
 df_dem = load_student_demographics(DATA_RAW).merge(
     load_precourse_gpa(DATA_RAW), on=MERGE_KEYS, how="outer"
@@ -59,7 +60,8 @@ log_nulls(df_dem_concurrent)
 df_dem_concurrent.to_csv(f"{DATA_GEN}/student_demographics_fall.csv", index=False)
 df_dem_following.to_csv(f"{DATA_GEN}/student_demographics_winter.csv", index=False)
 
-# %% Cell 3 — Treatment outcomes (df_main base)
+
+# --- Treatment outcomes (df_main base) ---
 
 df_main = load_treatment_outcomes(DATA_RAW)
 df_main["arm"] = df_main["toberandomized"] + df_main["treated"]
@@ -70,7 +72,8 @@ for c in [f"attend{i}" for i in range(1, 8)]:
 log_shape(df_main, "treatment_outcomes")
 log_nulls(df_main)
 
-# %% Cell 4 — 100A video aggregates
+
+# --- 100A video aggregates ---
 
 dfv = load_video_data(DATA_RAW, course="100a")
 dfv = add_exam_period_flags(dfv, EXAM_DATES)
@@ -86,6 +89,10 @@ print("\nRelevant videos by syllabus week:")
 print(dftmp.syllabus_week.value_counts().sort_index())
 print("\nStudents per year:")
 print(dfv[["id", "year"]].drop_duplicates().year.value_counts())
+
+plt.hist(dfv.duration, 50)
+plt.title("Distribution of video durations (seconds)")
+plt.show()
 
 # Relevant-only for aggregation
 dfr = dfv.query("relevant_100a > 0").copy()
@@ -138,7 +145,51 @@ for c in cnt_100a.columns[2:]:
 
 log_shape(df_main, "after 100a merge")
 
-# %% Cell 5 — 100B video aggregates
+
+# --- 100A video aggregates restricted to credit-eligible opens (referee point 4) ---
+# A video open earns credit only if the student did not open another video before this one
+# could have been watched in full at 2x speed (see modules.video_agg.add_credit_flag). Applied to all arms.
+
+dfv = add_credit_flag(dfv)
+print(f"Share of all opens earning credit: {dfv.credit.mean():.3f}")
+print("\nShare of relevant opens earning credit, by arm and period:")
+_tmp = dfv.query("relevant_100a > 0").copy()
+_tmp["period"] = np.select(
+    [_tmp.b4_mid1 == 1, _tmp.b4_mid2 == 1, _tmp.b4_final == 1],
+    ["pre_mid1", "mid1_to_mid2", "mid2_to_final"],
+    "after_final",
+)
+print(_tmp.groupby(["arm", "period"]).credit.mean().unstack().round(3))
+
+dfr_cr = dfv.query("relevant_100a > 0").copy()
+cr_flags = []
+for f in ["b4_mid1", "b4_mid2", "b4_final"]:
+    dfr_cr[f"{f}_cr"] = dfr_cr[f] * dfr_cr["credit"]
+    cr_flags.append(f"{f}_cr")
+
+cr_rename = {}
+for e in ["mid1", "mid2", "final"]:
+    cr_rename[f"duration_b4_{e}_cr"] = f"duration_{e}_cr"
+    cr_rename[f"duration_b4_{e}_cr_u"] = f"duration_{e}_cr_u"
+    cr_rename[f"videos_b4_{e}_cr"] = f"videos_{e}_cr"
+    cr_rename[f"videos_b4_{e}_cr_u"] = f"videos_{e}_cr_u"
+
+dur_cr = aggregate_duration(dfr_cr, MERGE_KEYS, period_flags=cr_flags, to_hours=True)
+cnt_cr = aggregate_counts(dfr_cr, MERGE_KEYS, count_flags=cr_flags)
+video_agg_cr = dur_cr.merge(cnt_cr, on=MERGE_KEYS).rename(columns=cr_rename)
+df_main = df_main.merge(video_agg_cr, on=MERGE_KEYS, how="left")
+for c in video_agg_cr.columns[2:]:
+    df_main[c] = df_main[c].fillna(0)
+for c in [c for c in video_agg_cr.columns[2:] if c.startswith("videos_")]:
+    df_main[c] = df_main[c].astype(int)
+
+print("\nMean video measures (all opens vs credit-eligible), randomized students:")
+_cols = ["videos_mid2_u", "videos_mid2_cr_u", "videos_final_u", "videos_final_cr_u"]
+print(df_main.loc[df_main.arm > 0].groupby("arm")[_cols].mean().round(2))
+log_shape(df_main, "after credit merge")
+
+
+# --- 100B video aggregates ---
 
 dfv_b = load_video_data(DATA_RAW, course="100b")
 
@@ -153,6 +204,10 @@ drop_100b = [
     "duration_u_b",
 ]
 df_main = df_main.drop(columns=[c for c in drop_100b if c in df_main.columns])
+
+plt.hist(dfv_b.duration, 50)
+plt.title("Distribution of 100B video durations (seconds)")
+plt.show()
 
 # Duration: aggregate_duration with no period_flags produces duration{suffix} and duration_u{suffix}
 # suffix="_b" -> columns: duration_b, duration_u_b
@@ -176,10 +231,11 @@ for c in cnt_100b.columns[2:]:
 
 log_shape(df_main, "after 100b merge")
 
-# %% Cell 6 — Export df_main
+
+# --- Export df_main ---
 
 # Drop stale columns carried over from raw treatment file before export
-# arm is excluded from the CSV but retained in df_main for the weekly panel (Cell 7)
+# arm is excluded from the CSV but retained in df_main for the weekly panel
 drop_stale = [
     "arm",
     "relevant",
@@ -198,9 +254,10 @@ export_cols = [c for c in df_main.columns if c not in drop_stale]
 df_main[export_cols].to_csv(f"{DATA_GEN}/student_analysis_sample.csv", index=False)
 log_shape(df_main, "student_analysis_sample")
 log_nulls(df_main)
-print(df_main.head())
+df_main.head()
 
-# %% Cell 7 — Weekly video panel
+
+# --- Weekly video panel ---
 
 df_arm = df_main[[*MERGE_KEYS, "arm", "finalscore"]].copy()
 df_weekly = build_weekly_video_panel(dfv, df_arm)
@@ -209,3 +266,22 @@ print(df_weekly.isnull().sum())
 print(len(df_weekly.loc[df_weekly.finalscore.isnull()].id.value_counts()))
 
 df_weekly.to_csv(f"{DATA_GEN}/weekly_video_panel.csv", index=False)
+
+
+# --- Diagnostic plots (time series) ---
+
+dftmp = df_weekly.groupby(["arm", "weekoy"]).mean(numeric_only=True).reset_index()
+for c in ["videos_pre_mid1", "videos_mid1_to_mid2", "videos_post_mid2"]:
+    plt.plot(dftmp.loc[dftmp.arm == 1, "weekoy"], dftmp.loc[dftmp.arm == 1, c], label="control")
+    plt.plot(dftmp.loc[dftmp.arm == 2, "weekoy"], dftmp.loc[dftmp.arm == 2, c], label="treated")
+    plt.title(c + ", All")
+    plt.legend()
+    plt.show()
+
+for c in ["videos_pre_mid1u", "videos_mid1_to_mid2u", "videos_post_mid2u"]:
+    plt.plot(dftmp.loc[dftmp.arm == 1, "weekoy"], dftmp.loc[dftmp.arm == 1, c], label="control")
+    plt.plot(dftmp.loc[dftmp.arm == 2, "weekoy"], dftmp.loc[dftmp.arm == 2, c], label="treated")
+    plt.title(c + ", Unique")
+    plt.legend()
+    plt.show()
+

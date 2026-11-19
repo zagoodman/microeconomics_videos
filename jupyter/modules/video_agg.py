@@ -374,15 +374,18 @@ def build_weekly_video_panel(
 # ---------------------------------------------------------------------------
 
 
-def add_credit_flag(dfv: pd.DataFrame, tolerance_seconds: int = 60) -> pd.DataFrame:
+def add_credit_flag(
+    dfv: pd.DataFrame, tolerance_seconds: int = 60, max_speed: float = 2.0
+) -> pd.DataFrame:
     """Flag video opens that satisfy the grade-incentive crediting rule.
 
     Incentive students were told a video counts toward the 40-video requirement only if it is
     watched in its entirety and one at a time. We operationalize this as: an open earns credit
     if the student's next video open (any video, any course page in the IMVH log) occurs no
-    earlier than the video's runtime after this open. The student's last open always earns
-    credit. Timestamps are recorded to the minute, so ``tolerance_seconds`` (default 60) is
-    subtracted from the runtime to avoid penalizing truncation.
+    earlier than the time needed to watch the whole video at ``max_speed`` (default 2x playback)
+    after this open. The student's last open always earns credit.
+    Timestamps are recorded to the minute, so ``tolerance_seconds`` (default 60) is subtracted
+    from that time to avoid penalizing truncation.
 
     The rule is applied identically to every student regardless of treatment arm.
 
@@ -396,7 +399,7 @@ def add_credit_flag(dfv: pd.DataFrame, tolerance_seconds: int = 60) -> pd.DataFr
     nxt = d.groupby(["id", "year"])["firstview"].shift(-1)
     gap = (nxt - d["firstview"]).dt.total_seconds()
     dfv.loc[order, "gap_next"] = gap
-    credit = gap.isna() | (gap >= d["duration"] - tolerance_seconds)
+    credit = gap.isna() | (gap >= d["duration"] / max_speed - tolerance_seconds)
     dfv.loc[order, "credit"] = credit.astype(int)
     dfv["credit"] = dfv["credit"].astype(int)
     return dfv

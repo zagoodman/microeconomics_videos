@@ -1,3 +1,19 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# # Referee-requested tables (JEE revision)
+# 
+# Python kernel. Reads the CSVs written by `referee_analysis.ipynb` and writes LaTeX to `tex/tables/`:
+# 
+# | Output | Referee point |
+# |---|---|
+# | `attrite_chart_by_year.tex` | 1 — Figure A1 by year |
+# | `balance_table_takers_2018.tex`, `balance_table_takers_2019.tex` | 1 — Table A1 by year |
+# | `exam_stats_by_year.tex` | 2 — exam mean/median/SD by year |
+# | `firststage_credit.tex`, `secondstage_credit.tex` | 4 — Tables 4 and 5 with credit-eligible videos |
+# 
+# Kept separate from `assemble_tables.ipynb` so these tables build on their own.
+
 import pandas as pd
 from table_utils import get_p_value, star_p
 
@@ -22,6 +38,9 @@ def stars(beta, se):
 def fmt_beta(beta, se, nd):
     s = stars(beta, se)
     return f"{beta:.{nd}f}" + (f"\\sym{{{s}}}" if s else "")
+
+
+# ## Figure A1 by year: attrition by treatment arm
 
 attr = pd.read_csv(f"{DATA_GEN}/attrition_by_year.csv")
 
@@ -62,8 +81,8 @@ def tree(year):
         "\t\t\tevery node/.style = {shape=rectangle, draw=none, text width = 30mm, minimum height = 1em, align=center},\n"
         "\t\t\tpval/.style = {shape=rectangle, draw=none, inner sep=0mm, outer sep=0mm, minimum height=1em, align=left, text width=20mm},\n"
         "\t\t\tcmnt/.style = {shape=rectangle, draw=none, inner sep=0mm, outer sep=0mm, minimum height=1em, align=right},\n"
-        "\t\t\tlevel 1/.style = {sibling distance=50mm},\n"
-        "\t\t\tlevel 2/.style = {sibling distance=35mm}, edge from parent fork down, edge from parent/.style = {draw, semithick, -latex},\n"
+        "\t\t\tlevel 1/.style = {sibling distance=50mm, level distance=15mm},\n"
+        "\t\t\tlevel 2/.style = {sibling distance=35mm, level distance=10mm}, edge from parent fork down, edge from parent/.style = {draw, semithick, -latex},\n"
         "\t\t\t]\n"
         f"\t\t\t\\node [text width = 50mm] (L1) {{Midterm 1 takers, {year}}}\n"
         "\t\t\tchild {node (L2) {Above median}\n"
@@ -95,18 +114,17 @@ fig = (
     "\t\t\\label{fig:attritchart_year}\n\t\t\\footnotesize\n"
     "\t\t\\textbf{Panel A: 2018}\\\\[1mm]\n" + tree(2018) + "\n\t\t\\bigskip\n\n"
     "\t\t\\textbf{Panel B: 2019}\\\\[1mm]\n" + tree(2019) + "\n"
-    "\t\t\\Fignote{Treatment was randomized separately within each year using matched pairs. "
-    "Assigned \\textit{Control} and \\textit{Incentive} counts are the number of matched pairs in each year. "
-    "Pre-anonymization counts of \\textit{Above median} students by year are not available; across both years, "
-    "five \\textit{Above median} students were removed for age or opting out (see Figure~\\ref{fig:attritchart}). "
-    "Percentages in parentheses are the portion of students who observed their treatment status and took the "
+    "\t\t{Percentages in parentheses are the portion of students who observe their treatment status and took the "
     "second midterm, final exam, and enrolled in Micro B, calculated separately for each treatment arm and year. "
-    "The p-values are from a two-sample t-test (unequal variances) of the equality of attrition rates between the "
-    "\\textit{Control} and \\textit{Incentive} arms at each stage within year. In 2019, no \\textit{Control} or "
-    "\\textit{Incentive} student who observed their treatment status missed the second midterm.}\n"
+    "The p-values are from a two-sample t-test of the equality of attrition rates between the "
+    "\\textit{Control} and \\textit{Incentive} arms at each stage within year. "
+    "\\textit{Above median} counts before removing minors and opt-outs are not available by year.}\n"
     "\t\\end{center}\n\\end{figure}\n"
 )
 write("attrite_chart_by_year", fig)
+
+
+# ## Table A1 by year: balance, exam-taker sample
 
 bal = pd.read_csv(f"{DATA_GEN}/balance_table_data_by_year.csv")
 
@@ -179,6 +197,9 @@ def balance_table(year):
 for y in YEARS:
     write(f"balance_table_takers_{y}", balance_table(y))
 
+
+# ## Exam score summary statistics by year
+
 es = pd.read_csv(f"{DATA_GEN}/exam_stats_by_year.csv")
 lines = []
 for g in ["All students", "Above median", "Control", "Incentive"]:
@@ -209,6 +230,9 @@ table = (
 )
 write("exam_stats_by_year", table)
 
+
+# ## Tables 4 and 5 with credit-eligible video counts
+
 fs = pd.read_csv(f"{DATA_GEN}/credit_firststage_coeffs.csv")
 ss = pd.read_csv(f"{DATA_GEN}/credit_secondstage_coeffs.csv")
 
@@ -221,8 +245,8 @@ NOTE_4MODELS = (
 )
 NOTE_CREDIT = (
     "Video measures count only credit-eligible video openings: a video counts only if the student did not "
-    "open another video before this one could have been watched in its entirety (allowing one minute for "
-    "timestamp rounding), the condition \\textit{Incentive} students were told was required for credit. "
+    "open another video before this one could have been watched in its entirety at 2x playback speed "
+    "(allowing one minute for timestamp rounding), the condition \\textit{Incentive} students were told was required for credit. "
     "The rule is applied identically to all arms."
 )
 FOOT = [
@@ -313,3 +337,4 @@ t5 = (
     "\\end{threeparttable}\n\\end{table} \n\\end{spacing}\n"
 )
 write("secondstage_credit", t5)
+

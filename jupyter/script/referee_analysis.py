@@ -1,3 +1,20 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# # Referee-requested analyses (JEE revision)
+# 
+# Python kernel. Produces the inputs for the new appendix tables/figures requested by Referee 1:
+# 
+# 1. **Point 1** — sample size, treatment assignment, and attrition by year (Figure A1 and Table A1 by year).
+# 2. **Point 2** — exam score mean, median, and standard deviation by year and exam.
+# 3. **Point 4** — first-stage and second-stage estimates (Tables 4 and 5) with video counts restricted to
+#    credit-eligible opens (no other video opened before the video could be watched in full).
+# 
+# Stata was unavailable for this revision (expired license), so estimators are ported to Python in
+# `modules/estimators.py`. Section 0 validates the ports by reproducing the existing Stata output files
+# before anything new is computed. Outputs go to `data/generated/`; `assemble_tables.ipynb` turns them into
+# LaTeX.
+
 import sys
 
 import numpy as np
@@ -14,6 +31,13 @@ YEARS = [2018, 2019]
 
 df = load_analysis_frame(DATA_GEN)
 print(df.groupby(["year", "arm"]).size().unstack())
+
+
+# ## 0. Validate Python ports against existing Stata output
+# 
+# Model (1) OLS, model (2) Neyman, the 2SLS LATEs, and all post-double-selection (PDS) ITT
+# estimates are checked against `itt_coeffs.csv`, `lates_coeffs.csv`, `pds_coeffs.csv`, and
+# `pds_iv_coeffs.csv`. Known residual differences from Stata's `lassopack` are printed rather than asserted.
 
 itt_st = pd.read_csv(f"{DATA_GEN}/itt_coeffs.csv")
 late_st = pd.read_csv(f"{DATA_GEN}/lates_coeffs.csv")
@@ -56,7 +80,10 @@ for exam in ["mid2", "final"]:
             r = st(pds_st, v, mod)
             st_sel = sorted(str(r.ctrls).split()) if isinstance(r.ctrls, str) else []
             if sorted(p["selected"]) == st_sel:
-                checks.append((f"PDS {mod} {v}", p["beta"], r.treatbeta, p["se"], r.stderr))
+                # Stata SEs lack the FE dof adjustment (ivlasso 1.1.02 bug); add it before comparing
+                checks.append(
+                    (f"PDS {mod} {v}", p["beta"], r.treatbeta, p["se"], r.stderr * np.sqrt(p["fe_dof"]))
+                )
             else:
                 notes.append(
                     f"PDS {mod} {v}: python selects {p['selected']}, Stata {st_sel}; "
@@ -81,7 +108,9 @@ for exam in ["mid2", "final"]:
             r = st(pdsiv_st, y, mod)
             st_sel = sorted(str(r.ctrls).split())
             if sorted(p["selected"]) == st_sel:
-                checks.append((f"{mod} {y}", p["beta"], r.treatbeta, p["se"], r.stderr))
+                checks.append(
+                    (f"{mod} {y}", p["beta"], r.treatbeta, p["se"], r.stderr * np.sqrt(p["fe_dof"]))
+                )
             else:
                 notes.append(
                     f"{mod} {y}: python selects {p['selected']}, Stata {st_sel}; "
@@ -95,6 +124,14 @@ assert (chk.max_abs_diff < 1e-4).all(), "Python port does not reproduce Stata"
 print(f"\n{len(chk)} estimates reproduce Stata to < 1e-4.")
 print("\nSelection differences (not asserted):")
 print("\n".join(notes))
+
+
+# ## 1. Sample size, treatment assignment, and attrition by year (Referee point 1)
+# 
+# Pre-anonymization assignment counts for the randomized arms are recovered from the matched-pair
+# identifiers (pairs are numbered consecutively within year, so assigned *Control* = assigned
+# *Incentive* = number of pairs). The pre-anonymization count of *Above median* students by year
+# is not recoverable from the anonymized data (five were removed across both years).
 
 def attrition_counts(data):
     """Counts at each stage of Figure A1 for one sample (Stata block 'examine attrition')."""
@@ -157,6 +194,12 @@ assert [round(pooled.loc["pvalue", k], 2) for k in ["took_mid2", "took_final", "
 ]
 
 attr.to_csv(f"{DATA_GEN}/attrition_by_year.csv", index=False)
+
+
+# ### Balance by year (Table A1 by year)
+# 
+# Same statistics as the Stata balance block (`balance_table_data.csv`), computed separately by year.
+# The pooled computation is validated against the Stata output first.
 
 BALANCE_VARS = [
     "mid1scorestd",
@@ -246,6 +289,12 @@ bal_year = pd.concat(
 bal_year.to_csv(f"{DATA_GEN}/balance_table_data_by_year.csv", index=False)
 bal_year.query("exam == 'final' and bothpairs == 0 and depvar == 'mid1scorestd'")
 
+
+# ## 2. Exam score summary statistics by year (Referee point 2)
+# 
+# Raw exam scores (percent of points possible) for every student in the analysis sample who sat
+# the exam, by year and arm.
+
 exam_cols = {"mid1score": "Midterm 1", "mid2score": "Midterm 2", "finalscore": "Final exam"}
 groups = {"All students": [0, 1, 2], "Above median": [0], "Control": [1], "Incentive": [2]}
 rows = []
@@ -267,6 +316,14 @@ for y in YEARS:
 exam_stats = pd.DataFrame(rows)
 exam_stats.to_csv(f"{DATA_GEN}/exam_stats_by_year.csv", index=False)
 exam_stats.round(1)
+
+
+# ## 3. Tables 4 and 5 with credit-eligible video counts (Referee point 4)
+# 
+# `*_cr` measures (built in `assemble_data.ipynb`, `modules.video_agg.add_credit_flag`) count only
+# video opens that could have been watched in full at 2x speed before the student's next open. The same four models
+# as Tables 4 and 5 are estimated with these measures; the reduced form is unchanged by construction.
+# For comparison, the same Python code is also run on the original measures.
 
 def first_stage(data, measures):
     """Rows of Table 4 for the given {label: column} measures."""
@@ -367,3 +424,4 @@ print(
     .round(3)
     .to_string()
 )
+

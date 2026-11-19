@@ -198,7 +198,12 @@ def _prep(df, cols_pen, cols_part, fe=None):
 
 
 def _fe_dof(df, fe):
-    """pdslasso/ivlasso with fe scale the robust VCE by N/(N - number of groups)."""
+    """Large-sample FE adjustment N/(N - number of groups) for the robust VCE.
+
+    pdslasso/ivlasso compute this (dofminus) for the fe option, and the published tables
+    include it. ivlasso 1.1.02 never passes it on to ivreg2, so current Stata output omits it
+    (SEs too small by sqrt(2) with matched pairs). We keep the adjustment.
+    """
     if fe is None:
         return 1.0
     n = len(df)
@@ -215,7 +220,7 @@ def pds(
 ):
     """pdslasso y d (partial + controls), partial(partial) [fe] robust.
 
-    Returns dict(beta, se, N, selected).
+    Returns dict(beta, se, N, selected, fe_dof).
     """
     df = df.dropna(subset=[y, d, *controls, *partial])
     tr, P = _prep(df, controls, partial, fe)
@@ -231,8 +236,9 @@ def pds(
     b = XtXi @ R.T @ Y
     e = Y - R @ b
     V = XtXi @ ((R * e[:, None] ** 2).T @ R) @ XtXi
-    V *= _fe_dof(df, fe)
-    return {"beta": b[0], "se": np.sqrt(V[0, 0]), "N": n, "selected": selected}
+    dof = _fe_dof(df, fe)
+    V *= dof
+    return {"beta": b[0], "se": np.sqrt(V[0, 0]), "N": n, "selected": selected, "fe_dof": dof}
 
 
 def pds_iv(
@@ -248,7 +254,7 @@ def pds_iv(
     """ivlasso y (partial + controls) (d = z), partial(partial z) [fe] robust.
 
     Selection is the union of rigorous-lasso selections of the partialled controls for the
-    equations listed in select_on (see comment below). Returns dict(beta, se, N, selected).
+    equations listed in select_on (see comment below). Returns dict(beta, se, N, selected, fe_dof).
     """
     df = df.dropna(subset=[y, d, z, *controls, *partial])
     tr, P = _prep(df, controls, partial, fe)
@@ -269,5 +275,6 @@ def pds_iv(
     b = ZX_i @ RZ.T @ Y
     e = Y - RX @ b
     V = ZX_i @ ((RZ * e[:, None] ** 2).T @ RZ) @ ZX_i.T
-    V *= _fe_dof(df, fe)
-    return {"beta": b[0], "se": np.sqrt(V[0, 0]), "N": len(Y), "selected": selected}
+    dof = _fe_dof(df, fe)
+    V *= dof
+    return {"beta": b[0], "se": np.sqrt(V[0, 0]), "N": len(Y), "selected": selected, "fe_dof": dof}

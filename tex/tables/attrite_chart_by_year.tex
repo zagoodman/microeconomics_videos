@@ -9,8 +9,8 @@
 			every node/.style = {shape=rectangle, draw=none, text width = 30mm, minimum height = 1em, align=center},
 			pval/.style = {shape=rectangle, draw=none, inner sep=0mm, outer sep=0mm, minimum height=1em, align=left, text width=20mm},
 			cmnt/.style = {shape=rectangle, draw=none, inner sep=0mm, outer sep=0mm, minimum height=1em, align=right},
-			level 1/.style = {sibling distance=50mm},
-			level 2/.style = {sibling distance=35mm}, edge from parent fork down, edge from parent/.style = {draw, semithick, -latex},
+			level 1/.style = {sibling distance=50mm, level distance=15mm},
+			level 2/.style = {sibling distance=35mm, level distance=10mm}, edge from parent fork down, edge from parent/.style = {draw, semithick, -latex},
 			]
 			\node [text width = 50mm] (L1) {Midterm 1 takers, 2018}
 			child {node (L2) {Above median}
@@ -56,8 +56,8 @@ child {node (R7) {47 (44.8\%)}
 			every node/.style = {shape=rectangle, draw=none, text width = 30mm, minimum height = 1em, align=center},
 			pval/.style = {shape=rectangle, draw=none, inner sep=0mm, outer sep=0mm, minimum height=1em, align=left, text width=20mm},
 			cmnt/.style = {shape=rectangle, draw=none, inner sep=0mm, outer sep=0mm, minimum height=1em, align=right},
-			level 1/.style = {sibling distance=50mm},
-			level 2/.style = {sibling distance=35mm}, edge from parent fork down, edge from parent/.style = {draw, semithick, -latex},
+			level 1/.style = {sibling distance=50mm, level distance=15mm},
+			level 2/.style = {sibling distance=35mm, level distance=10mm}, edge from parent fork down, edge from parent/.style = {draw, semithick, -latex},
 			]
 			\node [text width = 50mm] (L1) {Midterm 1 takers, 2019}
 			child {node (L2) {Above median}
@@ -95,6 +95,6 @@ child {node (R7) {53 (52.5\%)}
 			\node[pval] (r7) [right=3mm of R7] {$p=0.01$};
 		\end{tikzpicture}
 
-		\Fignote{Treatment was randomized separately within each year using matched pairs. Assigned \textit{Control} and \textit{Incentive} counts are the number of matched pairs in each year. Pre-anonymization counts of \textit{Above median} students by year are not available; across both years, five \textit{Above median} students were removed for age or opting out (see Figure~\ref{fig:attritchart}). Percentages in parentheses are the portion of students who observed their treatment status and took the second midterm, final exam, and enrolled in Micro B, calculated separately for each treatment arm and year. The p-values are from a two-sample t-test (unequal variances) of the equality of attrition rates between the \textit{Control} and \textit{Incentive} arms at each stage within year. In 2019, no \textit{Control} or \textit{Incentive} student who observed their treatment status missed the second midterm.}
+		{Percentages in parentheses are the portion of students who observe their treatment status and took the second midterm, final exam, and enrolled in Micro B, calculated separately for each treatment arm and year. The p-values are from a two-sample t-test of the equality of attrition rates between the \textit{Control} and \textit{Incentive} arms at each stage within year. \textit{Above median} counts before removing minors and opt-outs are not available by year.}
 	\end{center}
 \end{figure}
