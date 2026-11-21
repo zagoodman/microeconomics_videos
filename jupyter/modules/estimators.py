@@ -7,6 +7,8 @@ validated in referee_analysis.ipynb by reproducing the existing Stata outputs
 anything new.
 
 - ols_robust:  `reg y x, robust` (HC1)
+- wls_robust:  `reg y x [pweight=w], robust` (HC1)
+- logit_prob:  fitted probabilities from `logit y x` (Newton-Raphson MLE)
 - iv_robust:   `ivregress 2sls y w (d = z), vce(robust)` (HC0)
 - neyman / neyman_late: the paired difference-in-means programs
 - rlasso / pds / pds_iv: rigorous (heteroskedastic) lasso and post-double-selection,
@@ -42,6 +44,37 @@ def ols_robust(y, X, hc: str = "HC1"):
     if hc == "HC1":
         V *= n / (n - k)
     return b[:-1], np.sqrt(np.diag(V))[:-1]
+
+
+def wls_robust(y, X, w):
+    """Weighted OLS with probability weights, `reg y X [pweight=w], robust` (HC1).
+
+    Returns (beta, se) arrays aligned with X columns (constant appended and dropped).
+    """
+    y = np.asarray(y, float)
+    w = np.asarray(w, float)
+    X = _add_const(np.asarray(X, float))
+    n, k = X.shape
+    XtWXi = np.linalg.pinv((X * w[:, None]).T @ X)
+    b = XtWXi @ (X * w[:, None]).T @ y
+    e = y - X @ b
+    meat = (X * (w * e)[:, None] ** 2).T @ X
+    V = XtWXi @ meat @ XtWXi * n / (n - k)
+    return b[:-1], np.sqrt(np.diag(V))[:-1]
+
+
+def logit_prob(y, X, tol: float = 1e-12, max_iter: int = 100):
+    """Fitted P(y=1|X) from a logit of y on X (constant appended), by Newton-Raphson."""
+    y = np.asarray(y, float)
+    X = _add_const(np.asarray(X, float))
+    b = np.zeros(X.shape[1])
+    for _ in range(max_iter):
+        p = 1 / (1 + np.exp(-X @ b))
+        step = np.linalg.solve((X * (p * (1 - p))[:, None]).T @ X, X.T @ (y - p))
+        b += step
+        if np.max(np.abs(step)) < tol:
+            break
+    return 1 / (1 + np.exp(-X @ b))
 
 
 def iv_robust(y, d, W, z, small: bool = False):

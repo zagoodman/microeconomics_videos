@@ -7,7 +7,10 @@
 # 
 # 1. **Point 1** — sample size, treatment assignment, and attrition by year (Figure A1 and Table A1 by year).
 # 2. **Point 2** — exam score mean, median, and standard deviation by year and exam.
-# 3. **Point 4** — first-stage and second-stage estimates (Tables 4 and 5) with video counts restricted to
+# 3. **Point 3** — Micro B enrollment (Table 8, "Took Micro B") and Micro B video watching (Table 9,
+#    Panel A) by year. The enrollment gap is entirely in 2019, so 2018 is a persistence test without
+#    differential selection into Micro B.
+# 4. **Point 4** — first-stage and second-stage estimates (Tables 4 and 5) with video counts restricted to
 #    credit-eligible opens (no other video opened before the video could be watched in full).
 # 
 # Stata was unavailable for this revision (expired license), so estimators are ported to Python in
@@ -19,12 +22,21 @@ import sys
 
 import numpy as np
 import pandas as pd
-from scipy.stats import ttest_ind
+from scipy.stats import norm, ttest_ind
 
 sys.path.insert(0, ".")
 
-from modules.analysis_data import CTRL_VARS, load_analysis_frame
-from modules.estimators import iv_robust, neyman, neyman_late, ols_robust, pds, pds_iv
+from modules.analysis_data import CTRL_VARS, get_std_units, load_analysis_frame
+from modules.estimators import (
+    iv_robust,
+    logit_prob,
+    neyman,
+    neyman_late,
+    ols_robust,
+    pds,
+    pds_iv,
+    wls_robust,
+)
 
 DATA_GEN = "../data/generated"
 YEARS = [2018, 2019]
@@ -424,4 +436,146 @@ print(
     .round(3)
     .to_string()
 )
+
+
+# ## 4. Micro B enrollment and Micro B video watching by year (Referee point 3)
+# 
+# Figure A2 shows the Micro B enrollment gap is entirely in 2019. Here Table 8's *Took Micro B* row and
+# Table 9's Panel A are re-estimated separately by year, with `y2019` dropped from every specification
+# (and covariates that are constant within a year dropped, as Stata would: `mathquiz_unobs` is all zero in
+# 2019). Because the two years are disjoint samples, the 2019 − 2018 difference of the by-year estimates has
+# SE $\sqrt{se_{2018}^2 + se_{2019}^2}$; this is the year-interaction test.
+# 
+# Samples follow `analyze_data.ipynb`:
+# 
+# - *Took Micro B* models (1)–(4) use final-exam takers (as Table 8); model (5) uses all students who saw
+#   their assignment, coding non-enrollment as zero (Stata `itt_zeros`), which is the Figure A2 population.
+# - Panel A PDS uses Micro B final-exam takers; IPW reweights Micro B enrollees using a logit for enrollment
+#   on baseline covariates fit on all students who saw their assignment, weights trimmed at the 1st/99th
+#   percentiles. Generalized Lee bounds by year come from `modules/semenova_bounds.R <leebounds> <year>`.
+# 
+# Each estimator is first checked against the pooled Stata output.
+
+IPW_X = [
+    "mid1scorestd",
+    "mathquizstd",
+    "mathquiz_unobs",
+    "transfer",
+    "prev_cumgpa",
+    "prev_cumgpa_unobs",
+    "female",
+    "asian",
+    "latx",
+    "white",
+]
+PANEL_A = ["videos_b", "videos_b_u", "duration_b", "duration_b_u"]
+ipw_st = pd.read_csv(f"{DATA_GEN}/ipw_100b.csv")
+
+
+def stata_pctile(x, p):
+    """Stata `_pctile` default definition."""
+    x = np.sort(np.asarray(x))
+    nq = len(x) * p / 100
+    return (x[int(nq) - 1] + x[int(nq)]) / 2 if nq == int(nq) else x[int(np.ceil(nq)) - 1]
+
+
+def took_models(data, yr):
+    """Table 8 'Took Micro B' row, models (1)-(4), plus (5) = Stata itt_zeros."""
+    s = data[(data.arm > 0) & data.finalscorestd.notnull() & data.took100b.notnull()]
+    sp = data[(data.arm > 0) & (data.bothpairs_final == 1)]
+    m, mp = s.loc[s.arm == 1, "took100b"].mean(), sp.loc[sp.arm == 1, "took100b"].mean()
+    out = []
+    b, se = ols_robust(s.took100b, s[["treated", "mid1scorestd", *yr]])
+    out.append((1, b[0], se[0], len(s), m, ""))
+    nb_, nse = neyman(sp, "took100b")
+    out.append((2, nb_, nse, len(sp), mp, ""))
+    p = pds(s, "took100b", "treated", CTRL_VARS, [*yr, "mid1scorestd"])
+    out.append((3, p["beta"], p["se"], p["N"], m, " ".join(p["selected"])))
+    p = pds(sp, "took100b", "treated", CTRL_VARS, ["mid1scorestd"], fe="pairyear")
+    out.append((4, p["beta"], p["se"], p["N"], mp, " ".join(p["selected"])))
+    z = data[(data.arm > 0) & data.assigned_grade.notnull()].copy()
+    z["took100b"] = z.took100b.fillna(0)
+    z = get_std_units(z)  # Stata get_itt_with_zeros re-standardizes within this sample
+    b, se = ols_robust(z.took100b, z[["treated", "mid1scorestd", *yr]])
+    out.append((5, b[0], se[0], len(z), z.loc[z.arm == 1, "took100b"].mean(), ""))
+    return pd.DataFrame(out, columns=["model", "beta", "se", "N", "meanctrl", "ctrls"])
+
+
+def ipw(data, y, yr):
+    """Stata est_ipw."""
+    full = data[(data.arm > 0) & data.assigned_grade.notnull()].copy()
+    xs = [c for c in ["treated", *IPW_X, *yr] if full[c].nunique() > 1]
+    full["phat"] = logit_prob(full.took100b, full[xs])
+    t = full[full.took100b == 1].copy()
+    t["w"] = 1 / t.phat
+    t["w"] = t.w.clip(stata_pctile(t.w, 1), stata_pctile(t.w, 99))
+    t = t[t[y].notnull()]
+    b, se = wls_robust(t[y], t[["treated", "mid1scorestd", *yr]], t.w)
+    return b[0], se[0], len(t), t.loc[t.arm == 1, y].mean()
+
+
+def panel_a(data, yr):
+    """Table 9 Panel A: PDS (no FEs) on Micro B final takers, and IPW."""
+    s = data[(data.arm > 0) & data.final_100bstd.notnull()]
+    out = []
+    for v in PANEL_A:
+        p = pds(s, v, "treated", CTRL_VARS, [*yr, "mid1scorestd"])
+        out.append((v, "pds", p["beta"], p["se"], p["N"], s.loc[s.arm == 1, v].mean(), " ".join(p["selected"])))
+        out.append((v, "ipw", *ipw(data, v, yr), ""))
+    return pd.DataFrame(out, columns=["depvar", "model", "beta", "se", "N", "meanctrl", "ctrls"])
+
+
+# --- validate pooled estimates against Stata ---
+chk = []
+took_pool = took_models(df, ["y2019"])
+sp_final = df[(df.arm > 0) & (df.bothpairs_final == 1)]
+pair_dof = len(sp_final) / (len(sp_final) - sp_final.pairyear.nunique())
+for mdl, (frame, name) in {
+    1: (itt_st, "itt"),
+    2: (itt_st, "Neyman"),
+    3: (pds_st, "noFEs"),
+    4: (pds_st, "FEs"),
+    5: (itt_st, "itt_zeros"),
+}.items():
+    r, py = st(frame, "took100b", name), took_pool.set_index("model").loc[mdl]
+    se_st = r.stderr * (np.sqrt(pair_dof) if mdl == 4 else 1)  # Stata FE SEs lack dof adj., see Section 0
+    chk.append((f"took100b ({mdl})", py.beta, r.treatbeta, py.se, se_st))
+pa_pool = panel_a(df, ["y2019"]).set_index(["depvar", "model"])
+for v in PANEL_A:
+    for mdl, frame, name in [("pds", pds_st, "noFEs"), ("ipw", ipw_st, "ipw")]:
+        r, py = st(frame, v, name), pa_pool.loc[(v, mdl)]
+        chk.append((f"{v} {mdl}", py.beta, r.treatbeta, py.se, r.stderr))
+chk = pd.DataFrame(chk, columns=["estimate", "beta_py", "beta_stata", "se_py", "se_stata"])
+chk["max_abs_diff"] = np.maximum(abs(chk.beta_py - chk.beta_stata), abs(chk.se_py - chk.se_stata))
+print(chk.to_string())
+assert (chk.max_abs_diff < 1e-4).all(), "Python port does not reproduce Stata"
+assert list(took_pool.ctrls) == ["", "", "", "mathquizstd", ""]  # PDS selections match Stata
+
+
+def add_diff(frame, keys):
+    """Append 2019 - 2018 rows: difference of independent by-year estimates."""
+    a = frame[frame["sample"] == "2018"].set_index(keys)
+    b = frame[frame["sample"] == "2019"].set_index(keys)
+    d = pd.DataFrame({"beta": b.beta - a.beta, "se": np.sqrt(a.se**2 + b.se**2)})
+    d["pvalue"] = 2 * norm.sf(abs(d.beta / d.se))
+    return pd.concat([frame, d.reset_index().assign(sample="diff")], ignore_index=True)
+
+
+took = pd.concat(
+    [took_pool.assign(sample="pooled")]
+    + [took_models(df[df.year == y], []).assign(sample=str(y)) for y in YEARS],
+    ignore_index=True,
+)
+took = add_diff(took, ["model"])
+took.to_csv(f"{DATA_GEN}/microb_took_by_year.csv", index=False)
+print(took.round(3).to_string())
+
+vids = pd.concat(
+    [pa_pool.reset_index().assign(sample="pooled")]
+    + [panel_a(df[df.year == y], []).assign(sample=str(y)) for y in YEARS],
+    ignore_index=True,
+)
+vids = add_diff(vids, ["depvar", "model"])
+vids.to_csv(f"{DATA_GEN}/microb_videos_by_year.csv", index=False)
+print(vids.round(3).to_string())
 

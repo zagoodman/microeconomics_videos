@@ -11,6 +11,7 @@
 # | `balance_table_takers_2018.tex`, `balance_table_takers_2019.tex` | 1 — Table A1 by year |
 # | `exam_stats_by_year.tex` | 2 — exam mean/median/SD by year |
 # | `firststage_credit.tex`, `secondstage_credit.tex` | 4 — Tables 4 and 5 with credit-eligible videos |
+# | `microb_took_by_year.tex`, `microb_videos_by_year.tex` | 3 — Table 8 (Took Micro B) and Table 9 Panel A by year |
 # 
 # Kept separate from `assemble_tables.ipynb` so these tables build on their own.
 
@@ -337,4 +338,117 @@ t5 = (
     "\\end{threeparttable}\n\\end{table} \n\\end{spacing}\n"
 )
 write("secondstage_credit", t5)
+
+
+# ## Micro B enrollment and Micro B video watching by year
+
+took = pd.read_csv(f"{DATA_GEN}/microb_took_by_year.csv")
+vids = pd.read_csv(f"{DATA_GEN}/microb_videos_by_year.csv")
+sem = {y: pd.read_csv(f"{DATA_GEN}/semenova_bounds_100b_{y}.csv").set_index("depvar") for y in YEARS}
+
+PANELS = [("2018", "A", "2018"), ("2019", "B", "2019"), ("pooled", "C", "Pooled"), ("diff", "D", "Difference, 2019 $-$ 2018")]
+
+
+def cells(sub, nd):
+    sub = sub.sort_values("model")
+    return [fmt_beta(r.beta, r.se, nd) for r in sub.itertuples()], [f"({r.se:.{nd}f})" for r in sub.itertuples()]
+
+
+# Table 8 'Took Micro B' row by year
+body = ""
+for samp, letter, title in PANELS:
+    if letter != "A":
+        body += "\\midrule \n"
+    body += f"\\multicolumn{{6}}{{l}}{{\\textbf{{Panel {letter}}}: {title}}} \\\\ \n"
+    sub = took[took["sample"] == samp].sort_values("model")
+    b, s = cells(sub, 3)
+    body += "\\customlinespace \\indentrow{Took Micro B} & " + " & ".join(b) + " \\\\\n & " + " & ".join(s) + " \\\\\n"
+    if samp == "diff":
+        body += "\\indentrow{P-value} & " + " & ".join(f"{p:.2f}" for p in sub.pvalue) + " \\\\\n"
+    else:
+        body += "\\indentrow{Control mean} & " + " & ".join(f"{m:.2f}" for m in sub.meanctrl) + " \\\\\n"
+        body += "\\indentrow{Observations} & " + " & ".join(str(int(n)) for n in sub.N) + " \\\\\n"
+FOOT5 = [
+    ("Treatment assignment controls", ["Yes", "No", "Yes", "Yes", "Yes"]),
+    ("Demographic controls", ["No", "No", "Yes", "Yes", "No"]),
+    ("Pair Fixed Effects", ["No", "No", "No", "Yes", "No"]),
+    ("Sample", ["Final", "Final", "Final", "Final", "All"]),
+]
+body += "\\midrule \n"
+for lab, vals in FOOT5:
+    body += f"{lab} & " + " & ".join(vals) + " \\\\\n"
+t = (
+    "\\begin{spacing}{1.0} \n"
+    "\\begin{table} \\centering \\caption{Effects of Treatment on Micro B Enrollment by Year} \n"
+    "\\label{tab:microb_took_by_year} \n\\begin{threeparttable} \n"
+    "\\begin{tabular}{m{0.35\\linewidth} *{5}{>{\\centering\\arraybackslash}m{0.1\\linewidth}}}\n\\toprule\n"
+    " & (1) & (2) & (3) & (4) & (5) \\\\\n\\midrule\n"
+    + body
+    + "\\bottomrule\n\\end{tabular}\n"
+    "\\Fignote{This table re-estimates the \\textit{Took Micro B} row of Table~\\ref{tab:spillover_100b} separately "
+    "by year; the year control is dropped within year. Models (1)--(4) are as in Table~\\ref{tab:spillover_100b} and use "
+    "students who took the Micro A final exam (\\textit{Final}); models (2) and (4) include only students whose matched "
+    "pair did not attrite. Model (5) is model (1) estimated on all students who saw their treatment assignment "
+    "(\\textit{All}), coding students who did not enroll as zero; this is the population in "
+    "Figure~\\ref{fig:attritchart_year}. Panel C reproduces Table~\\ref{tab:spillover_100b} and adds model (5). "
+    "Panel D reports the difference between the 2019 and 2018 estimates; because the years are independent samples, its "
+    "standard error is $\\sqrt{se_{2018}^2 + se_{2019}^2}$. \\textit{Control mean} is the enrollment rate of "
+    "\\textit{Control} students in each estimation sample. \\Regnote}\n"
+    "\\end{threeparttable}\n\\end{table} \n\\end{spacing}\n"
+)
+write("microb_took_by_year", t)
+
+
+# Table 9 Panel A by year
+VID_ROWS = [
+    ("videos_b", "Num. of videos"),
+    ("videos_b_u", "Num. unique videos"),
+    ("duration_b", "Hours of videos"),
+    ("duration_b_u", "Hours unique videos"),
+]
+body = ""
+for samp, letter, title in [p for p in PANELS if p[0] != "pooled"]:
+    letter = {"2018": "A", "2019": "B", "diff": "C"}[samp]
+    if letter != "A":
+        body += "\\midrule \n"
+    body += f"\\multicolumn{{6}}{{l}}{{\\textbf{{Panel {letter}}}: {title}}} \\\\ \n"
+    v = vids[vids["sample"] == samp].set_index(["depvar", "model"])
+    for dv, lab in VID_ROWS:
+        pd_, iw = v.loc[(dv, "pds")], v.loc[(dv, "ipw")]
+        if samp == "diff":
+            row1 = ["", fmt_beta(pd_.beta, pd_.se, 2), "", fmt_beta(iw.beta, iw.se, 2), ""]
+            row2 = ["", f"({pd_.se:.2f})", "", f"({iw.se:.2f})", ""]
+        else:
+            sb, lee = sem[int(samp)].loc[dv], sem[int(samp)].loc[f"{dv}_lee2009"]
+            row1 = [
+                f"{pd_.meanctrl:.2f}",
+                fmt_beta(pd_.beta, pd_.se, 2),
+                f"[{sb.lower_bound:.2f}, {sb.upper_bound:.2f}]",
+                fmt_beta(iw.beta, iw.se, 2),
+                f"[{lee.lower_bound:.2f}, {lee.upper_bound:.2f}]",
+            ]
+            row2 = ["", f"({pd_.se:.2f})", f"\\{{{sb.ci_lower:.2f}, {sb.ci_upper:.2f}\\}}", f"({iw.se:.2f})", ""]
+        body += f"\\customlinespace \\indentrow{{{lab}}} & " + " & ".join(row1) + " \\\\\n & " + " & ".join(row2) + " \\\\\n"
+    if samp != "diff":
+        sb = sem[int(samp)].loc["videos_b"]
+        n = [int(v.loc[("videos_b", "pds")].N), int(sb.N_selected), int(v.loc[("videos_b", "ipw")].N), int(sb.N_selected)]
+        body += "\\indentrow{Observations} & & " + " & ".join(map(str, n)) + " \\\\\n"
+t = (
+    "\\begin{spacing}{1.0} \n"
+    "\\begin{table} \\centering \\caption{Treatment Effects on Micro B Video Watching by Year} \n"
+    "\\label{tab:microb_videos_by_year} \n\\resizebox{\\linewidth}{!}{% \n\\begin{threeparttable} \n"
+    "\\begin{tabular}{lccccc}\n\\toprule\n"
+    " & Control Mean & (1) PDS & (2) Semenova Bounds & (3) IPW & (4) Lee Bounds \\\\\n\\midrule\n"
+    + body
+    + "\\bottomrule\n\\end{tabular}\n"
+    "\\Fignote{This table re-estimates Panel A of Table~\\ref{tab:microb_results} separately by year; the year "
+    "control is dropped within year, as are covariates with no variation within year. Columns (1)--(3) are as in "
+    "Table~\\ref{tab:microb_results}. Column (4) reports \\textcite{lee2009} bounds without covariates. In 2018, "
+    "\\textit{Control} and \\textit{Incentive} students enrolled in Micro B at nearly the same rate "
+    "(Table~\\ref{tab:microb_took_by_year}), so little trimming is required. In 2019, the outcome model for column (2) "
+    "omits the \\textit{White} indicator, which is collinear with treatment among selected students. Panel C reports the "
+    "difference between the 2019 and 2018 estimates, with standard error $\\sqrt{se_{2018}^2 + se_{2019}^2}$. \\Regnote}\n"
+    "\\end{threeparttable}}\n\\end{table} \n\\end{spacing}\n"
+)
+write("microb_videos_by_year", t)
 

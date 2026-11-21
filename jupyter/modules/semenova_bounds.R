@@ -3,12 +3,17 @@
 #
 # Reads:  data/generated/semenova_sample.csv  (exported by analyze_data.do)
 # Writes: data/generated/semenova_bounds_100b.csv
+#         data/generated/semenova_bounds_100b_<year>.csv  (when a year is given)
 #
 # Dependencies: dplyr, expm, quantreg, reldist
-# Also requires the vsemenova/leebounds repo cloned locally.
+# Also requires the vsemenova/leebounds repo cloned locally
+# (https://github.com/vsemenova/leebounds; by-year results used commit 8c79595).
 #
 # Usage:
-#   Rscript jupyter/modules/semenova_bounds.R <path-to-leebounds-repo>
+#   Rscript jupyter/modules/semenova_bounds.R <path-to-leebounds-repo> [year]
+#
+# With a year (2018 or 2019), the sample is restricted to that year and y2019 is
+# dropped from the covariates (referee revision: Micro B results by year).
 #
 # Example:
 #   Rscript jupyter/modules/semenova_bounds.R ~/github/leebounds
@@ -21,9 +26,16 @@ library(reldist)
 # --- Parse args ---
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) < 1) {
-  stop("Usage: Rscript semenova_bounds.R <path-to-leebounds-repo>")
+  stop("Usage: Rscript semenova_bounds.R <path-to-leebounds-repo> [year]")
 }
 leebounds_path <- args[1]
+year <- if (length(args) >= 2) as.integer(args[2]) else NA
+out_path <- if (is.na(year)) {
+  "data/generated/semenova_bounds_100b.csv"
+} else {
+  sprintf("data/generated/semenova_bounds_100b_%d.csv", year)
+}
+set.seed(20260101)
 
 # --- Source the Semenova package ---
 source(file.path(leebounds_path, "R", "auxiliary.R"))
@@ -33,6 +45,9 @@ source(file.path(leebounds_path, "R", "second_stage_functions.R"))
 
 # --- Read data ---
 df <- read.csv("data/generated/semenova_sample.csv")
+if (!is.na(year)) {
+  df <- df[df$y2019 == as.integer(year == 2019), ]
+}
 
 # Covariates for selection model (all baseline controls)
 covariates_selection <- c(
@@ -51,6 +66,15 @@ covariates_outcome <- c(
   "transfer", "prev_cumgpa",
   "female", "asian", "latx", "white"
 )
+
+# Within a year, drop covariates that are constant there (y2019 always; mathquiz_unobs
+# is all zero in 2019)
+if (!is.na(year)) {
+  varies <- function(v) length(unique(df[[v]])) > 1
+  covariates_selection <- Filter(varies, covariates_selection)
+  covariates_outcome   <- Filter(varies, covariates_outcome)
+  cat("Year", year, "- selection covariates:", covariates_selection, "\n")
+}
 
 # Outcome variables and their raw names in the data
 outcomes <- list(
@@ -108,12 +132,28 @@ for (out in outcomes) {
     leedata[[cv]] <- df[[cv]]
   }
 
+  # The outcome quantile regression interacts covariates with treatment on the selected
+  # sample; drop covariates that make that design rank-deficient (in 2019 every treated
+  # Micro B taker is Asian, Latinx or White, so treat x white is collinear)
+  cov_out <- covariates_outcome
+  repeat {
+    X <- model.matrix(
+      reformulate(sprintf("treat * (%s)", paste(cov_out, collapse = " + "))),
+      leedata[leedata$selection == 1, ]
+    )
+    q <- qr(X)
+    if (q$rank == ncol(X)) break
+    bad <- sub("^treat:", "", colnames(X)[q$pivot[ncol(X)]])
+    cat("  Dropping collinear outcome covariate:", bad, "\n")
+    cov_out <- setdiff(cov_out, bad)
+  }
+
   # Compute bounds
   result <- ortho_leebounds(
     leedata                 = leedata,
     selection_function_name = "glm",
     variables_for_selection = covariates_selection,
-    variables_for_outcome   = covariates_outcome,
+    variables_for_outcome   = cov_out,
     quantile_grid_size      = 0.01,
     outcome_function_name   = "rq",
     min_wage                = min(leedata$outcome[leedata$selection == 1]),
@@ -183,5 +223,5 @@ for (out in outcomes) {
 }
 
 # --- Write results ---
-write.csv(results, "data/generated/semenova_bounds_100b.csv", row.names = FALSE)
-cat("\nResults written to data/generated/semenova_bounds_100b.csv\n")
+write.csv(results, out_path, row.names = FALSE)
+cat("\nResults written to", out_path, "\n")
