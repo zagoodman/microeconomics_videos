@@ -737,10 +737,9 @@ After using Claude and Refine, the authors reviewed and edited the content as ne
 	\begin{center}
 		\caption{Effect of grade incentive on videos watched}
 		\label{fig:combo_cdf}
-		\includegraphics[width=1\textwidth, angle=0]{../plots/combo_cdf.pdf}
-		\footnotesize Top panels display the percent students in the \textit{Control} and \textit{Incentive} arms that watched at least $X$ unique videos (left) or hours of unique videos (right).
-		Bottom panels display the differences between the two arms in the top panels with 95\% confidence intervals estimated by regressing an indicator for whether on the student watched at least $X\in\{0,.
-			..,X_{max}\}$ unique videos (or hours of unique videos) on the student's treatment status.
+		\includegraphics{../plots/combo_cdf.pdf}\par
+		\footnotesize Top panels display the percent of students in the \textit{Incentive} (solid) and \textit{Control} (dashed) arms that watched at least $X$ unique videos before the second midterm (left) and before the final exam (right), among students who took that exam.
+		Bottom panels display the difference between the two arms, with 95\% confidence intervals (shaded) from regressing an indicator for whether the student watched at least $X\in\{0,\ldots,X_{max}\}$ unique videos on the student's treatment status, with robust standard errors.
 	\end{center}
 \end{figure}
 
@@ -750,8 +749,8 @@ After using Claude and Refine, the authors reviewed and edited the content as ne
 	\begin{center}
 		\caption{Weekly video watching by treatment arm}
 		\label{fig:timeseries}
-		\includegraphics[width=1\textwidth, angle=0]{../plots/tscombo.pdf}
-		\footnotesize Dashed lines represent Midterm 1, Midterm 2, and Final exams
+		\includegraphics{../plots/tscombo.pdf}\par
+		\footnotesize Vertical lines mark the weeks of Midterm 1, Midterm 2, and the final exam. Students who took the final exam.
 	\end{center}
 \end{figure}
 
@@ -938,8 +937,8 @@ Substituting these variance and means estimators into the final step of~\ref{eq:
 	\begin{center}
 		\caption{Distribution of videos counted towards incentive}
 		\label{fig:hist_incent}
-		\includegraphics[width=1\textwidth, angle=0]{../plots/hist_v_incent.pdf}
-		\footnotesize This plot includes only videos that would have counted towards the earning the grade incentive.
+		\includegraphics{../plots/hist_v_incent.pdf}\par
+		\footnotesize This plot includes only videos that would have counted towards earning the grade incentive. The vertical line marks the 40-video requirement.
 		Students were required to watch 40 unique of 48 eligible videos between the first midterm and final exam to earn the grade incentive.
 		91\% of \textit{Incentive} students met the requirements for the grade incentive versus 11\% of \textit{Control} students.
 	\end{center}
@@ -951,9 +950,9 @@ Substituting these variance and means estimators into the final step of~\ref{eq:
 	\begin{center}
 		\caption{Video watch rates by video and treatment arm, grouped by incentive}
 		\label{fig:video_cdf}
-		\includegraphics[width=1\textwidth, angle=0]{../plots/bar_uviews.pdf}
-		\footnotesize Each bar represents the fraction of the treatment arm that watched a particular video.
-		Bars are in order of control group watch rates separately for incentivized and non-incentivized videos.
+		\includegraphics{../plots/bar_uviews.pdf}\par
+		\footnotesize Each pair of markers represents the percent of the \textit{Incentive} (filled) and \textit{Control} (open) arms that watched a particular video.
+		Videos are in order of control group watch rates separately for incentivized and non-incentivized videos.
 	\end{center}
 \end{figure}
 
@@ -962,9 +961,9 @@ Substituting these variance and means estimators into the final step of~\ref{eq:
 	\begin{center}
 		\caption{Video watch rates by video and treatment arm, grouped by week}
 		\label{fig:video_cdf_week}
-		\includegraphics[width=1\textwidth, angle=0]{../plots/bar_uviews_week.pdf}
-		\footnotesize Each bar represents the fraction of the treatment arm that watched a particular video.
-		Bars are in order of control group watch rates separately for each week the corresponding content was covered in lecture, as listed in the syllabus.
+		\includegraphics{../plots/bar_uviews_week.pdf}\par
+		\footnotesize Each pair of markers represents the percent of the \textit{Incentive} (filled) and \textit{Control} (open) arms that watched a particular video.
+		Videos are in order of control group watch rates separately for each week the corresponding content was covered in lecture, as listed in the syllabus.
 	\end{center}
 \end{figure}
 
@@ -974,11 +973,12 @@ Substituting these variance and means estimators into the final step of~\ref{eq:
 	\begin{center}
 		\caption{Effects of treatment along first midterm score, by midterm 2}
 		\label{fig:locallin_mid2}
-		\includegraphics[width=1\textwidth, angle=0]{../plots/lpolymid2.pdf}
+		\includegraphics{../plots/lpolymid2.pdf}\par
 		\footnotesize Videos (top) includes unique videos watched before the second midterm exam.
 		Exam scores (bottom) are measured in control standard deviations.
-		Confidence bands represent 95\% confidence intervals of the conditional mean outcome.
-		The left plots includes all students who took the second midterm while the right plots exclude any students whose matched pair attrited.
+		Lines are local linear fits (triangle kernel, bandwidth 0.9); 95\% confidence intervals of the conditional mean are shaded for \textit{Incentive} and dotted for \textit{Control}.
+		Students above zero are \textit{Above median} students, pooled with \textit{Control}.
+		The left plots include all students who took the second midterm while the right plots exclude any students whose matched pair attrited.
 	\end{center}
 \end{figure}
 
@@ -988,11 +988,12 @@ Substituting these variance and means estimators into the final step of~\ref{eq:
 	\begin{center}
 		\caption{Effects of treatment along first midterm score, by final}
 		\label{fig:locallin_final}
-		\includegraphics[width=1\textwidth, angle=0]{../plots/lpolyfinal.pdf}
+		\includegraphics{../plots/lpolyfinal.pdf}\par
 		\footnotesize Videos (top) includes unique videos watched before the final exam.
 		Exam scores (bottom) are measured in control standard deviations.
-		Confidence bands represent 95\% confidence intervals of the conditional mean outcome.
-		The left plots includes all students who took the final exam while the right plots exclude any students whose matched pair attrited.
+		Lines are local linear fits (triangle kernel, bandwidth 0.9); 95\% confidence intervals of the conditional mean are shaded for \textit{Incentive} and dotted for \textit{Control}.
+		Students above zero are \textit{Above median} students, pooled with \textit{Control}.
+		The left plots include all students who took the final exam while the right plots exclude any students whose matched pair attrited.
 	\end{center}
 \end{figure}
 
@@ -1000,10 +1001,11 @@ Substituting these variance and means estimators into the final step of~\ref{eq:
 \clearpage
 \begin{figure}[t]
 	\begin{center}
-		\caption{Distribution of max videos watched in one week}
+		\caption{Distribution of most videos watched in one week}
 		\label{fig:hist_binge}
-		\includegraphics[width=1\textwidth, angle=0]{../plots/hist_maxweek.pdf}
-		\footnotesize These plots help illustrate potential ``binge watching" behavior.
+		\includegraphics{../plots/hist_maxweek.pdf}\par
+		\footnotesize Each panel displays the distribution of the most videos a student watched in a single week (bins of two videos) for \textit{Control} (gray bars) and \textit{Incentive} (black outline) students who took the final exam.
+		These plots help illustrate potential ``binge watching" behavior.
 		Compared to the \textit{Control} students, \textit{Incentive} students are more likely to watch 40 or more unique videos in a week, which occurs in the weeks preceding the final and not the second midterm.
 	\end{center}
 \end{figure}
@@ -1012,11 +1014,10 @@ Substituting these variance and means estimators into the final step of~\ref{eq:
 \clearpage
 \begin{figure}[t]
 	\begin{center}
-		\caption{Video watch rates by video and treatment arm, grouped by incentive, ordered by video duration}
+		\caption{Video watch rates by video runtime and treatment arm, grouped by incentive}
 		\label{fig:video_cdf_duration}
-		\includegraphics[width=1\textwidth, angle=0]{../plots/bar_uviews_duration.pdf}
-		\footnotesize Each bar represents the fraction of the treatment arm that watched a particular video.
-		Bars are in order of video duration separately for incentivized and non-incentivized videos.
+		\includegraphics{../plots/bar_uviews_duration.pdf}\par
+		\footnotesize Each pair of markers represents the percent of the \textit{Incentive} (filled) and \textit{Control} (open) arms that watched a particular video, plotted against the video's runtime, separately for incentivized and non-incentivized videos.
 	\end{center}
 \end{figure}
 
