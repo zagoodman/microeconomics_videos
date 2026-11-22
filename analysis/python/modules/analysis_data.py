@@ -12,7 +12,6 @@ import pandas as pd
 # Mirrors the Stata global $ctrl_vars (PDS candidate controls).
 CTRL_VARS = [
     "mathquizstd",
-    "mathquiz_unobs",
     "videos_mid1_u",
     "duration_mid1_u",
     "pset_pre",
@@ -43,7 +42,6 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     ]:
         obs = df[v].notnull().astype(int)
         df[name] = (obs.groupby([df["pair"], df["year"]]).transform("sum") >= 2).astype(int)
-    df["mathquiz_unobs"] = df["mathquiz"].isnull().astype(int)
     df["mathquiz"] = df["mathquiz"].fillna(0)
     return df
 

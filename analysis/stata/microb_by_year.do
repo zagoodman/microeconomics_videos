@@ -3,7 +3,7 @@ version 17
 do "analysis/stata/_setup.do"
 
 local panel_a videos_b videos_b_u duration_b duration_b_u
-local selection_x mid1scorestd mathquizstd mathquiz_unobs transfer ///
+local selection_x mid1scorestd mathquizstd transfer ///
     prev_cumgpa prev_cumgpa_unobs female asian latx white
 
 * Bootstrap program for 1st/99th-percentile winsorized IPW (matching microb_selection.do).
@@ -155,7 +155,7 @@ foreach sample in pooled 2018 2019 {
     * (no preserve/restore here since bootstrap uses preserve internally)
     keep if !missing(assigned_grade) & arm > 0
 
-    * Drop covariates that are constant within this sample (e.g. mathquiz_unobs in 2019).
+    * Drop covariates that are constant within this sample.
     local active_x
     foreach x of local selection_x {
         quietly summarize `x'

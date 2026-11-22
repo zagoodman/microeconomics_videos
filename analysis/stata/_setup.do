@@ -15,7 +15,7 @@ foreach cmd in ivreg2 ranktest weakiv weakivtest avar pdslasso ivlasso rlasso mh
 }
 mata: mata which mm_quantile()
 
-* PDS control candidates as accepted in the 2021 submission (no mathquiz_unobs).
+* PDS control candidates (missing mathquiz scores are imputed to 0, matching 2019).
 global ctrl_vars mathquizstd videos_mid1_u duration_mid1_u pset_pre ///
     transfer prev_cumgpa prev_cumgpa_unobs female asian latx white
 

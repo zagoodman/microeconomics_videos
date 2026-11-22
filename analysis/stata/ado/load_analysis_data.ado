@@ -23,8 +23,7 @@ program _clean_sample
     generate pairyear = year * 1000 + pair
     mark_complete_pairs mid2score bothpairs_mid2
     mark_complete_pairs finalscore bothpairs_final
-    generate mathquiz_unobs = missing(mathquiz)
-    replace mathquiz = 0 if mathquiz_unobs
+    replace mathquiz = 0 if missing(mathquiz)
 end
 
 program _merge_student_file

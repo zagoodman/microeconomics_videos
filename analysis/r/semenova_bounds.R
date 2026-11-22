@@ -52,13 +52,13 @@ if (!is.na(year)) {
 # Covariates for selection model (all baseline controls)
 covariates_selection <- c(
   "y2019",
-  "mid1scorestd", "mathquizstd", "mathquiz_unobs",
+  "mid1scorestd", "mathquizstd",
   "transfer", "prev_cumgpa", "prev_cumgpa_unobs",
   "female", "asian", "latx", "white"
 )
 
 # Covariates for outcome quantile regression — drop near-constant indicators
-# (mathquiz_unobs ~3% missing, prev_cumgpa_unobs) to avoid singular design matrix
+# (prev_cumgpa_unobs) to avoid singular design matrix
 # when Semenova interacts all covariates with treatment
 covariates_outcome <- c(
   "y2019",
@@ -67,8 +67,7 @@ covariates_outcome <- c(
   "female", "asian", "latx", "white"
 )
 
-# Within a year, drop covariates that are constant there (y2019 always; mathquiz_unobs
-# is all zero in 2019)
+# Within a year, drop covariates that are constant there (e.g. y2019)
 if (!is.na(year)) {
   varies <- function(v) length(unique(df[[v]])) > 1
   covariates_selection <- Filter(varies, covariates_selection)

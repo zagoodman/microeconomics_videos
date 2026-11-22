@@ -4,7 +4,7 @@ version 17
 do "analysis/stata/_setup.do"
 
 local outcomes videos_b videos_b_u duration_b duration_b_u mid1_100bstd mid2_100bstd final_100bstd
-local selection_x mid1scorestd mathquizstd mathquiz_unobs transfer ///
+local selection_x mid1scorestd mathquizstd transfer ///
     prev_cumgpa prev_cumgpa_unobs female asian latx white
 
 load_analysis_data

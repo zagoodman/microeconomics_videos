@@ -142,7 +142,6 @@ def build_main_tables():
         "latx": "Latinx",
         "male": "Male",
         "mathquizstd": "Math quiz score",
-        "mathquiz_unobs": "No math quiz",
         "mid1scorestd": "Midterm 1 score",
         "othereth": "Other ethnicity",
         "prev_cumgpa": "Cumulative GPA",
