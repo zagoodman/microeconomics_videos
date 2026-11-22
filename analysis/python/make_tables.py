@@ -267,7 +267,10 @@ def build_main_tables():
         Combines pds_coeffs (df) and itt_coeffs (dff), formats for table output.
         dfb contains all variables; shape_dfb() selects the desired subset.
         """
-        dfb = pd.concat([df.copy().drop(columns=["ctrls"]), dff.copy()])
+        dfb = pd.concat([
+            df.copy().drop(columns=["ctrls"]),
+            dff.loc[dff["model"].isin(["Neyman", "itt"])].copy(),
+        ])
         dfb.rename(columns={"treatbeta": "1beta", "stderr": "2stderr", "meanctrl": "3mean", "N": "4N"}, inplace=True)
         dfb = stringify_stats(add_stars(dfb), roundn)
 

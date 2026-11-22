@@ -215,8 +215,6 @@ def add_indents(table, varlist):
     for v in varlist:
         idx = [m.start() for m in re.finditer(re.escape(v) + " &", table)]
         for i in idx[::-1]:
-            if v[0] == "\\":
-                i -= 1
             table = table[:i] + "\n\\customlinespace \\indentrow{" + v + "}" + table[i + len(v):]
 
     return table
