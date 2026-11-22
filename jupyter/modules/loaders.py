@@ -75,7 +75,12 @@ def load_quarter_gpa(data_dir: str, term: str) -> pd.DataFrame:
         zero_fill_cols = ZERO_FILL_COLS_FOLLOWING
 
     df = df.loc[df["term_courses"].isin(term_filter)]
-    df = df[["id", "year", "measure", "values"]]
+    df = df[["id", "year", "measure", "values"]].copy()
+
+    # 2018 cohort (FA18/WI19) labels not-passed classes as "N Classes - Not Passed - DFNP";
+    # 2019 cohort (FA19/WI20) uses "N Classes - Not Passed". Both count D, F, and NP grades
+    # only, excluding incompletes/ungraded classes.
+    df.loc[df["measure"] == "N Classes - Not Passed - DFNP", "measure"] = "N Classes - Not Passed"
 
     # reshape wide
     df = df.pivot_table(index=["id", "year"], columns="measure", values="values").reset_index()

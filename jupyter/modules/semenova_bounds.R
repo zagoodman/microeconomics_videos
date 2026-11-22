@@ -1,7 +1,7 @@
 # semenova_bounds.R
 # Compute generalized Lee Bounds (Semenova 2025) for Micro B outcomes.
 #
-# Reads:  data/generated/semenova_sample.csv  (exported by analyze_data.do)
+# Reads:  data/generated/semenova_sample.csv  (exported by scripts/stata/microb_selection.do)
 # Writes: data/generated/semenova_bounds_100b.csv
 #         data/generated/semenova_bounds_100b_<year>.csv  (when a year is given)
 #

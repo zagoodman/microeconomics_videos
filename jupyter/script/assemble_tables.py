@@ -265,7 +265,6 @@ def get_dfb(roundn):
     dfb contains all variables; shape_dfb() selects the desired subset.
     """
     dfb = pd.concat([df.copy().drop(columns=["ctrls"]), dff.copy()])
-    dfb = dfb[dfb["model"] != "itt_zeros"]
     dfb.rename(columns={"treatbeta": "1beta", "stderr": "2stderr", "meanctrl": "3mean", "N": "4N"}, inplace=True)
     dfb = stringify_stats(add_stars(dfb), roundn)
 
@@ -917,7 +916,6 @@ def get_dfl(roundn):
     """
     Combines pds_iv_coeffs (dfiv) and lates_coeffs (dflate), formats for table output.
     """
-    # late_*_with_zeros (zero-imputed attriters) is a robustness check reported elsewhere
     dfl = pd.concat([
         dfiv.copy().drop(columns=["ctrls"]),
         dflate.loc[~dflate.model.str.contains("with_zeros")].copy(),
@@ -1324,7 +1322,8 @@ note_t9_col2 = (
 )
 note_t9_col3 = (
     "Column (3) reports IPW-weighted OLS, where weights are the inverse probability "
-    "of enrolling in Micro B conditional on baseline covariates. "
+    "of enrolling in Micro B conditional on baseline covariates, winsorized at the "
+    "1st and 99th percentiles, with bootstrapped standard errors (1,000 replications)."
 )
 
 notes_list = [note_t9_col1]
@@ -1456,4 +1455,65 @@ for v in [x for x in dfht["Interaction Variable"].unique() if x not in ["", "Obs
 # write to tex file
 with open("../tex/tables/het_table.tex", "w") as tf:
     tf.write(table)
+
+
+# ### Table: Anderson-Rubin confidence sets
+
+# Build Anderson-Rubin confidence sets table from Stata weak_iv.do output
+import re
+
+weak_iv_path = "../data/generated/weak_iv.csv"
+if not os.path.exists(weak_iv_path):
+    print(f"Warning: {weak_iv_path} not found. Skipping arci_table.tex.")
+else:
+    df_wiv = pd.read_csv(weak_iv_path)
+
+    exam_labels = {"mid2": "Midterm 2 score", "final": "Final exam score"}
+    endog_labels = {"videos": "10 unique videos", "duration": "1 hour videos"}
+
+    def _fmt_cset(raw):
+        nums = re.findall(r"-?\d*\.\d+|-?\d+", str(raw))
+        if len(nums) == 2:
+            return f"[{float(nums[0]):.3f}, {float(nums[1]):.3f}]"
+        return str(raw).strip()
+
+    rows = []
+    for exam in ["mid2", "final"]:
+        for endog in ["videos", "duration"]:
+            sub = df_wiv[(df_wiv["exam"] == exam) & (df_wiv["endog"] == endog)]
+            if len(sub) == 1:
+                rows.append((
+                    exam_labels[exam],
+                    endog_labels[endog],
+                    _fmt_cset(sub.iloc[0]["ar_cset"]),
+                ))
+
+    body = "\n".join(
+        f"\t\t\t\t{out:<16s} & {end:<19s} & {ci:<17s} \\\\"
+        for out, end, ci in rows
+    )
+    arci_tex = (
+        "\\begin{spacing}{1.0}\n"
+        "\t\\begin{table}\n"
+        "\t\t\\centering\n"
+        "\t\t\\caption{Anderson-Rubin Confidence Sets}\n"
+        "\t\t\\label{tab:arci_table}\n"
+        "\t\t\\begin{threeparttable}\n"
+        "\t\t\t\\begin{tabular}{lcc}\n"
+        "\t\t\t\t\\toprule\n"
+        "\t\t\t\tOutcome Variable & Endogenous Variable & Anderson-Rubin CI \\\\\n"
+        "\t\t\t\t\\midrule\n"
+        f"{body}\n"
+        "\t\t\t\t\\bottomrule\n"
+        "\t\t\t\\end{tabular}\n"
+        "\t\t\t\\Fignote{This table displays Anderson-Rubin confidence sets at the 95\\% confidence level for the 2SLS estimator $\\hat{\\gamma}$ from Equation \\ref{eq:secondstage_spec} including year dummies and first midterm score as controls.\n"
+        "\t\t\t\tOutcomes are measured in standard deviations.\n"
+        "\t\t\t\tInstrumented endogenous variables are measured in 10s of unique videos or hours of unique content.\n"
+        "\t\t\t}\n"
+        "\t\t\\end{threeparttable}\n"
+        "\t\\end{table}\n"
+        "\\end{spacing}\n"
+    )
+    with open("../tex/tables/arci_table.tex", "w") as tf:
+        tf.write(arci_tex)
 

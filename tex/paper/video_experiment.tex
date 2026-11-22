@@ -945,29 +945,7 @@ Substituting these variance and means estimators into the final step of~\ref{eq:
 \input{../tables/balance_table_matched.tex}
 
 \clearpage
-\begin{spacing}{1.0}
-	\begin{table}
-		\centering
-		\caption{Anderson-Rubin Confidence Sets}
-		\label{tab:arci_table}
-		\begin{threeparttable}
-			\begin{tabular}{lcc}
-				\toprule
-				Outcome Variable & Endogenous Variable & Anderson-Rubin CI \\
-				\midrule
-				Midterm 2 score  & 10 unique videos    & [-0.001, 0.653]   \\
-				Midterm 2 score  & 1 hour videos       & [-0.001, 0.392]   \\
-				Final exam score & 10 unique videos    & [0.000, 0.163]    \\
-				Final exam score & 1 hour videos       & [0.000, 0.102]    \\
-				\bottomrule
-			\end{tabular}
-			\Fignote{This table displays Anderson-Rubin confidence sets at the 95\% confidence level for the 2SLS estimator $\hat{\gamma}$ from Equation \ref{eq:secondstage_spec} including year dummies and first midterm score as controls.
-				Outcomes are measured in standard deviations.
-				Instrumented endogenous variables are measured in 10s of unique videos or hours of unique content.
-			}
-		\end{threeparttable}
-	\end{table}
-\end{spacing}
+\input{../tables/arci_table.tex}
 
 \clearpage
 \input{../tables/firststage_credit.tex}
