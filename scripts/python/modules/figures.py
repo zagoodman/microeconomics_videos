@@ -8,7 +8,7 @@ Every figure is drawn with opaque grays only (no alpha): EPS has no transparency
 `save` writes a vector PDF for the LaTeX build (tex/plots/) plus EPS and a 600 dpi grayscale
 TIFF for submission (tex/plots/jee/).
 
-Replaces the Stata figures in analyze_data.ipynb (Stata license expired). Data definitions
+Replaces the Stata figures from the original analyze_data notebook. Data definitions
 follow the Stata code; deviations are noted in each function's docstring.
 """
 

@@ -1,5 +1,5 @@
 * Inputs for the Micro B selection corrections: the sample for the generalized Lee
-* bounds (jupyter/modules/semenova_bounds.R) and IPW estimates.
+* bounds (scripts/r/semenova_bounds.R) and IPW estimates.
 version 17
 do "scripts/stata/_setup.do"
 

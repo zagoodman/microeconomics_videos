@@ -18,9 +18,12 @@ Of note, the design of the experiment includes randomizing students who scored b
 
 ## Repository details
 
-We are unable to post the data used because of privacy restrictions. However, the repository contains the output from our Jupyter Notebooks:
-* [Data prep](https://nbviewer.jupyter.org/github/zagoodman/microeconomics_videos/blob/master/jupyter/assemble_data.ipynb)
-* [Data analysis](https://nbviewer.jupyter.org/github/zagoodman/microeconomics_videos/blob/master/jupyter/assemble_data.ipynb)
+We are unable to post the data used because of privacy restrictions. The replication pipeline lives in `scripts/`:
+* `scripts/python/assemble_data.py` — data assembly from raw registrar/video logs
+* `scripts/stata/run_all.do` — statistical analysis (Stata 17)
+* `scripts/r/semenova_bounds.R` — generalized Lee bounds (R)
+* `scripts/python/assemble_tables.py`, `scripts/python/assemble_referee_tables.py` — LaTeX table generation
+* `scripts/python/make_figures.py` — JEE print-style figures
 
 ## More information
 
@@ -30,11 +33,15 @@ We are unable to post the data used because of privacy restrictions. However, th
 ## Environment setup
 
 1. Install [uv](https://docs.astral.sh/uv/getting-started/installation/)
-1. Install dependencies: `uv sync`
-1. Register the Stata kernel: `uv run python -m stata_kernel.install`
-1. Verify `stata_path` in `~/.stata_kernel.conf` points to your Stata executable (e.g. `/Applications/Stata/StataSE.app/Contents/MacOS/stata-se`)
-1. Download data (from Drive folder) and add to /data directory
-1. Run notebooks: `uv run jupyter lab`
+1. Install Python dependencies: `uv sync`
+1. Install Stata 17 (for `scripts/stata/`) and R (for `scripts/r/semenova_bounds.R`)
+1. Download raw data into `data/raw/`
+1. Run the replication scripts:
+   - `uv run python scripts/python/assemble_data.py`
+   - `stata -b do scripts/stata/run_all.do`
+   - `uv run python scripts/python/assemble_tables.py`
+   - `uv run python scripts/python/assemble_referee_tables.py`
+   - `uv run python scripts/python/make_figures.py`
 
 ## LaTeX setup
 

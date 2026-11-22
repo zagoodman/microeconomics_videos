@@ -1,10 +1,7 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 # # Referee-requested tables (JEE revision)
-# 
+#
 # Python kernel. Reads the CSVs written by `scripts/stata/` (`by_year_balance.do`, `credit_eligible.do`, `microb_by_year.do`) and writes LaTeX to `tex/tables/`:
-# 
+#
 # | Output | Referee point |
 # |---|---|
 # | `attrite_chart_by_year.tex` | 1 — Figure A1 by year |
@@ -12,14 +9,17 @@
 # | `exam_stats_by_year.tex` | 2 — exam mean/median/SD by year |
 # | `firststage_credit.tex`, `secondstage_credit.tex` | 4 — Tables 4 and 5 with credit-eligible videos |
 # | `microb_took_by_year.tex`, `microb_videos_by_year.tex` | 3 — Table 8 (Took Micro B) and Table 9 Panel A by year |
-# 
-# Kept separate from `assemble_tables.ipynb` so these tables build on their own.
+#
+# Kept separate from `assemble_tables.py` so these tables build on their own.
+
+from pathlib import Path
 
 import pandas as pd
 from table_utils import get_p_value, star_p
 
-DATA_GEN = "../data/generated"
-TEX = "../tex/tables"
+ROOT = Path(__file__).resolve().parents[2]
+DATA_GEN = str(ROOT / "data" / "generated")
+TEX = str(ROOT / "tex" / "tables")
 YEARS = [2018, 2019]
 
 REGNOTE = "\\Regnote"
@@ -39,7 +39,6 @@ def stars(beta, se):
 def fmt_beta(beta, se, nd):
     s = stars(beta, se)
     return f"{beta:.{nd}f}" + (f"\\sym{{{s}}}" if s else "")
-
 
 # ## Figure A1 by year: attrition by treatment arm
 
@@ -124,7 +123,6 @@ fig = (
 )
 write("attrite_chart_by_year", fig)
 
-
 # ## Table A1 by year: balance, exam-taker sample
 
 bal = pd.read_csv(f"{DATA_GEN}/balance_table_data_by_year.csv")
@@ -198,7 +196,6 @@ def balance_table(year):
 for y in YEARS:
     write(f"balance_table_takers_{y}", balance_table(y))
 
-
 # ## Exam score summary statistics by year
 
 es = pd.read_csv(f"{DATA_GEN}/exam_stats_by_year.csv")
@@ -230,7 +227,6 @@ table = (
     "\\end{threeparttable}\n\\end{table} \n\\end{spacing}\n"
 )
 write("exam_stats_by_year", table)
-
 
 # ## Tables 4 and 5 with credit-eligible video counts
 
@@ -339,7 +335,6 @@ t5 = (
 )
 write("secondstage_credit", t5)
 
-
 # ## Micro B enrollment and Micro B video watching by year
 
 took = pd.read_csv(f"{DATA_GEN}/microb_took_by_year.csv")
@@ -398,7 +393,6 @@ t = (
 )
 write("microb_took_by_year", t)
 
-
 # Table 9 Panel A by year
 VID_ROWS = [
     ("videos_b", "Num. of videos"),
@@ -451,4 +445,3 @@ t = (
     "\\end{threeparttable}}\n\\end{table} \n\\end{spacing}\n"
 )
 write("microb_videos_by_year", t)
-

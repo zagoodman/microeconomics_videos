@@ -10,13 +10,13 @@
 # (https://github.com/vsemenova/leebounds; by-year results used commit 8c79595).
 #
 # Usage:
-#   Rscript jupyter/modules/semenova_bounds.R <path-to-leebounds-repo> [year]
+#   Rscript scripts/r/semenova_bounds.R <path-to-leebounds-repo> [year]
 #
 # With a year (2018 or 2019), the sample is restricted to that year and y2019 is
 # dropped from the covariates (referee revision: Micro B results by year).
 #
 # Example:
-#   Rscript jupyter/modules/semenova_bounds.R ~/github/leebounds
+#   Rscript scripts/r/semenova_bounds.R ~/github/leebounds
 
 library(dplyr)
 library(expm)

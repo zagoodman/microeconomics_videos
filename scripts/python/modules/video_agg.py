@@ -254,8 +254,8 @@ def build_weekly_video_panel(
 ) -> pd.DataFrame:
     """Build a student-week-level panel of video-watching activity.
 
-    Replicates the week-level aggregation logic in assemble_data.ipynb
-    (lines ~384-461).
+    Replicates the week-level aggregation logic of the original assemble_data notebook
+    (now scripts/python/assemble_data.py).
 
     Parameters
     ----------

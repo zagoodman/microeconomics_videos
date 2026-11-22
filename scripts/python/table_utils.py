@@ -1,5 +1,5 @@
 """
-Utility functions for assembling LaTeX tables in assemble_tables.ipynb.
+Utility functions for assembling LaTeX tables in assemble_tables.py and assemble_referee_tables.py.
 """
 import re
 

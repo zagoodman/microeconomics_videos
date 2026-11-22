@@ -1,58 +1,47 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# <h1>Table of Contents<span class="tocSkip"></span></h1>
-# <div class="toc"><ul class="toc-item"><li><span><a href="#Stuff-shared-across-tables" data-toc-modified-id="Stuff-shared-across-tables-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Stuff shared across tables</a></span><ul class="toc-item"><li><span><a href="#Import-data" data-toc-modified-id="Import-data-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>Import data</a></span></li><li><span><a href="#Variable-descriptions" data-toc-modified-id="Variable-descriptions-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>Variable descriptions</a></span></li><li><span><a href="#Common-captions" data-toc-modified-id="Common-captions-1.3"><span class="toc-item-num">1.3&nbsp;&nbsp;</span>Common captions</a></span></li><li><span><a href="#Common-funtions" data-toc-modified-id="Common-funtions-1.4"><span class="toc-item-num">1.4&nbsp;&nbsp;</span>Common funtions</a></span></li></ul></li><li><span><a href="#Covariate-balance" data-toc-modified-id="Covariate-balance-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Covariate balance</a></span></li><li><span><a href="#Post-double-selection-control-variable-selection" data-toc-modified-id="Post-double-selection-control-variable-selection-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>Post-double-selection control variable selection</a></span><ul class="toc-item"><li><span><a href="#Table:-description-of-eligible-control-vars" data-toc-modified-id="Table:-description-of-eligible-control-vars-3.1"><span class="toc-item-num">3.1&nbsp;&nbsp;</span>Table: description of eligible control vars</a></span></li><li><span><a href="#Table:-control-variables-for-ITT-PDS" data-toc-modified-id="Table:-control-variables-for-ITT-PDS-3.2"><span class="toc-item-num">3.2&nbsp;&nbsp;</span>Table: control variables for ITT PDS</a></span></li><li><span><a href="#Table:-control-variables-for-LATE-PDS" data-toc-modified-id="Table:-control-variables-for-LATE-PDS-3.3"><span class="toc-item-num">3.3&nbsp;&nbsp;</span>Table: control variables for LATE PDS</a></span></li></ul></li><li><span><a href="#Coefficient-estimates---below-cutoff-experiment" data-toc-modified-id="Coefficient-estimates---below-cutoff-experiment-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>Coefficient estimates - below cutoff experiment</a></span><ul class="toc-item"><li><span><a href="#Table:-first-stage" data-toc-modified-id="Table:-first-stage-4.1"><span class="toc-item-num">4.1&nbsp;&nbsp;</span>Table: first stage</a></span></li><li><span><a href="#Table:-second-stage" data-toc-modified-id="Table:-second-stage-4.2"><span class="toc-item-num">4.2&nbsp;&nbsp;</span>Table: second stage</a></span></li><li><span><a href="#Table:-spillovers-to-grades" data-toc-modified-id="Table:-spillovers-to-grades-4.3"><span class="toc-item-num">4.3&nbsp;&nbsp;</span>Table: spillovers to grades</a></span></li><li><span><a href="#Table:-spillovers-to-studying" data-toc-modified-id="Table:-spillovers-to-studying-4.4"><span class="toc-item-num">4.4&nbsp;&nbsp;</span>Table: spillovers to studying</a></span></li><li><span><a href="#Table:-spillovers-to-subsequent-quarter" data-toc-modified-id="Table:-spillovers-to-subsequent-quarter-4.5"><span class="toc-item-num">4.5&nbsp;&nbsp;</span>Table: spillovers to subsequent quarter</a></span></li></ul></li><li><span><a href="#Other-tables" data-toc-modified-id="Other-tables-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>Other tables</a></span><ul class="toc-item"><li><span><a href="#Table:-heterogeneity" data-toc-modified-id="Table:-heterogeneity-5.1"><span class="toc-item-num">5.1&nbsp;&nbsp;</span>Table: heterogeneity</a></span></li></ul></li></ul></div>
-
 # ## Stuff shared across tables
 
 # ### Import data
 
+import os
 import re
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from scipy.stats import t
-
 from table_utils import (
-    add_stars,
-    stringify_stats,
-    convert_to_latex,
-    combine_notes,
-    insert_panel,
     add_indents,
+    add_stars,
+    combine_notes,
+    convert_to_latex,
     get_p_value,
+    insert_panel,
     star_p,
+    stringify_stats,
 )
 
-pd.options.display.max_columns = 50
-pd.options.display.max_rows = 100
-pd.options.display.max_colwidth = 100
+ROOT = Path(__file__).resolve().parents[2]
+DATA_GEN = str(ROOT / "data" / "generated")
+TEX = str(ROOT / "tex" / "tables")
 
-
-df = pd.read_csv("../data/generated/pds_coeffs.csv")
+df = pd.read_csv(f"{DATA_GEN}/pds_coeffs.csv")
 print(df.dtypes)
 print(df.isnull().sum())
 df.head()
 
-
-dff = pd.read_csv("../data/generated/itt_coeffs.csv")
+dff = pd.read_csv(f"{DATA_GEN}/itt_coeffs.csv")
 print(dff.dtypes)
 print(dff.isnull().sum())
 dff.head()
 
-
-dflate = pd.read_csv("../data/generated/lates_coeffs.csv")
+dflate = pd.read_csv(f"{DATA_GEN}/lates_coeffs.csv")
 print(dflate.dtypes)
 print(dflate.isnull().sum())
 dflate.head()
 
-
-dfiv = pd.read_csv("../data/generated/pds_iv_coeffs.csv")
+dfiv = pd.read_csv(f"{DATA_GEN}/pds_iv_coeffs.csv")
 print(dfiv.dtypes)
 print(dfiv.isnull().sum())
 dfiv.head()
-
 
 # ### Variable descriptions
 
@@ -207,7 +196,6 @@ table_dict = {
     "winter_units_w": 5,
 }
 
-
 # ### Common captions
 
 # list named strings to be included in the captions of multiple tables.
@@ -255,7 +243,6 @@ note_gpa = (
 note_attend = "There were seven \\textit{Attendance checks} during the quarter."
 
 note_pset = "\\textit{Tutoring visits} includes those after the first midterm."
-
 
 # ### Common funtions
 
@@ -322,17 +309,15 @@ def shape_dfb(varlist, N_list=[""]):
                            "ITT": "(1)", "Neyman": "(2)", "All": "(3)", "FEs": "(4)"}, inplace=True)
     return dfsub
 
-
 # get_p_value and star_p are imported from table_utils
 
-
 # ## Covariate balance
-# 
+#
 # Create table showing balance across treatment arms on observables
 
 # Read in data
 
-dfbal = pd.read_csv("../data/generated/balance_table_data.csv")
+dfbal = pd.read_csv(f"{DATA_GEN}/balance_table_data.csv")
 
 # stack mean, stderr, N
 dfbal = dfbal.melt(["exam", "depvar", "arm", "bothpairs"], var_name="stat", value_name="value")
@@ -453,9 +438,6 @@ dfbal = dfbal.rename(
     }
 )
 
-display(dfbal)
-
-
 # convert only the sample of those who took the exams to tex
 
 btable_taker = dfbal.iloc[:, np.r_[0:2, 6:10]].copy()
@@ -498,9 +480,8 @@ for v in [x for x in dfbal.Variable.unique() if x not in ["", "Observations"]]:
     k = k.replace(v + " &", "\\customlinespace " + v + " &")
 
 # write to tex file
-with open("../tex/tables/" + label + ".tex", "w") as tf:
+with open(f"{TEX}/" + label + ".tex", "w") as tf:
     tf.write(k)
-
 
 # the full sample is the same for mid2 and final, so only keep one copy
 
@@ -537,12 +518,8 @@ for v in [x for x in dfbal.Variable.unique() if x not in ["", "Observations"]]:
 k = k.replace("\\resizebox{\\linewidth}{!}{% \n", "\\resizebox*{!}{\\textheight}{%\n", 1)
 
 # write to tex file
-with open("../tex/tables/" + label + ".tex", "w") as tf:
+with open(f"{TEX}/" + label + ".tex", "w") as tf:
     tf.write(k)
-
-
-
-
 
 # Matched pairs only
 
@@ -589,9 +566,8 @@ for v in [x for x in dfbal.Variable.unique() if x not in ["", "Observations"]]:
     k = k.replace(v + " &", "\\customlinespace " + v + " &")
 
 # write to tex file
-with open("../tex/tables/" + label + ".tex", "w") as tf:
+with open(f"{TEX}/" + label + ".tex", "w") as tf:
     tf.write(k)
-
 
 # ## Post-double-selection control variable selection
 
@@ -616,7 +592,6 @@ ctrls = [
 ]
 
 dfc = pd.DataFrame(data={"Variable": ctrls, "Description": [ctrl_dict.get(x) for x in ctrls]})
-display(dfc.head())
 
 # translate to tex
 
@@ -639,9 +614,8 @@ table0 = convert_to_latex(
 )
 
 # write to tex file
-with open("../tex/tables/controlvars_desc.tex", "w") as tf:
+with open(f"{TEX}/controlvars_desc.tex", "w") as tf:
     tf.write(table0)
-
 
 # ### Table: control variables for ITT PDS
 
@@ -655,8 +629,6 @@ dfw.columns = [
 ]
 dfw = dfw.iloc[:, [0, 2, 1]]
 dfw["og"] = dfw.iloc[:, 0].copy()
-dfw.head()
-
 
 ctrls = [x for x in dfw.iloc[:, 2].unique()]
 ctrls += [x for x in dfw.iloc[:, 1].unique() if x not in ctrls]
@@ -666,18 +638,14 @@ ctrls = list(dict.fromkeys(ctrls))
 for x in ["nan"]:
     ctrls.remove(x)
 ctrls.sort()
-ctrls
-
 
 # Relabel variables with publication-ready names
 
 for i in range(0, 3):
-    print(i)
     col = dfw.columns[i]
     dfw[col] = dfw[col].apply(
         lambda x: ("\\newline ").join(sorted(name_dict.get(k) or "None" for k in str(x).split(" ")))
     )
-
 
 # Add Table labels
 
@@ -696,9 +664,6 @@ dfw["Table"] = dfw["Table"].mask(dfw["Table"].duplicated(), "")
 dfw = dfw.loc[:, ["Table"] + [c for c in dfw.columns if c != "Table"]]
 dfw.reset_index(inplace=True, drop=True)
 
-display(dfw.head())
-
-
 # TODO: get subset of models in paper
 
 # get subset and convert to tex
@@ -710,8 +675,6 @@ for c in table1.columns[-2:]:
     table1.loc[table1[c].str.contains(", unique"), c] = table1.loc[
         table1[c].str.contains(", unique"), c
     ].apply(lambda x: x.replace(", unique", ""))
-
-display(table1.head())
 
 
 # convert to latex
@@ -748,9 +711,8 @@ for i in range(2, 6):
     table1 = table1.replace(f"Table {i!s}", f"\\midrule \nTable {i!s}", 1)
 
 # write to tex file
-with open("../tex/tables/controlvars_selected_itt.tex", "w") as tf:
+with open(f"{TEX}/controlvars_selected_itt.tex", "w") as tf:
     tf.write(table1)
-
 
 # ### Table: control variables for LATE PDS
 
@@ -795,8 +757,6 @@ for i in range(0, 4):
 # sort by publishable name
 dfw.sort_values(["Dependent Variable", "Instrumented"], ascending=[True, True], inplace=True)
 
-dfw.head()
-
 
 # export to tex
 
@@ -809,8 +769,6 @@ for c in table.columns[-2:]:
     table.loc[table[c].str.contains(", unique"), c] = table.loc[
         table[c].str.contains(", unique"), c
     ].apply(lambda x: x.replace(", unique", ""))
-
-display(table.head())
 
 # convert to latex
 
@@ -838,9 +796,8 @@ table = convert_to_latex(
 )
 
 # write to tex file
-with open("../tex/tables/controlvars_selected_iv.tex", "w") as tf:
+with open(f"{TEX}/controlvars_selected_iv.tex", "w") as tf:
     tf.write(table)
-
 
 # ## Coefficient estimates - below cutoff experiment
 
@@ -850,7 +807,6 @@ with open("../tex/tables/controlvars_selected_iv.tex", "w") as tf:
 
 dfb = get_dfb(2)
 dfb.head()
-
 
 # create table for first stage vars only
 
@@ -877,8 +833,6 @@ rename_dict = {
 for v in rename_dict:
     dfsub.iloc[dfsub.iloc[:, 0].str.contains(v), 0] = rename_dict.get(v)
 
-dfsub
-
 
 # translate to tex
 
@@ -900,9 +854,8 @@ varlist = [x for x in dfsub.iloc[:-4, 0].unique() if x not in ["", "Observations
 table = add_indents(table, varlist)
 
 # write to tex file
-with open("../tex/tables/firststage.tex", "w") as tf:
+with open(f"{TEX}/firststage.tex", "w") as tf:
     tf.write(table)
-
 
 # ### Table: second stage
 
@@ -910,7 +863,6 @@ with open("../tex/tables/firststage.tex", "w") as tf:
 
 dfb = get_dfb(3)
 dfb.head()
-
 
 def get_dfl(roundn):
     """
@@ -943,7 +895,6 @@ def get_dfl(roundn):
 
 dfl = get_dfl(3)
 dfl.head()
-
 
 # stack with dfb (ITT estimates)
 
@@ -995,8 +946,6 @@ dfsub.loc[len(dfsub), :] = ["Treatment assignment controls", "Yes", "No", "Yes",
 dfsub.loc[len(dfsub), :] = ["Demographic controls", "No", "No", "Yes", "Yes"]
 dfsub.loc[len(dfsub), :] = ["Pair Fixed Effects", "No", "No", "No", "Yes"]
 
-dfsub
-
 
 # translate to tex
 
@@ -1018,9 +967,8 @@ varlist = [x for x in dfsub.iloc[:-4, 0].unique() if x not in ["", "Observations
 table = add_indents(table, varlist)
 
 # write to tex file
-with open("../tex/tables/secondstage.tex", "w") as tf:
+with open(f"{TEX}/secondstage.tex", "w") as tf:
     tf.write(table)
-
 
 # ### Table: spillovers to grades
 
@@ -1028,7 +976,6 @@ with open("../tex/tables/secondstage.tex", "w") as tf:
 
 dfb = get_dfb(2)
 dfb.head()
-
 
 # create table for spillover vars only
 
@@ -1046,8 +993,6 @@ table3_vars = [
 ]
 gpalist = [x for x in table3_vars if x.find("gpa") > -1]
 dfsub = shape_dfb(table3_vars, gpalist)
-dfsub
-
 
 # translate to tex
 
@@ -1086,9 +1031,8 @@ idx += len("resizebox{")
 table = table[:idx] + "0.9" + table[idx:]
 
 # write to tex file
-with open("../tex/tables/spillover_grades.tex", "w") as tf:
+with open(f"{TEX}/spillover_grades.tex", "w") as tf:
     tf.write(table)
-
 
 # ### Table: spillovers to studying
 
@@ -1096,7 +1040,6 @@ with open("../tex/tables/spillover_grades.tex", "w") as tf:
 
 dfb = get_dfb(2)
 dfb.head()
-
 
 # get dfsub
 
@@ -1111,8 +1054,6 @@ table4_vars = [
 
 # gpalist = [x for x in table4_vars if x.find('gpa') > -1]
 dfsub = shape_dfb(table4_vars)
-dfsub
-
 
 # translate to tex
 
@@ -1126,9 +1067,8 @@ table = convert_to_latex(
 )
 
 # write to tex file
-with open("../tex/tables/spillover_studying.tex", "w") as tf:
+with open(f"{TEX}/spillover_studying.tex", "w") as tf:
     tf.write(table)
-
 
 # ### Table: spillovers to subsequent quarter
 
@@ -1136,7 +1076,6 @@ with open("../tex/tables/spillover_studying.tex", "w") as tf:
 
 dfb = get_dfb(2)
 dfb.head()
-
 
 # Table 8: Effects on enrollment and course-type outcomes (formerly Panel C)
 
@@ -1147,8 +1086,6 @@ table8_vars = [
     "winter_nclass_w",
 ]
 dfsub = shape_dfb(table8_vars)
-dfsub
-
 
 # translate to tex
 
@@ -1180,13 +1117,11 @@ varlist = [x for x in dfsub.iloc[:, 0].unique() if x not in ["", "Observations",
 table = add_indents(table, varlist)
 
 # write to tex file
-with open("../tex/tables/spillover_100b.tex", "w") as tf:
+with open(f"{TEX}/spillover_100b.tex", "w") as tf:
     tf.write(table)
-
 
 # ### Table 9: Micro B results
 
-import os
 
 # Panel A: video watching outcomes
 # Panel B: exam score outcomes
@@ -1216,12 +1151,12 @@ t9_alt_depvar = {
 }
 
 # --- Column (1): PDS without pair FEs ---
-df_pds = pd.read_csv("../data/generated/pds_coeffs.csv")
+df_pds = pd.read_csv(f"{DATA_GEN}/pds_coeffs.csv")
 df_pds = df_pds[(df_pds["model"] == "noFEs") & (df_pds["depvar"].isin(t9_outcomes))].copy()
 df_pds = df_pds.set_index("depvar")
 
 # --- Column (2): Semenova (2025) Bounds ---
-semenova_path = "../data/generated/semenova_bounds_100b.csv"
+semenova_path = f"{DATA_GEN}/semenova_bounds_100b.csv"
 semenova_available = os.path.exists(semenova_path)
 if not semenova_available:
     print(f"Warning: {semenova_path} not found. Column (2) will be omitted.")
@@ -1231,7 +1166,7 @@ else:
     df_sem = df_sem.set_index("depvar")
 
 # --- Column (3): IPW ---
-ipw_path = "../data/generated/ipw_100b.csv"
+ipw_path = f"{DATA_GEN}/ipw_100b.csv"
 ipw_available = os.path.exists(ipw_path)
 if not ipw_available:
     print(f"Warning: {ipw_path} not found. Column (3) will be omitted.")
@@ -1239,7 +1174,6 @@ else:
     df_ipw = pd.read_csv(ipw_path)
     df_ipw = df_ipw[df_ipw["depvar"].isin(t9_alt_depvar.values())].copy()
     df_ipw = df_ipw.set_index("depvar")
-
 
 # Build display DataFrame
 
@@ -1306,8 +1240,6 @@ if ipw_available:
 rows.append(obs_row)
 
 dft9 = pd.DataFrame(rows)
-dft9
-
 
 # Convert to LaTeX and write Table 9
 
@@ -1353,21 +1285,19 @@ table9 = insert_panel(table9, ncols, "B", "Micro B exam scores", name_dict.get("
 varlist = [v for v in dft9["Outcome"].unique() if v not in ["", "Observations"]]
 table9 = add_indents(table9, varlist)
 
-with open("../tex/tables/table9_microb.tex", "w") as tf:
+with open(f"{TEX}/table9_microb.tex", "w") as tf:
     tf.write(table9)
-
 
 # ## Other tables
 
 # ### Table: heterogeneity
 
 # read in data
-dfh = pd.read_csv("../data/generated/het_coeffs.csv")
+dfh = pd.read_csv(f"{DATA_GEN}/het_coeffs.csv")
 dfh = dfh.drop(columns=["meanctrl"])
 print(dfh.dtypes)
 print(dfh.isnull().sum())
 dfh.head()
-
 
 # reformat, similar to get_dfb
 
@@ -1431,8 +1361,6 @@ dfht.loc[dfht.depvar == "Videos, unique", "depvar"] = "Pretreatment videos, uniq
 dfht = dfht.drop(columns=["stat"])
 dfht.rename(columns={"depvar": "Interaction Variable"}, inplace=True)
 
-dfht
-
 
 # translate to tex
 
@@ -1453,16 +1381,14 @@ for v in [x for x in dfht["Interaction Variable"].unique() if x not in ["", "Obs
     table = table.replace(v + " &", "\\customlinespace " + v + " &")
 
 # write to tex file
-with open("../tex/tables/het_table.tex", "w") as tf:
+with open(f"{TEX}/het_table.tex", "w") as tf:
     tf.write(table)
-
 
 # ### Table: Anderson-Rubin confidence sets
 
 # Build Anderson-Rubin confidence sets table from Stata weak_iv.do output
-import re
 
-weak_iv_path = "../data/generated/weak_iv.csv"
+weak_iv_path = f"{DATA_GEN}/weak_iv.csv"
 if not os.path.exists(weak_iv_path):
     print(f"Warning: {weak_iv_path} not found. Skipping arci_table.tex.")
 else:
@@ -1514,6 +1440,5 @@ else:
         "\t\\end{table}\n"
         "\\end{spacing}\n"
     )
-    with open("../tex/tables/arci_table.tex", "w") as tf:
+    with open(f"{TEX}/arci_table.tex", "w") as tf:
         tf.write(arci_tex)
-

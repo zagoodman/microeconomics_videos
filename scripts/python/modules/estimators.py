@@ -1,8 +1,8 @@
 """
-estimators.py — numpy ports of the Stata estimators used in analyze_data.ipynb.
+estimators.py — numpy ports of the Stata estimators now in scripts/stata/.
 
 Written because Stata was unavailable for the referee revisions. Every estimator here is
-validated in referee_analysis.ipynb by reproducing the existing Stata outputs
+validated (in the former referee_analysis notebook) by reproducing the existing Stata outputs
 (itt_coeffs.csv, lates_coeffs.csv, pds_coeffs.csv, pds_iv_coeffs.csv) before it is used for
 anything new.
 

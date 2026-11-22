@@ -1,9 +1,6 @@
-import sys
+from pathlib import Path
 
 import numpy as np
-from matplotlib import pyplot as plt
-
-sys.path.insert(0, ".")
 
 from modules.constants import (
     EXAM_DATES,
@@ -27,8 +24,9 @@ from modules.video_agg import (
     build_weekly_video_panel,
 )
 
-DATA_RAW = "../data/raw"
-DATA_GEN = "../data/generated"
+ROOT = Path(__file__).resolve().parents[2]
+DATA_RAW = str(ROOT / "data" / "raw")
+DATA_GEN = str(ROOT / "data" / "generated")
 
 # --- Demographics ---
 
@@ -84,10 +82,6 @@ print(dftmp.syllabus_week.value_counts().sort_index())
 print("\nStudents per year:")
 print(dfv[["id", "year"]].drop_duplicates().year.value_counts())
 
-plt.hist(dfv.duration, 50)
-plt.title("Distribution of video durations (seconds)")
-plt.show()
-
 # Relevant-only for aggregation
 dfr = dfv.query("relevant_100a > 0").copy()
 print(
@@ -141,7 +135,7 @@ log_shape(df_main, "after 100a merge")
 
 # --- 100A video aggregates restricted to credit-eligible opens (referee point 4) ---
 # A video open earns credit only if the student did not open another video before this one
-# could have been watched in full (see modules.video_agg.add_credit_flag). Applied to all arms.
+# could have been watched in full at 2x speed (see modules.video_agg.add_credit_flag). Applied to all arms.
 
 dfv = add_credit_flag(dfv)
 print(f"Share of all opens earning credit: {dfv.credit.mean():.3f}")
@@ -181,7 +175,6 @@ _cols = ["videos_mid2_u", "videos_mid2_cr_u", "videos_final_u", "videos_final_cr
 print(df_main.loc[df_main.arm > 0].groupby("arm")[_cols].mean().round(2))
 log_shape(df_main, "after credit merge")
 
-
 # --- 100B video aggregates ---
 
 dfv_b = load_video_data(DATA_RAW, course="100b")
@@ -197,10 +190,6 @@ drop_100b = [
     "duration_u_b",
 ]
 df_main = df_main.drop(columns=[c for c in drop_100b if c in df_main.columns])
-
-plt.hist(dfv_b.duration, 50)
-plt.title("Distribution of 100B video durations (seconds)")
-plt.show()
 
 # Duration: aggregate_duration with no period_flags produces duration{suffix} and duration_u{suffix}
 # suffix="_b" -> columns: duration_b, duration_u_b
@@ -257,20 +246,3 @@ print(df_weekly.isnull().sum())
 print(len(df_weekly.loc[df_weekly.finalscore.isnull()].id.value_counts()))
 
 df_weekly.to_csv(f"{DATA_GEN}/weekly_video_panel.csv", index=False)
-
-# --- Diagnostic plots (time series) ---
-
-dftmp = df_weekly.groupby(["arm", "weekoy"]).mean(numeric_only=True).reset_index()
-for c in ["videos_pre_mid1", "videos_mid1_to_mid2", "videos_post_mid2"]:
-    plt.plot(dftmp.loc[dftmp.arm == 1, "weekoy"], dftmp.loc[dftmp.arm == 1, c], label="control")
-    plt.plot(dftmp.loc[dftmp.arm == 2, "weekoy"], dftmp.loc[dftmp.arm == 2, c], label="treated")
-    plt.title(c + ", All")
-    plt.legend()
-    plt.show()
-
-for c in ["videos_pre_mid1u", "videos_mid1_to_mid2u", "videos_post_mid2u"]:
-    plt.plot(dftmp.loc[dftmp.arm == 1, "weekoy"], dftmp.loc[dftmp.arm == 1, c], label="control")
-    plt.plot(dftmp.loc[dftmp.arm == 2, "weekoy"], dftmp.loc[dftmp.arm == 2, c], label="treated")
-    plt.title(c + ", Unique")
-    plt.legend()
-    plt.show()
