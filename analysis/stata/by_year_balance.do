@@ -1,6 +1,6 @@
 * Attrition, balance, and exam score summary statistics by year.
 version 17
-do "scripts/stata/_setup.do"
+do "analysis/stata/_setup.do"
 
 load_analysis_data
 

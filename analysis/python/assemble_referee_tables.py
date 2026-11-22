@@ -1,6 +1,6 @@
 # # Referee-requested tables (JEE revision)
 #
-# Python kernel. Reads the CSVs written by `scripts/stata/` (`by_year_balance.do`, `credit_eligible.do`, `microb_by_year.do`) and writes LaTeX to `tex/tables/`:
+# Python kernel. Reads the CSVs written by `analysis/stata/` (`by_year_balance.do`, `credit_eligible.do`, `microb_by_year.do`) and writes LaTeX to `tex/tables/`:
 #
 # | Output | Referee point |
 # |---|---|

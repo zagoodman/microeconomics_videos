@@ -1,7 +1,7 @@
 * Inputs for the Micro B selection corrections: the sample for the generalized Lee
-* bounds (scripts/r/semenova_bounds.R) and IPW estimates.
+* bounds (analysis/r/semenova_bounds.R) and IPW estimates.
 version 17
-do "scripts/stata/_setup.do"
+do "analysis/stata/_setup.do"
 
 local outcomes videos_b videos_b_u duration_b duration_b_u mid1_100bstd mid2_100bstd final_100bstd
 local selection_x mid1scorestd mathquizstd mathquiz_unobs transfer ///

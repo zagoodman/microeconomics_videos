@@ -18,12 +18,15 @@ Of note, the design of the experiment includes randomizing students who scored b
 
 ## Repository details
 
-We are unable to post the data used because of privacy restrictions. The replication pipeline lives in `scripts/`:
-* `scripts/python/assemble_data.py` — data assembly from raw registrar/video logs
-* `scripts/stata/run_all.do` — statistical analysis (Stata 17)
-* `scripts/r/semenova_bounds.R` — generalized Lee bounds (R)
-* `scripts/python/assemble_tables.py`, `scripts/python/assemble_referee_tables.py` — LaTeX table generation
-* `scripts/python/make_figures.py` — JEE print-style figures
+We are unable to post the data used because of privacy restrictions. The replication pipeline is split into two stages:
+
+* `construction/` — builds the analysis datasets in `data/generated/` from raw registrar and video logs in `data/raw/`:
+  * `construction/assemble_data.py`
+* `analysis/` — reads only `data/generated/` and produces all estimates, tables, and figures:
+  * `analysis/stata/run_all.do` — statistical analysis (Stata 17)
+  * `analysis/r/semenova_bounds.R` — generalized Lee bounds (R)
+  * `analysis/python/assemble_tables.py`, `analysis/python/assemble_referee_tables.py` — LaTeX table generation
+  * `analysis/python/make_figures.py` — JEE print-style figures
 
 ## More information
 
@@ -34,14 +37,14 @@ We are unable to post the data used because of privacy restrictions. The replica
 
 1. Install [uv](https://docs.astral.sh/uv/getting-started/installation/)
 1. Install Python dependencies: `uv sync`
-1. Install Stata 17 (for `scripts/stata/`) and R (for `scripts/r/semenova_bounds.R`)
-1. Download raw data into `data/raw/`
+1. Install Stata 17 (for `analysis/stata/`) and R (for `analysis/r/semenova_bounds.R`)
+1. Download raw data into `data/raw/` (or place the assembled datasets in `data/generated/` to start at `analysis/`)
 1. Run the replication scripts:
-   - `uv run python scripts/python/assemble_data.py`
-   - `stata -b do scripts/stata/run_all.do`
-   - `uv run python scripts/python/assemble_tables.py`
-   - `uv run python scripts/python/assemble_referee_tables.py`
-   - `uv run python scripts/python/make_figures.py`
+   - `uv run python construction/assemble_data.py`
+   - `stata -b do analysis/stata/run_all.do`
+   - `uv run python analysis/python/assemble_tables.py`
+   - `uv run python analysis/python/assemble_referee_tables.py`
+   - `uv run python analysis/python/make_figures.py`
 
 ## LaTeX setup
 

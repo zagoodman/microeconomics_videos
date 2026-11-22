@@ -1,5 +1,5 @@
 version 17
-do "scripts/stata/_setup.do"
+do "analysis/stata/_setup.do"
 
 load_analysis_data
 add_microb_exams

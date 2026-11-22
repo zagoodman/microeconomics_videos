@@ -1,5 +1,5 @@
 """
-estimators.py — numpy ports of the Stata estimators now in scripts/stata/.
+estimators.py — numpy ports of the Stata estimators now in analysis/stata/.
 
 Written because Stata was unavailable for the referee revisions. Every estimator here is
 validated (in the former referee_analysis notebook) by reproducing the existing Stata outputs

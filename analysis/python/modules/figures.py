@@ -180,41 +180,6 @@ def local_linear(x, y, grid, h: float):
     return fit, fit - 1.96 * se, fit + 1.96 * se
 
 
-def video_watch_rates(data_raw: str | Path, sample: pd.DataFrame) -> pd.DataFrame:
-    """Per-video share of each arm that opened the video at least once (Stata block behind
-    bar_uviews*). `sample` holds id, year, arm for students who took the final; only arms 1-2
-    are kept. Videos are those in the IMVH log with a runtime and a syllabus week."""
-    v = pd.read_csv(Path(data_raw) / "DeID_video-level_data.csv")
-    v = v.dropna(subset=["length_mins", "DeID", "syllabus_week"])
-    v["duration_min"] = (v["minutes"] * 60 + v["seconds"]) / 60
-    vids = (
-        v.groupby("videocode")
-        .agg(
-            incentivized=("incentivized", "min"),
-            week=("syllabus_week", "min"),
-            duration_min=("duration_min", "min"),
-            title=("title", "first"),
-        )
-        .reset_index()
-    )
-    vids["incent"] = (vids["incentivized"] > 0).astype(int)
-    vids["week"] = vids["week"].astype(int) + 1
-    s = sample.loc[sample["arm"].isin([1, 2]), ["id", "year", "arm"]].copy()
-    s["id"] = s["id"].astype(str)
-    v = v.rename(columns={"DeID": "id"})
-    v["id"] = v["id"].astype(str)
-    seen = v[["id", "year", "videocode"]].drop_duplicates().merge(s, on=["id", "year"])
-    n_arm = s.groupby("arm").size()
-    rates = (
-        seen.groupby(["videocode", "arm"]).size().unstack("arm").reindex(vids["videocode"])
-        .fillna(0)
-        .div(n_arm, axis=1)
-    )
-    vids["control"] = rates[1].to_numpy()
-    vids["incentive"] = rates[2].to_numpy()
-    return vids
-
-
 # ---------------------------------------------------------------------------
 # Figures
 # ---------------------------------------------------------------------------

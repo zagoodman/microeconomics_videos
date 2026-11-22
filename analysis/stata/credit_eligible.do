@@ -1,6 +1,6 @@
 * Tables 4 and 5 re-estimated with credit-eligible video counts (*_cr columns).
 version 17
-do "scripts/stata/_setup.do"
+do "analysis/stata/_setup.do"
 
 load_analysis_data
 

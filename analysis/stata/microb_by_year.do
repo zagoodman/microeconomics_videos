@@ -1,6 +1,6 @@
 * Micro B enrollment ("Took Micro B") and Panel A video watching by year.
 version 17
-do "scripts/stata/_setup.do"
+do "analysis/stata/_setup.do"
 
 local panel_a videos_b videos_b_u duration_b duration_b_u
 local selection_x mid1scorestd mathquizstd mathquiz_unobs transfer ///

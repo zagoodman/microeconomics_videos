@@ -8,7 +8,7 @@ if _rc {
     exit 601
 }
 
-adopath ++ "scripts/stata/ado"
+adopath ++ "analysis/stata/ado"
 
 foreach cmd in ivreg2 ranktest weakiv weakivtest avar pdslasso ivlasso rlasso mhtreg ritest {
     quietly which `cmd'

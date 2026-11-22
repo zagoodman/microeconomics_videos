@@ -1,5 +1,5 @@
 """
-analysis_data.py — Python port of the Stata data-prep programs (now scripts/stata/ado/)
+analysis_data.py — Python port of the Stata data-prep programs (now analysis/stata/ado/)
 (clean_data, get_std_units, merge_dem, clean_dem). Used by make_figures.py and export_results.py so the
 Python estimates are computed on exactly the sample and variable definitions Stata uses.
 """

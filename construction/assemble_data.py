@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 
 from modules.constants import (
     EXAM_DATES,
@@ -24,7 +25,7 @@ from modules.video_agg import (
     build_weekly_video_panel,
 )
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 DATA_RAW = str(ROOT / "data" / "raw")
 DATA_GEN = str(ROOT / "data" / "generated")
 
@@ -246,3 +247,59 @@ print(df_weekly.isnull().sum())
 print(len(df_weekly.loc[df_weekly.finalscore.isnull()].id.value_counts()))
 
 df_weekly.to_csv(f"{DATA_GEN}/weekly_video_panel.csv", index=False)
+
+# --- Per-video watch rates by arm (for bar_uviews* figures) ---
+
+v_raw = pd.read_csv(f"{DATA_RAW}/DeID_video-level_data.csv")
+v_raw = v_raw.dropna(subset=["length_mins", "DeID", "syllabus_week"]).copy()
+v_raw["duration_min"] = (v_raw["minutes"] * 60 + v_raw["seconds"]) / 60
+vids = (
+    v_raw.groupby("videocode")
+    .agg(
+        incentivized=("incentivized", "min"),
+        week=("syllabus_week", "min"),
+        duration_min=("duration_min", "min"),
+        title=("title", "first"),
+    )
+    .reset_index()
+)
+vids["incent"] = (vids["incentivized"] > 0).astype(int)
+vids["week"] = vids["week"].astype(int) + 1
+sample_final = df_main.loc[
+    df_main["mid1score"].notnull() & df_main["finalscore"].notnull() & df_main["arm"].isin([1, 2]),
+    ["id", "year", "arm"],
+].copy()
+sample_final["id"] = sample_final["id"].astype(str)
+v_raw = v_raw.rename(columns={"DeID": "id"})
+v_raw["id"] = v_raw["id"].astype(str)
+seen = v_raw[["id", "year", "videocode"]].drop_duplicates().merge(sample_final, on=["id", "year"])
+n_arm = sample_final.groupby("arm").size()
+rates = (
+    seen.groupby(["videocode", "arm"])
+    .size()
+    .unstack("arm")
+    .reindex(vids["videocode"])
+    .fillna(0)
+    .div(n_arm, axis=1)
+)
+vids["control"] = rates[1].to_numpy()
+vids["incentive"] = rates[2].to_numpy()
+vids.to_csv(f"{DATA_GEN}/video_watch_rates.csv", index=False)
+
+# --- In-class treatment-awareness quiz (for sample_checks.do) ---
+
+quiz_frames = []
+for year, ans_idx in [(2018, 8), (2019, 14)]:
+    q = pd.read_csv(
+        f"{DATA_RAW}/DeID_fa{year % 100}_attendance_checks.csv",
+        encoding="latin-1",
+    )
+    sub = pd.DataFrame({"id": q.iloc[:, 15].astype(str), "year": year})
+    ans = q.iloc[:, ans_idx].astype(str).str.strip()
+    sub["quiz_treated"] = np.where(
+        ans.isin(["True", "1"]), 1, np.where(ans.isin(["False", "0"]), 0, np.nan)
+    )
+    quiz_frames.append(sub)
+pd.concat(quiz_frames, ignore_index=True).to_csv(
+    f"{DATA_GEN}/treatment_awareness_quiz.csv", index=False
+)

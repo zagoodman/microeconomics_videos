@@ -23,7 +23,6 @@ from modules import figures as F
 from modules.analysis_data import load_analysis_frame
 
 ROOT = Path(__file__).resolve().parents[2]
-DATA_RAW = str(ROOT / "data" / "raw")
 DATA_GEN = str(ROOT / "data" / "generated")
 PLOTS = str(ROOT / "tex" / "plots")
 
@@ -33,8 +32,8 @@ F.use_style()
 
 df = load_analysis_frame(DATA_GEN)
 df = df.loc[df["arm"].notnull()]
-weekly = pd.read_csv(f"{DATA_GEN}/id-year-weekoy-arm_level.csv", dtype={"id": str})
-vids = F.video_watch_rates(DATA_RAW, df.loc[df["finalscore"].notnull()])
+weekly = pd.read_csv(f"{DATA_GEN}/weekly_video_panel.csv", dtype={"id": str})
+vids = pd.read_csv(f"{DATA_GEN}/video_watch_rates.csv")
 print(df.groupby("arm").size().rename(F.ARM_NAME))
 print(f"{len(vids)} videos ({vids.incent.sum()} incentivized)")
 

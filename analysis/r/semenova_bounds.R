@@ -1,7 +1,7 @@
 # semenova_bounds.R
 # Compute generalized Lee Bounds (Semenova 2025) for Micro B outcomes.
 #
-# Reads:  data/generated/semenova_sample.csv  (exported by scripts/stata/microb_selection.do)
+# Reads:  data/generated/semenova_sample.csv  (exported by analysis/stata/microb_selection.do)
 # Writes: data/generated/semenova_bounds_100b.csv
 #         data/generated/semenova_bounds_100b_<year>.csv  (when a year is given)
 #
@@ -10,13 +10,13 @@
 # (https://github.com/vsemenova/leebounds; by-year results used commit 8c79595).
 #
 # Usage:
-#   Rscript scripts/r/semenova_bounds.R <path-to-leebounds-repo> [year]
+#   Rscript analysis/r/semenova_bounds.R <path-to-leebounds-repo> [year]
 #
 # With a year (2018 or 2019), the sample is restricted to that year and y2019 is
 # dropped from the covariates (referee revision: Micro B results by year).
 #
 # Example:
-#   Rscript scripts/r/semenova_bounds.R ~/github/leebounds
+#   Rscript analysis/r/semenova_bounds.R ~/github/leebounds
 
 library(dplyr)
 library(expm)

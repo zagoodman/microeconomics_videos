@@ -1,5 +1,5 @@
 version 17
-do "scripts/stata/_setup.do"
+do "analysis/stata/_setup.do"
 
 local blocking mid1scorestd y2019
 local interact_vars `blocking' videos_mid1 videos_mid1_u transfer female white asian latx othereth

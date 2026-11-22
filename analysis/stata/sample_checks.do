@@ -1,6 +1,6 @@
 * Attrition, treatment-awareness quiz and incentive take-up. Log output only.
 version 17
-do "scripts/stata/_setup.do"
+do "analysis/stata/_setup.do"
 
 load_analysis_data
 
@@ -24,23 +24,10 @@ foreach v of varlist attrit_* {
 regress took100b treated mid1scorestd y2019
 restore
 
-* In-class quiz: which grading scheme are you on? Answer column differs by year.
+* In-class quiz: which grading scheme are you on? (assembled by construction/assemble_data.py)
 preserve
+import delimited "data/generated/treatment_awareness_quiz.csv", clear varnames(1) stringcols(1)
 tempfile quiz
-clear
-save `quiz', emptyok
-foreach spec in "2018 v9" "2019 v15" {
-    gettoken year answer : spec
-    import delimited "data/raw/DeID_fa`=mod(`year', 100)'_attendance_checks.csv", clear
-    keep `answer' v16
-    rename (`answer' v16) (answer id)
-    drop in 1
-    generate year = `year'
-    append using `quiz'
-    save `quiz', replace
-}
-generate quiz_treated = cond(inlist(answer, "True", "1"), 1, cond(inlist(answer, "False", "0"), 0, .))
-keep id year quiz_treated
 save `quiz', replace
 restore
 
