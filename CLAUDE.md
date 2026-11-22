@@ -61,7 +61,7 @@ sudo tlmgr install scalerel doublestroke cmathbb placeins preprint threeparttabl
 
 - **Python**: pandas, numpy, scipy, matplotlib, torch, pandas-flavor
 - **Stata**: Used for all econometric analysis (IV estimation, heterogeneous effects, spillover analysis)
-- **LaTeX**: BibLaTeX with APA style (custom `apa.bbx`/`apa.cbx`)
+- **LaTeX**: BibLaTeX with Chicago 15th edition / JEE author-date style (`style=authoryear` customized in `tex/paper/preamble.tex`), 12pt Times New Roman (`times`), double-spaced, unnumbered headings, automated endnotes
 
 ## Exporting Notebooks
 
