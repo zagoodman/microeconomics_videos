@@ -1,5 +1,5 @@
 """
-Utility functions for assembling LaTeX tables in assemble_tables.py and assemble_referee_tables.py.
+Utility functions for assembling LaTeX tables in make_tables.py.
 """
 import re
 
@@ -239,3 +239,22 @@ def star_p(x):
     """
     stars = "" if x > 0.1 else "*" if x > 0.05 else "**" if x > 0.01 else "***"
     return f"{x:.3f}{stars}"
+
+
+def stars(beta, se):
+    """Return significance stars based on z-critical thresholds (1.645 / 1.96 / 2.576)."""
+    z = abs(beta) / se
+    return "***" if z > 2.576 else "**" if z > 1.96 else "*" if z > 1.645 else ""
+
+
+def fmt_beta(beta, se, nd):
+    """Format a point estimate with LaTeX \\sym{} significance stars."""
+    s = stars(beta, se)
+    return f"{beta:.{nd}f}" + (f"\\sym{{{s}}}" if s else "")
+
+
+def write_tex(tex_dir, name, text):
+    """Write LaTeX table text to <tex_dir>/<name>.tex."""
+    with open(f"{tex_dir}/{name}.tex", "w") as f:
+        f.write(text)
+    print(f"wrote {name}.tex")

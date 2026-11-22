@@ -10,7 +10,7 @@ local balance_vars mid1scorestd y2019 ///
     asian latx white othereth female male transfer
 
 capture frame drop results
-frame create results str32 depvar arm str32 exam bothpairs mean stderr N
+frame create results str32 depvar arm str32 exam bothpairs mean stderr N pvalue
 
 foreach exam in mid2 final {
     preserve

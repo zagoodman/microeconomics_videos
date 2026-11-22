@@ -25,7 +25,7 @@ We are unable to post the data used because of privacy restrictions. The replica
 * `analysis/` — reads only `data/generated/` and produces all estimates, tables, and figures:
   * `analysis/stata/run_all.do` — statistical analysis (Stata 17)
   * `analysis/r/semenova_bounds.R` — generalized Lee bounds (R)
-  * `analysis/python/assemble_tables.py`, `analysis/python/assemble_referee_tables.py` — LaTeX table generation
+  * `analysis/python/make_tables.py` — LaTeX table generation (main and referee tables)
   * `analysis/python/make_figures.py` — JEE print-style figures
 
 ## More information
@@ -42,8 +42,7 @@ We are unable to post the data used because of privacy restrictions. The replica
 1. Run the replication scripts:
    - `uv run python construction/assemble_data.py`
    - `stata -b do analysis/stata/run_all.do`
-   - `uv run python analysis/python/assemble_tables.py`
-   - `uv run python analysis/python/assemble_referee_tables.py`
+   - `uv run python analysis/python/make_tables.py`
    - `uv run python analysis/python/make_figures.py`
 
 ## LaTeX setup

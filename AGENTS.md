@@ -19,11 +19,11 @@ The project is split into `construction/` (raw data → clean datasets in `data/
    - `weak_iv.do` writes effective $F$ (`weakivtest`) and Anderson–Rubin confidence sets (`weakiv`) to `data/generated/weak_iv.csv`.
    - `robustness.do` runs randomization inference within `strata(pairyear)` (`reps(5000)` for both exams, `arm > 0`) and `sqreg` with `y2019` (`reps(500)`). `heterogeneity.do` seeds `mhtreg` (`set seed 20191`).
    - The Stata plotting code was dropped; figures come from `analysis/python/make_figures.py`.
-3. **Table & Figure Generation** (`analysis/python/assemble_tables.py`, `analysis/python/assemble_referee_tables.py`, `analysis/python/make_figures.py`) — Python. Reads coefficient estimates from `data/generated/` (including `weak_iv.csv` → `tex/tables/arci_table.tex` and the by-year / credit-eligible CSVs → `tex/tables/*_by_year.tex`, `balance_table_takers_{2018,2019}.tex`, `*_credit.tex`), formats publication-ready LaTeX tables to `tex/tables/`.
+3. **Table & Figure Generation** (`analysis/python/make_tables.py`, `analysis/python/make_figures.py`) — Python. `make_tables.py` (with `--only {all,main,referee}`) reads coefficient and balance CSVs from `data/generated/` (including `weak_iv.csv` → `tex/tables/arci_table.tex` and the by-year / credit-eligible CSVs → `tex/tables/*_by_year.tex`, `balance_table_takers_{2018,2019}.tex`, `*_credit.tex`) and formats publication-ready LaTeX tables to `tex/tables/`. Balance-table Welch t-test p-values are computed in Stata (`post_balance.ado` → `pvalue` column in `balance_table_data*.csv`), with a fallback in `modules/table_utils.py` for pre-existing CSVs.
 
 Generalized Lee bounds (R):
 
-- `Rscript analysis/r/semenova_bounds.R <leebounds-repo> <year>` — by-year generalized Lee bounds (`semenova_bounds_100b_{2018,2019}.csv`), needed by `assemble_referee_tables.py`. Without a year it rewrites the pooled Table 9 bounds (bootstrap was unseeded before, so pooled CIs will shift slightly).
+- `Rscript analysis/r/semenova_bounds.R <leebounds-repo> <year>` — by-year generalized Lee bounds (`semenova_bounds_100b_{2018,2019}.csv`), needed by `make_tables.py`. Without a year it rewrites the pooled Table 9 bounds (bootstrap was unseeded before, so pooled CIs will shift slightly).
 
 *(Helper modules `analysis/python/modules/analysis_data.py` and `analysis/python/modules/estimators.py` are retained for figure generation and `scripts/export_results.py`; all econometric estimation runs in `analysis/stata/`.)*
 

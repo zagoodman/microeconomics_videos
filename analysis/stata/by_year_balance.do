@@ -75,35 +75,17 @@ local balance_vars mid1scorestd y2019 ///
     asian latx white othereth female male transfer
 
 capture frame drop bal_results
-frame create bal_results str32 depvar arm str32 exam bothpairs mean stderr N year
+frame create bal_results str32 depvar arm str32 exam bothpairs mean stderr N pvalue year
 
 foreach yr in 2018 2019 {
     foreach exam in mid2 final {
         preserve
         keep if year == `yr' & !missing(assigned_grade)
-        foreach v of local balance_vars {
-            forvalues a = 0/2 {
-                quietly summarize `v' if arm == `a'
-                frame post bal_results ("`v'") (`a') ("`exam'") (-1) ///
-                    (r(mean)) (r(sd) / sqrt(r(N))) (r(N)) (`yr')
-            }
-        }
+        post_balance `balance_vars', exam(`exam') sample(-1) arms(0/2) frame(bal_results) year(`yr')
         keep if !missing(`exam'score)
-        foreach v of local balance_vars {
-            forvalues a = 0/2 {
-                quietly summarize `v' if arm == `a'
-                frame post bal_results ("`v'") (`a') ("`exam'") (0) ///
-                    (r(mean)) (r(sd) / sqrt(r(N))) (r(N)) (`yr')
-            }
-        }
+        post_balance `balance_vars', exam(`exam') sample(0) arms(0/2) frame(bal_results) year(`yr')
         keep if bothpairs_`exam'
-        foreach v of local balance_vars {
-            forvalues a = 1/2 {
-                quietly summarize `v' if arm == `a'
-                frame post bal_results ("`v'") (`a') ("`exam'") (1) ///
-                    (r(mean)) (r(sd) / sqrt(r(N))) (r(N)) (`yr')
-            }
-        }
+        post_balance `balance_vars', exam(`exam') sample(1) arms(1/2) frame(bal_results) year(`yr')
         restore
     }
 }
