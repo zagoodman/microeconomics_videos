@@ -4,20 +4,22 @@ program pds_itt
     args y exam
     foreach model in noFEs FEs {
         preserve
+        keep if !missing(`exam'scorestd) & !missing(`y') & arm > 0
         if "`model'" == "FEs" {
-            keep if bothpairs_`exam'
+            * Keep only pairs with both members in the sample: singletons carry no
+            * within-pair variation but would inflate N and the DOF correction.
+            bysort pairyear: keep if _N >= 2
             xtset pairyear
             local partial mid1scorestd
             local fe fe
         }
         else {
-            keep if !missing(`exam'scorestd)
             local partial y2019 mid1scorestd
             local fe
         }
         quietly summarize `y' if arm == 1
         local meanctrl = r(mean)
-        pdslasso `y' treated (`partial' $ctrl_vars) if arm > 0, partial(`partial') `fe' robust
+        pdslasso `y' treated (`partial' $ctrl_vars), partial(`partial') `fe' robust
         local fe_se = _se[treated]
         if "`fe'" != "" pair_fe_se `fe_se'
         restore

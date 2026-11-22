@@ -31,7 +31,8 @@ global outcomes_final videos_final_u videos_final duration_final_u duration_fina
     winter_units_letter winter_units_pnp winter_units_w ///
     winter_nclass_p winter_nclass_np winter_nclass_w ///
     winter_nclass_letter winter_nclass_pnp winter_pclass_letter winter_pclass_pnp
-global outcomes_finalb videos_b videos_b_u duration_b duration_b_u finalbscorestd pass100b
+global outcomes_enrollb videos_b videos_b_u duration_b duration_b_u
+global outcomes_finalb finalbscorestd pass100b
 global outcomes_mid1b mid1bscorestd
 global outcomes_mid2b mid2bscorestd
-global itt_exams mid2 final finalb mid1b mid2b
+global itt_exams mid2 final enrollb finalb mid1b mid2b

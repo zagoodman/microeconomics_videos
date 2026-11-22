@@ -136,9 +136,9 @@ foreach sample in pooled 2018 2019 {
         local yrctrl y2019
     }
 
-    * PDS (no FEs) on Micro B final-exam takers
+    * PDS (no FEs) on all Micro B enrollees (same sample as IPW and bounds)
     preserve
-    keep if !missing(final_100bstd) & arm > 0
+    keep if took100b == 1 & arm > 0
     foreach v of local panel_a {
         quietly summarize `v' if arm == 1, meanonly
         local mc = r(mean)

@@ -154,62 +154,29 @@ def build_main_tables():
         "y2019": "Year = 2019",
     }
 
-    # variables appearing in which table
-    table_dict = {
-        "attendance": 4,
-        "duration_final": 1,
-        "duration_final_u": 1,
-        "duration_mid2": 1,
-        "duration_mid2_u": 1,
-        "duration_b": 5,
-        "duration_u_b": 5,
-        "final_100b": 5,
-        "finalscorestd": 2,
-        "gpa_econ_sans100a": 3,
-        "gpa_letter": 3,
-        "gpa_letter_sans100a": 3,
-        "gpa_letter_sansecon": 3,
-        "letter_option": 3,
-        "mid1bscorestd": 5,
-        "mid2bscorestd": 5,
-        "mid2scorestd": 2,
-        "nclass_letter": 3,
-        "nclass_np": 3,
-        "nclass_p": 3,
-        "nclass_pnp": 3,
-        "nclass_w": 3,
-        "pclass_letter": 3,
-        "pclass_pnp": 3,
-        "piazza_answers": 4,
-        "piazza_daysonline": 4,
-        "piazza_questions": 4,
-        "piazza_views": 4,
-        "pset_post": 4,
-        "took100b": 5,
-        "units_letter": 3,
-        "units_pnp": 3,
-        "units_w": 3,
-        "videos_final": 1,
-        "videos_final_u": 1,
-        "videos_mid2": 1,
-        "videos_mid2_u": 1,
-        "videos_b": 5,
-        "videos_u_b": 5,
-        "winter_gpa_econ_sans100a": 5,
-        "winter_gpa_letter": 5,
-        "winter_gpa_letter_sans100a": 5,
-        "winter_gpa_letter_sansecon": 5,
-        "winter_nclass_letter": 5,
-        "winter_nclass_np": 5,
-        "winter_nclass_p": 5,
-        "winter_nclass_pnp": 5,
-        "winter_nclass_w": 5,
-        "winter_pclass_letter": 5,
-        "winter_pclass_pnp": 5,
-        "winter_units_letter": 5,
-        "winter_units_pnp": 5,
-        "winter_units_w": 5,
+    # outcomes reported in each paper table, keyed by the table's LaTeX label (in paper order)
+    table_outcomes = {
+        "firststage_table": [
+            "videos_mid2", "videos_mid2_u", "duration_mid2", "duration_mid2_u",
+            "videos_final", "videos_final_u", "duration_final", "duration_final_u",
+        ],
+        "secondstage_table": ["mid2scorestd", "finalscorestd"],
+        "spillover_grades": [
+            "gpa_letter", "gpa_letter_sans100a", "gpa_letter_sansecon", "gpa_econ_sans100a",
+            "nclass_p", "nclass_np", "nclass_w", "letter_option", "pclass_letter", "pclass_pnp",
+        ],
+        "spillover_studying": [
+            "attendance", "piazza_views", "piazza_daysonline", "piazza_questions",
+            "piazza_answers", "pset_post",
+        ],
+        "spillover_100b": ["took100b", "winter_nclass_p", "winter_nclass_np", "winter_nclass_w"],
+        "microb_results": [
+            "videos_b", "videos_b_u", "duration_b", "duration_b_u",
+            "mid1bscorestd", "mid2bscorestd", "finalbscorestd",
+        ],
     }
+    table_dict = {v: label for label, vs in table_outcomes.items() for v in vs}
+    table_order = {label: i for i, label in enumerate(table_outcomes)}
 
     # ### Common captions
 
@@ -679,28 +646,21 @@ def build_main_tables():
             lambda x: ("\\newline ").join(sorted(name_dict.get(k) or "None" for k in str(x).split(" ")))
         )
 
-    # Add Table labels
+    # Add Table labels; keep only outcomes reported in the paper
 
-    # tables:
-    # 1 - first stage
-    # 2 - second stage
-    # 3 - spillovers to grades
-    # 4 - spillovers to study methods
-    # 5 - spillovers to following quarter
-
-    dfw["Table"] = dfw.og.apply(lambda x: f"Table {table_dict.get(x)!s}")
-    dfw.sort_values(["Table", dfw.columns[0]], inplace=True)
+    dfw = dfw.loc[dfw.og.isin(table_dict)].copy()
+    dfw["Table"] = dfw.og.map(lambda x: f"Table \\ref{{tab:{table_dict[x]}}}")
+    dfw["_order"] = dfw.og.map(lambda x: table_order[table_dict[x]])
+    dfw.sort_values(["_order", dfw.columns[0]], inplace=True)
+    dfw = dfw.drop(columns="_order")
 
     # set Table 'index' as first column
     dfw["Table"] = dfw["Table"].mask(dfw["Table"].duplicated(), "")
     dfw = dfw.loc[:, ["Table"] + [c for c in dfw.columns if c != "Table"]]
     dfw.reset_index(inplace=True, drop=True)
 
-    # TODO: get subset of models in paper
-
-    # get subset and convert to tex
-    table1vars = dfw.og.unique()  # change this
-    table1 = dfw.loc[dfw.og.isin(table1vars), dfw.columns[:-1]]
+    # convert to tex (drop og column)
+    table1 = dfw[dfw.columns[:-1]].copy()
 
     # shorten variable descriptions
     for c in table1.columns[-2:]:
@@ -739,8 +699,9 @@ def build_main_tables():
     )
 
     # add horizontal lines betweeen groups
-    for i in range(2, 6):
-        table1 = table1.replace(f"Table {i!s}", f"\\midrule \nTable {i!s}", 1)
+    for label in list(table_outcomes)[1:]:
+        ref = f"Table \\ref{{tab:{label}}}"
+        table1 = table1.replace(ref, f"\\midrule \n{ref}", 1)
 
     # write to tex file
     with open(f"{TEX}/controlvars_selected_itt.tex", "w") as tf:
@@ -768,15 +729,14 @@ def build_main_tables():
     dfw.columns = [
         "Dependent Variable",
         "Instrumented",
-        "Controls,\\newline Fixed Effects",
         "Controls,\\newline All Observations",
+        "Controls,\\newline Fixed Effects",
     ]
 
     # rename instruments
     dfw["Instrumented"] = dfw["Instrumented"].replace({"d": "duration_mid1_u", "v": "videos_mid1_u"})
 
-    # order columns, copy og varnames
-    dfw = dfw.iloc[:, [0, 1, 3, 2]]
+    # copy og varnames
     dfw["og"] = dfw.iloc[:, 0].copy()
 
     # replace varnames with publishable names
@@ -931,7 +891,7 @@ def build_main_tables():
     # stack with dfb (ITT estimates)
 
     # keep only second stage vars
-    table2_vars = [x for x in table_dict if table_dict.get(x) == 2]
+    table2_vars = table_outcomes["secondstage_table"]
     dfsub = dfb.loc[dfb.og.isin(table2_vars)].copy()
 
     # add 'instrumented' col (for stacking), drop ctrlmean
@@ -984,7 +944,11 @@ def build_main_tables():
     column_format = "m{0.35\\linewidth} *{4}{>{\\centering\\arraybackslash}m{0.1\\linewidth}}"
     caption = "Effects of Videos on Grades"
     label = "secondstage_table"
-    note = combine_notes([note_bothspec, note_scorestd, note_4models])
+    note_4models_iv = note_4models.replace(
+        "Table \\ref{tab:controlvars_selected_itt}",
+        "Tables \\ref{tab:controlvars_selected_itt} and \\ref{tab:controlvars_selected_iv}",
+    )
+    note = combine_notes([note_bothspec, note_scorestd, note_4models_iv])
 
     table = convert_to_latex(
         dfsub, column_format, caption, label, note, scalewidth=False, observations=True
@@ -1125,7 +1089,7 @@ def build_main_tables():
     caption = "Effects of Treatment on Subsequent Quarter Enrollment and Course Outcomes"
     label = "spillover_100b"
     notex = (
-        "Sample includes all students who completed Micro A (saw treatment assignment). "
+        "Sample includes all students who completed Micro A. "
         "Took Micro B is an indicator for enrolling in the subsequent course in the "
         "quarter following the experiment."
     )
@@ -1216,9 +1180,6 @@ def build_main_tables():
         return f"{beta:.2f}{stars_str}"
 
     rows = []
-    obs_col1 = ""
-    obs_col2 = ""
-    obs_col3 = ""
 
     for depvar in t9_outcomes:
         label_str = t9_display[depvar]
@@ -1227,49 +1188,44 @@ def build_main_tables():
         # Column (1): PDS noFEs
         if depvar in df_pds.index:
             row_pds = df_pds.loc[depvar]
-            ctrl_mean = f"{row_pds['meanctrl']:.2f}"
+            ctrl_mean = f"{row_pds['meanctrl'] + 0.0:.2f}".replace("-0.00", "0.00")
             beta_stars = fmt_stars(row_pds["treatbeta"], row_pds["stderr"])
             se_str = f"({row_pds['stderr']:.2f})"
-            obs_col1 = str(int(row_pds["N"]))
+            n1 = str(int(row_pds["N"]))
         else:
-            ctrl_mean, beta_stars, se_str = "", "", ""
+            ctrl_mean, beta_stars, se_str, n1 = "", "", "", ""
 
         # Column (2): Semenova bounds
         if semenova_available and alt_depvar in df_sem.index:
             row_sem = df_sem.loc[alt_depvar]
             bounds_str = f"[{row_sem['lower_bound']:.2f}, {row_sem['upper_bound']:.2f}]"
             ci_str = r"\{" + f"{row_sem['ci_lower']:.2f}, {row_sem['ci_upper']:.2f}" + r"\}"
-            obs_col2 = str(int(row_sem["N_selected"]))
+            n2 = str(int(row_sem["N_selected"]))
         else:
-            bounds_str, ci_str = "", ""
+            bounds_str, ci_str, n2 = "", "", ""
 
         # Column (3): IPW
         if ipw_available and alt_depvar in df_ipw.index:
             row_ipw = df_ipw.loc[alt_depvar]
             ipw_beta = fmt_stars(row_ipw["treatbeta"], row_ipw["stderr"])
             ipw_se = f"({row_ipw['stderr']:.2f})"
-            obs_col3 = str(int(row_ipw["N"]))
+            n3 = str(int(row_ipw["N"]))
         else:
-            ipw_beta, ipw_se = "", ""
+            ipw_beta, ipw_se, n3 = "", "", ""
 
         row1 = {"Outcome": label_str, "Control Mean": ctrl_mean, "(1) PDS": beta_stars}
         row2 = {"Outcome": "", "Control Mean": "", "(1) PDS": se_str}
+        # sample sizes differ across outcomes (Micro B exam takers vary by exam), so report N per row
+        row3 = {"Outcome": "", "Control Mean": "", "(1) PDS": n1}
         if semenova_available:
             row1["(2) Semenova Bounds"] = bounds_str
             row2["(2) Semenova Bounds"] = ci_str
+            row3["(2) Semenova Bounds"] = n2
         if ipw_available:
             row1["(3) IPW"] = ipw_beta
             row2["(3) IPW"] = ipw_se
-        rows.append(row1)
-        rows.append(row2)
-
-    # Observations row
-    obs_row = {"Outcome": "Observations", "Control Mean": "", "(1) PDS": obs_col1}
-    if semenova_available:
-        obs_row["(2) Semenova Bounds"] = obs_col2
-    if ipw_available:
-        obs_row["(3) IPW"] = obs_col3
-    rows.append(obs_row)
+            row3["(3) IPW"] = n3
+        rows.extend([row1, row2, row3])
 
     dft9 = pd.DataFrame(rows)
 
@@ -1277,7 +1233,9 @@ def build_main_tables():
 
     note_t9_col1 = (
         "Column (1) reports post-double-selection (PDS) OLS coefficients on $Incentive_i$ "
-        "estimated on the selected sample of Micro B takers."
+        "estimated on the selected sample of Micro B takers, with heteroskedasticity-robust "
+        "standard errors in parentheses. The third row for each outcome "
+        "reports the number of observations."
     )
     note_t9_col2 = (
         "Column (2) reports generalized Lee (2009) bounds following "
@@ -1297,6 +1255,8 @@ def build_main_tables():
         notes_list.append(note_t9_col3)
     notes_list.append(note_scorestd)
     note_t9 = combine_notes(notes_list)
+    # star legend only: \Regnote's robust-SE statement does not fit the bootstrapped IPW column
+    note_t9 += " \\par\\noindent $^{*}p < .10$; $^{**}p < .05$; $^{***}p < .01$"
 
     caption = "Treatment Effects on Micro B Outcomes"
     label = "tab:microb_results"
@@ -1306,7 +1266,7 @@ def build_main_tables():
 
     table9 = convert_to_latex(
         dft9, column_format=column_format, caption=caption, label=label,
-        note=note_t9, observations=True, scalewidth=True, stars=True, regnote=False,
+        note=note_t9, observations=False, scalewidth=True, stars=True, regnote=False,
     )
 
     # Add panel labels
@@ -1314,7 +1274,7 @@ def build_main_tables():
     table9 = insert_panel(table9, ncols, "B", "Micro B exam scores", name_dict.get("mid1bscorestd"), False)
 
     # Indent variable names
-    varlist = [v for v in dft9["Outcome"].unique() if v not in ["", "Observations"]]
+    varlist = [v for v in dft9["Outcome"].unique() if v != ""]
     table9 = add_indents(table9, varlist)
 
     with open(f"{TEX}/table9_microb.tex", "w") as tf:

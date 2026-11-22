@@ -20,15 +20,15 @@
 	\vspace{1\baselineskip}
 	\noindent\textbf{Authors:}
 
-	\noindent Melissa Famulari (Corresponding Author)\\% TODO: confirm corresponding author
+	\noindent Melissa Famulari (Corresponding Author)\\
 	Department of Economics, University of California, San Diego\\% TODO: add academic rank / position
 	9500 Gilman Drive, La Jolla, CA 92093-0508\\% TODO: confirm mailing address, phone, fax
 	E-mail: mfamulari@ucsd.edu
 
 	\vspace{0.5\baselineskip}
-	\noindent Zachary A. Goodman\\% TODO: add academic rank / position
-	Department of Economics, University of California, San Diego\\% TODO: confirm affiliation, mailing address, phone, fax
-	E-mail: zack@zgoodman.com
+	\noindent Zachary A. Goodman\\
+	Department of Economics, University of California, San Diego\\
+	E-mail: zgoodman@ucsd.edu
 \end{titlepage}
 
 % *****************************************************************
@@ -301,17 +301,12 @@ $\beta$, our parameter of interest, is the average causal effect of being assign
 }
 Under unconfoundedness, $\wh{\beta}$ is an unbiased estimate of the ITT effect~\parencite{ir2015}.\footnote{Though we cannot test whether $Z_i$ is confounded by unobservable covariates, we have confidence unconfoundedness holds given the random assignment of $Z_i$ and the balance across observable covariates as demonstrated in Appendix Tables~\ref{tab:balance_table_takers} and~\ref{tab:balance_table_matched}.}
 
-In our baseline estimation of Equation~\ref{eq:itt_spec}, we include in $X_i$ a year indicator and first midterm score, following the advice of \textcite{bm2009} to control for all covariates used in seeking balance.
-In a second model, we include additional controls chosen using the Post-Double-Selection (PDS) procedure of \textcite{bch2014a}, explained in detail in the Appendix under ``\nameref{subsubsec:a_selection}.''
+In our baseline estimation of Equation~\ref{eq:itt_spec} (model 1), we include in $X_i$ a year indicator and first midterm score, following the advice of \textcite{bm2009} to control for all covariates used in seeking balance.
 While we use heteroskedasticity-robust standard errors, these do not account for within-year correlation in the error term, which may arise because exam difficulty and teaching assistant grading standards are year-level variables.
 The year indicator absorbs differences in means across years but not the within-year correlation in residuals.
-Our next two estimation strategies mitigate this concern since estimation occurs within matched pairs that are formed within year and so absorb year-level variation.
+Our matched-pair specifications (models 2 and 4) mitigate this concern since estimation occurs within matched pairs that are formed within year and so absorb year-level variation.
 
-In a third model, we fit Equation~\ref{eq:itt_spec} including pair fixed effects.
-These fixed effects subsume the year indicator since pairs were formed within year, so we drop the year indicator but keep midterm 1 score to control for small differences within pairs along that dimension.
-Because pair fixed effects require two observations per pair, we drop students who lost their matched partner due to attrition.
-
-Our fourth model is a nonparametric estimate using Neyman's (\citeyear{neyman1923}) repeated sampling approach, considering each pair an independent, completely randomized experiment and averaging the results.
+Our second model is a nonparametric estimate using Neyman's (\citeyear{neyman1923}) repeated sampling approach, considering each pair an independent, completely randomized experiment and averaging the results.
 We estimate the ITT as the mean difference in outcomes across pairs:
 
 \begin{equation} \label{eq:neyman_spec}
@@ -326,7 +321,11 @@ We therefore use the following estimator for the standard error of $\wh{\tau}$, 
 	\wh{SE}(\wh{\tau}) = \Big(\frac{1}{J(J-1)}\sum_{j=1}^{J} (\wh{\tau_j} - \wh{\tau})^2 \Big)^\frac{1}{2}
 \end{equation}
 
-As with the paired fixed effects model, this approach requires dropping students who lost their matched partner to attrition.
+In our third model, we augment Equation~\ref{eq:itt_spec} with additional controls chosen using the Post-Double-Selection (PDS) procedure of \textcite{bch2014a}, explained in detail in the Appendix under ``\nameref{subsubsec:a_selection}.''
+
+In our fourth model, we estimate the PDS specification with pair fixed effects.
+These fixed effects subsume the year indicator since pairs were formed within year, so we drop the year indicator but keep midterm 1 score to control for small differences within pairs along that dimension.
+Because both the Neyman and pair fixed effects specifications require two observations per pair, we drop students who lost their matched partner due to attrition.
 This reduction in sample size widens our confidence intervals, though the effect is modest because within-pair estimation substantially reduces residual variance.
 We present estimates from all four models to demonstrate that the results are not sensitive to model specification.
 In addition, the similarity of estimates across models that include all students and models that exclude students whose matched partner attrited suggests that attrition is largely unrelated to treatment status.
@@ -519,7 +518,7 @@ The inverse probability weighting results should also be treated with caution, a
 
 \insertplaceholder{table \ref{tab:microb_results}}
 
-Treated students watched substantially more videos in Micro B: 8.3 more unique videos and 1.3 more hours of unique content than control students (Column 1).
+Treated students watched substantially more videos in Micro B: 8.4 more unique videos and 1.3 more hours of unique content than control students (Column 1).
 While the PDS and IPW estimates for video watching are statistically significant, the generalized Lee bound confidence interval includes zero.
 We therefore interpret the persistence of video watching in Micro B as suggestive evidence.
 Point estimates for Micro B exam scores are positive, 0.12 standard deviations on the final exam, but confidence intervals are wide.
@@ -528,7 +527,7 @@ The enrollment gap is concentrated in 2019 (Appendix Figure~\ref{fig:attritchart
 In 2019, treatment reduced Micro B enrollment by 14.5 percentage points (s.e.\ 6.8); in 2018 the estimate is 0.1 percentage points (s.e.\ 7.3).
 The difference between years is not statistically significant ($p=0.14$).
 Because enrollment did not differ across arms in 2018, that year tests persistence without differential selection into Micro B.
-In Appendix Table~\ref{tab:microb_videos_by_year}, treated students in 2018 watched 9.5 more unique videos and 1.6 more hours of unique content in Micro B (PDS), compared with 8.1 videos and 1.2 hours in 2019, and none of the differences between years is statistically significant.
+In Appendix Table~\ref{tab:microb_videos_by_year}, treated students in 2018 watched 9.6 more unique videos and 1.6 more hours of unique content in Micro B (PDS), compared with 8.1 videos and 1.2 hours in 2019, and none of the differences between years is statistically significant.
 With nearly equal enrollment rates, \textcite{lee2009} bounds in 2018 require little trimming and are narrow: 12.3 to 13.3 unique videos.
 
 \subsection{Treatment effect heterogeneity}\label{subsec:heterogeneity}
@@ -615,7 +614,7 @@ First, the composition of videos watched differs across arms.
 In Figure~\ref{fig:video_cdf}, control group watch rates vary widely across videos, from nearly 0\% to over 70\%.
 Treatment and control watch rates are positively correlated across videos: videos that control students find valuable, treatment students also watch at high rates.
 However, the incentive sharply increases watch rates for videos that few control students watch: treatment watch rates are 70\% or greater for many videos whose control watch rates are between 5\% and 20\%.
-Because earning the incentive required watching 40 of the 48 eligible videos, and as shown in Figure~\ref{fig:hist_incent} nearly 60\% of treatment students watched all 48, these high treatment watch rates are largely mechanical and do not reveal whether content or time costs drive students' choices.
+Earning the incentive required watching 40 of the 48 eligible videos, and as Figure~\ref{fig:hist_incent} shows, over 90\% of treatment students reached this threshold, more than half watched at least 45, and 23\% watched all 48. These high treatment watch rates are therefore largely mechanical and do not reveal whether content or time costs drive students' choices.
 Nevertheless, these are the marginal videos induced by treatment.
 If they are less valuable per hour, the LATE is diluted relative to the population ATE, while if they are equally valuable, the composition effect is not a concern.
 
@@ -800,7 +799,7 @@ and the following estimators for the population means of $Y$ and $V$:
 Substituting these variance and means estimators into the final step of~\ref{eq:var_expanded}, we arrive at the standard error estimator for $\wh{\gamma}$:
 
 \begin{equation}
-	\wh{\sigma_{\gamma}} = \frac{\wb{\Delta y}}{\wb{\Delta v}} \sqrt{ \frac{\wh{\sigma_Y^2}}{\wb{\Delta y}^2} + \frac{\wh{\sigma_V^2}}{\wb{\Delta v}^2} - 2 \frac{\wh{\sigma_{YV}}}{\wb{\Delta y} \wb{\Delta v}} }\label{eq:equation5}
+	\wh{\sigma_{\gamma}} = \left|\frac{\wb{\Delta y}}{\wb{\Delta v}}\right| \sqrt{ \frac{\wh{\sigma_Y^2}}{\wb{\Delta y}^2} + \frac{\wh{\sigma_V^2}}{\wb{\Delta v}^2} - 2 \frac{\wh{\sigma_{YV}}}{\wb{\Delta y} \wb{\Delta v}} }\label{eq:equation5}
 \end{equation}
 
 % *****************************************************************
@@ -846,7 +845,7 @@ Substituting these variance and means estimators into the final step of~\ref{eq:
 				\toprule
 				Assessment          & Incentive     & Control       \\
 				\midrule
-				$>$40 videos        & \textbf{4\%}  & \textbf{0\%}  \\
+				$\geq$40 videos     & \textbf{4\%}  & \textbf{0\%}  \\
 				Midterm 1           & \textbf{18\%} & \textbf{22\%} \\
 				Midterm 2           & 22\%          & 22\%          \\
 				Final exam          & 50\%          & 50\%          \\
