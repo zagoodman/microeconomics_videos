@@ -1735,11 +1735,9 @@ def build_referee_tables():
     )
     write_tex(TEX, "secondstage_credit", t5)
 
-    # ## Micro B enrollment and Micro B video watching by year
+    # ## Micro B enrollment by year
 
     took = pd.read_csv(f"{DATA_GEN}/microb_took_by_year.csv")
-    vids = pd.read_csv(f"{DATA_GEN}/microb_videos_by_year.csv")
-    sem = {y: pd.read_csv(f"{DATA_GEN}/semenova_bounds_100b_{y}.csv").set_index("depvar") for y in YEARS}
 
     PANELS = [("2018", "A", "2018"), ("2019", "B", "2019"), ("pooled", "C", "Pooled"), ("diff", "D", "Difference, 2019 $-$ 2018")]
 
@@ -1793,58 +1791,6 @@ def build_referee_tables():
     )
     write_tex(TEX, "microb_took_by_year", t)
 
-    # Table 9 Panel A by year
-    VID_ROWS = [
-        ("videos_b", "Num. of videos"),
-        ("videos_b_u", "Num. unique videos"),
-        ("duration_b", "Hours of videos"),
-        ("duration_b_u", "Hours unique videos"),
-    ]
-    body = ""
-    for samp, letter, title in [p for p in PANELS if p[0] != "pooled"]:
-        letter = {"2018": "A", "2019": "B", "diff": "C"}[samp]
-        if letter != "A":
-            body += "\\midrule \n"
-        body += f"\\multicolumn{{6}}{{l}}{{\\textbf{{Panel {letter}}}: {title}}} \\\\ \n"
-        v = vids[vids["sample"] == samp].set_index(["depvar", "model"])
-        for dv, lab in VID_ROWS:
-            pd_, iw = v.loc[(dv, "pds")], v.loc[(dv, "ipw")]
-            if samp == "diff":
-                row1 = ["", fmt_beta(pd_.beta, pd_.se, 2), "", fmt_beta(iw.beta, iw.se, 2), ""]
-                row2 = ["", f"({pd_.se:.2f})", "", f"({iw.se:.2f})", ""]
-            else:
-                sb, lee = sem[int(samp)].loc[dv], sem[int(samp)].loc[f"{dv}_lee2009"]
-                row1 = [
-                    f"{pd_.meanctrl:.2f}",
-                    fmt_beta(pd_.beta, pd_.se, 2),
-                    f"[{sb.lower_bound:.2f}, {sb.upper_bound:.2f}]",
-                    fmt_beta(iw.beta, iw.se, 2),
-                    f"[{lee.lower_bound:.2f}, {lee.upper_bound:.2f}]",
-                ]
-                row2 = ["", f"({pd_.se:.2f})", f"\\{{{sb.ci_lower:.2f}, {sb.ci_upper:.2f}\\}}", f"({iw.se:.2f})", ""]
-            body += f"\\customlinespace \\indentrow{{{lab}}} & " + " & ".join(row1) + " \\\\\n & " + " & ".join(row2) + " \\\\\n"
-        if samp != "diff":
-            sb = sem[int(samp)].loc["videos_b"]
-            n = [int(v.loc[("videos_b", "pds")].N), int(sb.N_selected), int(v.loc[("videos_b", "ipw")].N), int(sb.N_selected)]
-            body += "\\indentrow{Observations} & & " + " & ".join(map(str, n)) + " \\\\\n"
-    t = (
-        "\\begin{spacing}{1.0} \n"
-        "\\begin{table} \\centering \\caption{Treatment Effects on Micro B Video Watching by Year} \n"
-        "\\label{tab:microb_videos_by_year} \n\\resizebox{\\linewidth}{!}{% \n\\begin{threeparttable} \n"
-        "\\begin{tabular}{lccccc}\n\\toprule\n"
-        " & Control Mean & (1) PDS & (2) Semenova Bounds & (3) IPW & (4) Lee Bounds \\\\\n\\midrule\n"
-        + body
-        + "\\bottomrule\n\\end{tabular}\n"
-        "\\Fignote{This table re-estimates Panel A of Table~\\ref{tab:microb_results} separately by year; the year "
-        "control is dropped within year, as are covariates with no variation within year. Columns (1)--(3) are as in "
-        "Table~\\ref{tab:microb_results}. Column (4) reports \\textcite{lee2009} bounds without covariates. In 2018, "
-        "\\textit{Control} and \\textit{Incentive} students enrolled in Micro B at nearly the same rate "
-        "(Table~\\ref{tab:microb_took_by_year}), so little trimming is required. In 2019, the outcome model for column (2) "
-        "omits the \\textit{White} indicator, which is collinear with treatment among selected students. Panel C reports the "
-        "difference between the 2019 and 2018 estimates, with standard error $\\sqrt{se_{2018}^2 + se_{2019}^2}$. \\Regnote}\n"
-        "\\end{threeparttable}}\n\\end{table} \n\\end{spacing}\n"
-    )
-    write_tex(TEX, "microb_videos_by_year", t)
 
 def main():
     parser = argparse.ArgumentParser(description="Generate paper LaTeX tables.")

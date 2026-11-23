@@ -20,10 +20,10 @@ The codebase separates data construction from analysis: `construction/` transfor
    - `analysis/stata/ado/pair_fe_se.ado` applies a pair-fixed-effects degrees-of-freedom standard error adjustment that `pdslasso`/`ivlasso` omits. If a newer version of those packages applies this adjustment natively, verify against the committed LaTeX tables to avoid double-correcting.
 
 3. **Generalized Lee Bounds** (`analysis/r/semenova_bounds.R`)
-   - Standalone R script computing pooled and by-year generalized Lee bounds (Semenova) from the selection sample exported by Stata.
+   - Standalone R script computing generalized Lee bounds (Semenova) from the selection sample exported by Stata.
    - Requires a local clone of the `vsemenova/leebounds` repository:
      ```bash
-     Rscript analysis/r/semenova_bounds.R <path-to-leebounds-repo> [year]
+     Rscript analysis/r/semenova_bounds.R <path-to-leebounds-repo>
      ```
 
 4. **Tables & Figures** (`analysis/python/`)

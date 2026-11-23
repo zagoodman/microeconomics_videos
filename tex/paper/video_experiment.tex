@@ -82,7 +82,7 @@ Point estimates suggest that each additional hour of incentive-induced video con
 Final exam estimates are smaller, at 0.04 to 0.05 standard deviations per hour.
 The smaller final exam estimates likely reflect binge-watching near the deadline, making the second midterm LATE our preferred per-hour estimate.
 
-We then examine whether the incentive affected other study behaviors, including lecture attendance, tutoring center visits, and course discussion board engagement, and find no statistically significant effects on any of these margins.
+We then examine whether the incentive affected other study behaviors, including lecture attendance, tutoring lab visits, and course discussion board engagement, and find no statistically significant effects on any of these margins.
 We also find no evidence that treatment reduced the number of courses taken concurrently or grades in those courses.
 The lack of spillovers from treatment on any of these margins suggests that (1) the incentive operated primarily through increased video watching and the associated increase in study time and (2) the additional time spent watching videos came at least in part at the expense of non-academic activities.
 
@@ -92,7 +92,7 @@ This may reflect discouragement: by experimental design, treatment did not affec
 So treated students, who exerted more effort and performed better than the control group, saw no improvement in their course grade.
 Among those who did enroll in Micro B, treated students watched significantly more videos despite facing no direct grade incentive to do so.
 This result is robust to inverse probability weighting but generalized Lee bound confidence intervals include zero, so we view our evidence on the persistence of video watching as suggestive.
-Point estimates for Micro B exam scores are positive but imprecisely estimated.
+Point estimates for Micro B exam scores are near zero for the midterms and positive for the final exam, but imprecisely estimated.
 
 Our study makes several contributions.
 First, we add to the causal evidence on the effects of incentivizing the adoption of video-based learning resources in higher education.
@@ -209,7 +209,7 @@ For students who scored below the median on the first midterm, we randomly assig
 	Watching all 48 incentivized videos in standard speed would require just shy of eight hours.
 }
 These 48 videos cover new class content since the first midterm that would be assessed in the second midterm and final exam.
-All students could still view the 26 videos relevant to the first midterm and, as they could help students on the cumulative final exam, we include them in our measures of video watching despite not counting towards the grade incentive.
+All students could still view the 25 videos relevant to the first midterm and, as they could help students on the cumulative final exam, we include them in our measures of video watching despite not counting towards the grade incentive.
 
 The two different grading schemes are outlined in Table~\ref{tab:gradescheme}.
 Notably, the four percentage points for video watching come at the expense of reduced weight placed on the first midterm score, which had already occurred at the time of treatment assignment.
@@ -428,7 +428,7 @@ After removing minors and opt-outs per IRB requirement, our sample consists of 2
 Thirty students dropped the course before learning their treatment assignment --- two \textit{Above median}, 19 \textit{Control} and nine \textit{Incentive} --- and additional students attrited before the second midterm and final exam.
 The \textit{p}-values in Figure~\ref{fig:attritchart} are calculated using two-sample \textit{t}-tests of the equality of attrition rates between arms.
 We find no statistically significant difference in attrition before the second midterm and final exams.
-In the quarter following the experiment, treatment students were 9.7 percentage points less likely to enroll in Micro B in the raw comparison among all students who observed their treatment status ($p=0.05$), though this difference attenuates to 7 to 8 percentage points and is not statistically significant in our regression specifications among Micro A completers (Table~\ref{tab:spillover_100b}).
+In the quarter following the experiment, treatment students were 9.6 percentage points less likely to enroll in Micro B in the raw comparison among all students who observed their treatment status ($p=0.05$), though this difference attenuates to 7 to 8 percentage points and is not statistically significant in our regression specifications among Micro A completers (Table~\ref{tab:spillover_100b}).
 Given the potential for selection bias, we perform several robustness checks when exploring the effect of treatment on Micro B outcomes in the ``\nameref{subsec:spillovers_micro_b}'' section.
 
 \insertplaceholder{figure \ref{fig:attritchart}}
@@ -480,7 +480,7 @@ Point estimates for term GPA are positive in all but one specification, with mar
 	Hence, students may not have attrited from the sample but may have taken all courses Pass/No Pass and thus have no term GPA.
 	As such, we report sample sizes for each GPA specification.
 }
-In our worst-case specification, the 95\% confidence interval rules out negative effects on grades in other courses (Term GPA excluding Micro A) larger than -0.06 on a 4.0 scale, about 2\% of the control mean.
+In our worst-case specification, the 95\% confidence interval rules out negative effects on grades in other courses (Term GPA excluding Micro A) larger than -0.05 on a 4.0 scale, about 2\% of the control mean.
 Effects on classes passed are small, insignificant, and directionally positive.
 Treatment students were somewhat less likely to take Micro A for a letter grade, but this difference is only marginally significant in one specification.
 We find no effect on the fraction of classes taken Pass/No Pass.
@@ -521,14 +521,10 @@ The inverse probability weighting results should also be treated with caution, a
 Treated students watched substantially more videos in Micro B: 8.4 more unique videos and 1.3 more hours of unique content than control students (Column 1).
 While the PDS and IPW estimates for video watching are statistically significant, the generalized Lee bound confidence interval includes zero.
 We therefore interpret the persistence of video watching in Micro B as suggestive evidence.
-Point estimates for Micro B exam scores are positive, 0.12 standard deviations on the final exam, but confidence intervals are wide.
+Point estimates for Micro B exam scores are near zero for the midterms and 0.12 standard deviations on the final exam, but confidence intervals are wide.
 
-The enrollment gap is concentrated in 2019 (Appendix Figure~\ref{fig:attritchart_year} and Appendix Table~\ref{tab:microb_took_by_year}).
-In 2019, treatment reduced Micro B enrollment by 14.5 percentage points (s.e.\ 6.8); in 2018 the estimate is 0.1 percentage points (s.e.\ 7.3).
-The difference between years is not statistically significant ($p=0.14$).
-Because enrollment did not differ across arms in 2018, that year tests persistence without differential selection into Micro B.
-In Appendix Table~\ref{tab:microb_videos_by_year}, treated students in 2018 watched 9.6 more unique videos and 1.6 more hours of unique content in Micro B (PDS), compared with 8.1 videos and 1.2 hours in 2019, and none of the differences between years is statistically significant.
-With nearly equal enrollment rates, \textcite{lee2009} bounds in 2018 require little trimming and are narrow: 12.3 to 13.3 unique videos.
+By year, the Micro B enrollment point estimate is larger in 2019 than in 2018 (Appendix Figure~\ref{fig:attritchart_year} and Appendix Table~\ref{tab:microb_took_by_year}).
+Treatment reduced Micro B enrollment by 14.5 percentage points (s.e.\ 6.8) in 2019 and by 0.1 percentage points (s.e.\ 7.3) in 2018, but the difference between years is not statistically significant ($p=0.14$), and the experiment is not powered to detect differences across years.
 
 \subsection{Treatment effect heterogeneity}\label{subsec:heterogeneity}
 
@@ -614,9 +610,10 @@ First, the composition of videos watched differs across arms.
 In Figure~\ref{fig:video_cdf}, control group watch rates vary widely across videos, from nearly 0\% to over 70\%.
 Treatment and control watch rates are positively correlated across videos: videos that control students find valuable, treatment students also watch at high rates.
 However, the incentive sharply increases watch rates for videos that few control students watch: treatment watch rates are 70\% or greater for many videos whose control watch rates are between 5\% and 20\%.
-Earning the incentive required watching 40 of the 48 eligible videos, and as Figure~\ref{fig:hist_incent} shows, over 90\% of treatment students reached this threshold, more than half watched at least 45, and 23\% watched all 48. These high treatment watch rates are therefore largely mechanical and do not reveal whether content or time costs drive students' choices.
-Nevertheless, these are the marginal videos induced by treatment.
-If they are less valuable per hour, the LATE is diluted relative to the population ATE, while if they are equally valuable, the composition effect is not a concern.
+Earning the incentive required watching 40 of the 48 eligible videos, and as Figure~\ref{fig:hist_incent} shows, over 90\% of treatment students reached this threshold, more than half watched at least 45, and 23\% watched all 48.
+The large gap in watch rates therefore follows from the incentive structure rather than from students' choices among videos.
+Since the LATE identifies the effect of videos that control students are less likely to watch, if these induced videos are less valuable per hour, then the LATE is diluted relative to the population ATE.
+On the other hand, Appendix Figure~\ref{fig:video_cdf_duration} shows that the gap in watch rates between arms does not vary with video runtime, consistent with treated students choosing videos they expected to find valuable rather than ones requiring the least time to earn the incentive.
 
 Second, the timing of video watching matters.
 In Figure~\ref{fig:video_cdf_week}, control group watch rates taper off towards the end of the term while treatment watch rates remain high, consistent with the incentive serving as a commitment device to spend more time studying for the final exam.
@@ -942,9 +939,6 @@ Substituting these variance and means estimators into the final step of~\ref{eq:
 \input{../tables/microb_took_by_year.tex}
 
 \clearpage
-\input{../tables/microb_videos_by_year.tex}
-
-\clearpage
 \input{../tables/controlvars_desc.tex}
 
 \clearpage
@@ -1037,6 +1031,19 @@ Substituting these variance and means estimators into the final step of~\ref{eq:
 	\end{center}
 \end{figure}
 
+% video CDF by duration
+\clearpage
+\begin{figure}[t]
+	\begin{center}
+		\caption{Video Watch Rates by Video Runtime and Treatment Arm, Grouped by Incentive}
+		\label{fig:video_cdf_duration}
+		\includegraphics{../plots/bar_uviews_duration.pdf}\par
+		\begin{flushleft}
+			\footnotesize \textit{Note}: Each pair of markers represents the percent of the \textit{Incentive} (filled) and \textit{Control} (open) arms that watched a particular video, plotted against the video's runtime, separately for incentivized and non-incentivized videos.
+		\end{flushleft}
+	\end{center}
+\end{figure}
+
 % Local smoothing: midterm 2 exam scores
 \clearpage
 \begin{figure}[t]
@@ -1086,19 +1093,6 @@ Substituting these variance and means estimators into the final step of~\ref{eq:
 	\end{center}
 \end{figure}
 
-% video CDF by duration
-\clearpage
-\begin{figure}[t]
-	\begin{center}
-		\caption{Video Watch Rates by Video Runtime and Treatment Arm, Grouped by Incentive}
-		\label{fig:video_cdf_duration}
-		\includegraphics{../plots/bar_uviews_duration.pdf}\par
-		\begin{flushleft}
-			\footnotesize \textit{Note}: Each pair of markers represents the percent of the \textit{Incentive} (filled) and \textit{Control} (open) arms that watched a particular video, plotted against the video's runtime, separately for incentivized and non-incentivized videos.
-		\end{flushleft}
-	\end{center}
-\end{figure}
-
 % *****************************************************************
 % Figure Captions (JEE Style: as a list at the end of manuscript)
 % *****************************************************************
@@ -1119,12 +1113,12 @@ Substituting these variance and means estimators into the final step of~\ref{eq:
 
 \noindent FIGURE \ref{fig:video_cdf_week}: Video Watch Rates by Video and Treatment Arm, Grouped by Week.
 
+\noindent FIGURE \ref{fig:video_cdf_duration}: Video Watch Rates by Video Runtime and Treatment Arm, Grouped by Incentive.
+
 \noindent FIGURE \ref{fig:locallin_mid2}: Effects of Treatment Along First Midterm Score, by Midterm 2.
 
 \noindent FIGURE \ref{fig:locallin_final}: Effects of Treatment Along First Midterm Score, by Final.
 
 \noindent FIGURE \ref{fig:hist_binge}: Distribution of Most Videos Watched in One Week.
-
-\noindent FIGURE \ref{fig:video_cdf_duration}: Video Watch Rates by Video Runtime and Treatment Arm, Grouped by Incentive.
 
 \end{document}

@@ -295,9 +295,10 @@ for year, ans_idx in [(2018, 8), (2019, 14)]:
         encoding="latin-1",
     )
     sub = pd.DataFrame({"id": q.iloc[:, 15].astype(str), "year": year})
+    # 2018 answers are True/False strings; 2019 answers are read as floats (0.0/1.0).
     ans = q.iloc[:, ans_idx].astype(str).str.strip()
     sub["quiz_treated"] = np.where(
-        ans.isin(["True", "1"]), 1, np.where(ans.isin(["False", "0"]), 0, np.nan)
+        ans.isin(["True", "1", "1.0"]), 1, np.where(ans.isin(["False", "0", "0.0"]), 0, np.nan)
     )
     quiz_frames.append(sub)
 pd.concat(quiz_frames, ignore_index=True).to_csv(

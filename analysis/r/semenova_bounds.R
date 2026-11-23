@@ -3,17 +3,13 @@
 #
 # Reads:  data/generated/semenova_sample.csv  (exported by analysis/stata/microb_selection.do)
 # Writes: data/generated/semenova_bounds_100b.csv
-#         data/generated/semenova_bounds_100b_<year>.csv  (when a year is given)
 #
 # Dependencies: dplyr, expm, quantreg, reldist
 # Also requires the vsemenova/leebounds repo cloned locally
-# (https://github.com/vsemenova/leebounds; by-year results used commit 8c79595).
+# (https://github.com/vsemenova/leebounds; results used commit 8c79595).
 #
 # Usage:
-#   Rscript analysis/r/semenova_bounds.R <path-to-leebounds-repo> [year]
-#
-# With a year (2018 or 2019), the sample is restricted to that year and y2019 is
-# dropped from the covariates (referee revision: Micro B results by year).
+#   Rscript analysis/r/semenova_bounds.R <path-to-leebounds-repo>
 #
 # Example:
 #   Rscript analysis/r/semenova_bounds.R ~/github/leebounds
@@ -26,15 +22,10 @@ library(reldist)
 # --- Parse args ---
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) < 1) {
-  stop("Usage: Rscript semenova_bounds.R <path-to-leebounds-repo> [year]")
+  stop("Usage: Rscript semenova_bounds.R <path-to-leebounds-repo>")
 }
 leebounds_path <- args[1]
-year <- if (length(args) >= 2) as.integer(args[2]) else NA
-out_path <- if (is.na(year)) {
-  "data/generated/semenova_bounds_100b.csv"
-} else {
-  sprintf("data/generated/semenova_bounds_100b_%d.csv", year)
-}
+out_path <- "data/generated/semenova_bounds_100b.csv"
 set.seed(20260101)
 
 # --- Source the Semenova package ---
@@ -45,9 +36,6 @@ source(file.path(leebounds_path, "R", "second_stage_functions.R"))
 
 # --- Read data ---
 df <- read.csv("data/generated/semenova_sample.csv")
-if (!is.na(year)) {
-  df <- df[df$y2019 == as.integer(year == 2019), ]
-}
 
 # Covariates for selection model (all baseline controls)
 covariates_selection <- c(
@@ -66,14 +54,6 @@ covariates_outcome <- c(
   "transfer", "prev_cumgpa",
   "female", "asian", "latx", "white"
 )
-
-# Within a year, drop covariates that are constant there (e.g. y2019)
-if (!is.na(year)) {
-  varies <- function(v) length(unique(df[[v]])) > 1
-  covariates_selection <- Filter(varies, covariates_selection)
-  covariates_outcome   <- Filter(varies, covariates_outcome)
-  cat("Year", year, "- selection covariates:", covariates_selection, "\n")
-}
 
 # Outcome variables and their raw names in the data
 outcomes <- list(
@@ -132,8 +112,7 @@ for (out in outcomes) {
   }
 
   # The outcome quantile regression interacts covariates with treatment on the selected
-  # sample; drop covariates that make that design rank-deficient (in 2019 every treated
-  # Micro B taker is Asian, Latinx or White, so treat x white is collinear)
+  # sample; drop any covariates that make that design rank-deficient
   cov_out <- covariates_outcome
   repeat {
     X <- model.matrix(
