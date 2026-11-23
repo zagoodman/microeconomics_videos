@@ -29,7 +29,8 @@ The codebase separates data construction from analysis: `construction/` transfor
 4. **Tables & Figures** (`analysis/python/`)
    - `uv run python analysis/python/make_tables.py` (supports `--only {all,main,referee}`) reads estimation CSVs from `data/generated/` and writes publication-ready LaTeX tables to `tex/tables/`.
    - `uv run python analysis/python/make_figures.py` generates journal-formatted grayscale figures (PDF for LaTeX, EPS/TIFF for submission) in `tex/plots/`. Keep figure styling opaque grayscale (EPS does not support transparency).
-   - Helper modules in `analysis/python/modules/` support figure generation and table formatting; all econometric estimation runs in Stata and R.
+   - Figures read `data/generated/figure_sample.csv`, the student-level sample exported by `analysis/stata/figure_data.do` (run by `run_all.do`); Python never re-derives the analysis sample.
+   - Helper modules in `analysis/python/modules/` support figure generation and table formatting only; all econometric estimation runs in Stata and R. Do not add Python ports of the Stata estimators or data prep.
 
 5. **Paper Compilation** (`tex/`)
    - Run `./tex/build.sh` to compile `tex/paper/video_experiment.tex` (which inputs the generated tables and plots).

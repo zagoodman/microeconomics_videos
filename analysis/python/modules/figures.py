@@ -8,8 +8,7 @@ Every figure is drawn with opaque grays only (no alpha): EPS has no transparency
 `save` writes a vector PDF for the LaTeX build (tex/plots/) plus EPS and a 600 dpi grayscale
 TIFF for submission (tex/plots/jee/).
 
-Replaces the Stata figures from the original analyze_data notebook. Data definitions
-follow the Stata code; deviations are noted in each function's docstring.
+Data definitions follow the Stata code; deviations are noted in each function's docstring.
 """
 
 from __future__ import annotations
@@ -22,8 +21,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from PIL import Image
-
-from .estimators import ols_robust
 
 # ---------------------------------------------------------------------------
 # Style
@@ -121,10 +118,15 @@ def save(fig, name: str, plots_dir: str | Path):
 # ---------------------------------------------------------------------------
 
 
-def _survival(v: np.ndarray, grid: np.ndarray) -> np.ndarray:
-    """Share of observations with v >= x for each x in grid."""
-    v = np.sort(np.asarray(v, float))
-    return 1 - np.searchsorted(v, grid, side="left") / len(v)
+def _ols_hc1(y: np.ndarray, x: np.ndarray) -> tuple[float, float]:
+    """Slope and HC1-robust SE from OLS of y on a constant and x (Stata `reg y x, robust`)."""
+    X = np.column_stack([x, np.ones_like(x)])
+    n, k = X.shape
+    XtXi = np.linalg.pinv(X.T @ X)
+    b = XtXi @ X.T @ y
+    e = y - X @ b
+    V = XtXi @ ((X * e[:, None] ** 2).T @ X) @ XtXi * n / (n - k)
+    return b[0], np.sqrt(V[0, 0])
 
 
 def survival_effects(df: pd.DataFrame, var: str, xmax: int) -> pd.DataFrame:
@@ -136,19 +138,19 @@ def survival_effects(df: pd.DataFrame, var: str, xmax: int) -> pd.DataFrame:
     for x in range(xmax + 1):
         y = (d[var] >= x).to_numpy(float)
         if y.std() == 0:
-            b, se = np.array([0.0]), np.array([0.0])
+            b, se = 0.0, 0.0
         else:
             with np.errstate(invalid="ignore"):
-                b, se = ols_robust(y, t[:, None])
+                b, se = _ols_hc1(y, t)
             se = np.nan_to_num(se)  # 1-2 nonzero obs: HC1 variance can round below zero
         rows.append(
             dict(
                 x=x,
                 control=y[t == 0].mean(),
                 incentive=y[t == 1].mean(),
-                effect=b[0],
-                lo=b[0] - 1.96 * se[0],
-                hi=b[0] + 1.96 * se[0],
+                effect=b,
+                lo=b - 1.96 * se,
+                hi=b + 1.96 * se,
             )
         )
     return pd.DataFrame(rows)

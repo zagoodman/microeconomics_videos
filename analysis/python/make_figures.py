@@ -1,7 +1,10 @@
 """Paper figures (JEE print style).
 
-Python replacement for the nine Stata figures in the paper. Style and data definitions live in
-``modules/figures.py``.
+The nine figures in the paper. Style and data definitions live in ``modules/figures.py``.
+
+Inputs (``data/generated/``): ``figure_sample.csv`` (student-level sample exported by
+``analysis/stata/figure_data.do``), plus ``weekly_video_panel.csv`` and ``video_watch_rates.csv``
+(from ``construction/assemble_data.py``).
 
 JEE style sheet: black and white with arms distinguished by line pattern/weight, Times New Roman
 bold 8-10 pt, at most 5 x 5 in, EPS/TIFF/JPEG at 600 dpi or more.
@@ -20,7 +23,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 from modules import figures as F
-from modules.analysis_data import load_analysis_frame
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA_GEN = str(ROOT / "data" / "generated")
@@ -30,8 +32,7 @@ F.use_style()
 
 # Data
 
-df = load_analysis_frame(DATA_GEN)
-df = df.loc[df["arm"].notnull()]
+df = pd.read_csv(f"{DATA_GEN}/figure_sample.csv", dtype={"id": str})
 weekly = pd.read_csv(f"{DATA_GEN}/weekly_video_panel.csv", dtype={"id": str})
 vids = pd.read_csv(f"{DATA_GEN}/video_watch_rates.csv")
 print(df.groupby("arm").size().rename(F.ARM_NAME))

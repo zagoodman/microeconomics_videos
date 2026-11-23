@@ -23,10 +23,10 @@ We are unable to post the data used because of privacy restrictions. The replica
 * `construction/` — builds the analysis datasets in `data/generated/` from raw registrar and video logs in `data/raw/`:
   * `construction/assemble_data.py`
 * `analysis/` — reads only `data/generated/` and produces all estimates, tables, and figures:
-  * `analysis/stata/run_all.do` — statistical analysis (Stata 17)
+  * `analysis/stata/run_all.do` — all estimation (Stata 17); also exports the student-level figure sample
   * `analysis/r/semenova_bounds.R` — generalized Lee bounds (R)
   * `analysis/python/make_tables.py` — LaTeX table generation (main and referee tables)
-  * `analysis/python/make_figures.py` — JEE print-style figures
+  * `analysis/python/make_figures.py` — JEE print-style figures (plotting only; no estimation)
 
 ## More information
 
@@ -42,6 +42,7 @@ We are unable to post the data used because of privacy restrictions. The replica
 1. Run the replication scripts:
    - `uv run python construction/assemble_data.py`
    - `stata -b do analysis/stata/run_all.do`
+   - `Rscript analysis/r/semenova_bounds.R <path-to-leebounds-repo>`
    - `uv run python analysis/python/make_tables.py`
    - `uv run python analysis/python/make_figures.py`
 
