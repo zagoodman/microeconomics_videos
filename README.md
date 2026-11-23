@@ -18,9 +18,15 @@ Of note, the design of the experiment includes randomizing students who scored b
 
 ## Repository details
 
-We are unable to post the data used because of privacy restrictions. However, the repository contains the output from our Jupyter Notebooks:
-* [Data prep](https://nbviewer.jupyter.org/github/zagoodman/microeconomics_videos/blob/master/jupyter/assemble_data.ipynb)
-* [Data analysis](https://nbviewer.jupyter.org/github/zagoodman/microeconomics_videos/blob/master/jupyter/assemble_data.ipynb)
+We are unable to post the data used because of privacy restrictions. The replication pipeline is split into two stages:
+
+* `construction/` — builds the analysis datasets in `data/generated/` from raw registrar and video logs in `data/raw/`:
+  * `construction/assemble_data.py`
+* `analysis/` — reads only `data/generated/` and produces all estimates, tables, and figures:
+  * `analysis/stata/run_all.do` — all estimation (Stata 17); also exports the student-level figure sample
+  * `analysis/r/semenova_bounds.R` — generalized Lee bounds (R)
+  * `analysis/python/make_tables.py` — LaTeX table generation (main and referee tables)
+  * `analysis/python/make_figures.py` — JEE print-style figures (plotting only; no estimation)
 
 ## More information
 
@@ -30,11 +36,15 @@ We are unable to post the data used because of privacy restrictions. However, th
 ## Environment setup
 
 1. Install [uv](https://docs.astral.sh/uv/getting-started/installation/)
-1. Install dependencies: `uv sync`
-1. Register the Stata kernel: `uv run python -m stata_kernel.install`
-1. Verify `stata_path` in `~/.stata_kernel.conf` points to your Stata executable (e.g. `/Applications/Stata/StataSE.app/Contents/MacOS/stata-se`)
-1. Download data (from Drive folder) and add to /data directory
-1. Run notebooks: `uv run jupyter lab`
+1. Install Python dependencies: `uv sync`
+1. Install Stata 17 (for `analysis/stata/`) and R (for `analysis/r/semenova_bounds.R`)
+1. Download raw data into `data/raw/` (or place the assembled datasets in `data/generated/` to start at `analysis/`)
+1. Run the replication scripts:
+   - `uv run python construction/assemble_data.py`
+   - `stata -b do analysis/stata/run_all.do`
+   - `Rscript analysis/r/semenova_bounds.R <path-to-leebounds-repo>`
+   - `uv run python analysis/python/make_tables.py`
+   - `uv run python analysis/python/make_figures.py`
 
 ## LaTeX setup
 

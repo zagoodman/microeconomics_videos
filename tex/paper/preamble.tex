@@ -1,95 +1,240 @@
-\documentclass[12pt]{article}
-\linespread{1.5}
+\documentclass[12pt,letterpaper]{article}
 \pdfminorversion=6
 
-\usepackage[format=hang,font=normalsize,labelfont=bf]{caption}
+% Page geometry: 8.5" x 11" letter paper, 1-inch margins, page numbers bottom center
+\usepackage[letterpaper,margin=1in]{geometry}
+\pagestyle{plain}
+
+% Font: 12-point Times New Roman (without switching \ttdefault to missing Courier)
+\usepackage[T1]{fontenc}
+\renewcommand{\rmdefault}{ptm}
+
+% Double spacing for all text, quotations, endnotes, and references
+\usepackage{setspace}
+\doublespacing
+
+% Language and quotes
 \usepackage[american]{babel}
+\usepackage{csquotes}
+
+% Tables and figures
+\usepackage{caption}
+\captionsetup[table]{labelsep=colon,name=TABLE,font=normalsize,labelfont=normalfont,singlelinecheck=true}
+\captionsetup[figure]{labelsep=colon,name=FIGURE,font=normalsize,labelfont=normalfont,singlelinecheck=true}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{float,xcolor}
 \usepackage{graphicx,scalerel}
-\usepackage{amsmath}
-\usepackage{dsfont}
-\usepackage{cmathbb}
 \usepackage{placeins}
-\usepackage[margin=1in]{geometry}
-\usepackage{setspace}
-\newcommand{\Rho}{\mathrm{P}}
-\usepackage{authblk}
 \usepackage[flushleft]{threeparttable}
 \usepackage{longtable}
 \usepackage{threeparttablex}
 \usepackage{multirow}
 \usepackage{array}
+\usepackage{etoolbox}
+
+% JEE table style: 8-10pt Times New Roman (\footnotesize is 10pt in 12pt class)
+\AtBeginEnvironment{tabular}{\footnotesize}
+
+% Math
+\usepackage{amsmath}
+\usepackage{dsfont}
+\usepackage{cmathbb}
+\newcommand{\Rho}{\mathrm{P}}
+
+% Graphics / diagrams
 \usepackage{tikz}
-\usepackage{csquotes}
+\usetikzlibrary{shapes, arrows, positioning, trees}
 
+% Epigraph
 \usepackage{epigraph}
-\setlength \epigraphwidth {\linewidth}
-\setlength \epigraphrule {0pt}
-\AtBeginDocument{\renewcommand {\epigraphflush}{center}}
-\renewcommand {\sourceflush} {center}
+\setlength\epigraphwidth{\linewidth}
+\setlength\epigraphrule{0pt}
+\AtBeginDocument{\renewcommand{\epigraphflush}{center}}
+\renewcommand{\sourceflush}{center}
 
+% Block quotations: double-spaced, indented 0.5 in from left margin, no quotation marks
+\renewenvironment{quote}{%
+	\list{}{%
+		\leftmargin=0.5in
+		\rightmargin=0in
+		\parsep=0pt
+		\topsep=0pt
+	}%
+	\item\relax
+}{\endlist}
+\renewenvironment{quotation}{%
+	\list{}{%
+		\leftmargin=0.5in
+		\rightmargin=0in
+		\listparindent=0.5in
+		\parsep=0pt
+		\topsep=0pt
+	}%
+	\item\relax
+}{\endlist}
+
+% JEE Heading Styles: unnumbered; flush left; 12pt Times New Roman
+% Heading 1: bold; Heading 2: bold italic; Heading 3: italic; Heading 4: run-in italic
+\setcounter{secnumdepth}{0}
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+	{-2.5ex \@plus -0.5ex \@minus -0.2ex}%
+	{1.0ex \@plus 0.2ex}%
+	{\normalfont\normalsize\bfseries\raggedright}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+	{-2.0ex \@plus -0.5ex \@minus -0.2ex}%
+	{0.8ex \@plus 0.2ex}%
+	{\normalfont\normalsize\bfseries\itshape\raggedright}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+	{-1.8ex \@plus -0.4ex \@minus -0.2ex}%
+	{0.6ex \@plus 0.2ex}%
+	{\normalfont\normalsize\itshape\raggedright}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+	{1.5ex \@plus 0.4ex \@minus 0.2ex}%
+	{-1em}%
+	{\normalfont\normalsize\itshape}}
+
+% Automated endnotes (placed on a new page titled NOTES before Acknowledgments/References)
+\newcounter{jeeendnote}
+\newwrite\@endnotes
+\newif\if@endnotesopen
+\@endnotesopenfalse
+\newcommand{\jeeendnote}[1]{%
+	\unskip
+	\stepcounter{jeeendnote}%
+	\textsuperscript{\thejeeendnote}%
+	\if@endnotesopen\else
+		\immediate\openout\@endnotes=\jobname.ent\relax
+		\@endnotesopentrue
+	\fi
+	\immediate\write\@endnotes{\string\jeeendnoteitem{\thejeeendnote}{\unexpanded{#1}}}%
+}
+\newcommand{\jeeendnoteitem}[2]{%
+	\par\noindent\textsuperscript{#1}\hspace{0.5em}#2\par
+}
+\newcommand{\theendnotes}{%
+	\if@endnotesopen
+		\immediate\closeout\@endnotes
+		\@endnotesopenfalse
+		\clearpage
+		\section*{NOTES}
+		\begingroup
+		\doublespacing
+		\InputIfFileExists{\jobname.ent}{}{}%
+		\endgroup
+	\fi
+}
+\let\footnote=\jeeendnote
+\makeatother
+
+% Hyperlinks
 \usepackage{hyperref}
 \usepackage{bookmark}
 \hypersetup{colorlinks,linkcolor=black,urlcolor=blue,citecolor=black}
+\urlstyle{same}
 
-% Bibliography stuff
+% Bibliography: Chicago Manual of Style (15th ed.) / JEE author-date style
 \usepackage[
-hyperref=true,
-giveninits=true, % render first and middle names as initials
-uniquename=init,
-maxcitenames=3,
-maxbibnames=99,
-dashed=false, % re-print recurring author names in bibliography
-natbib=true,
-useprefix=true, % for inclusion of `de' `da' in surname
-%urldate=long,
-backend=biber,
-style=apa]{biblatex}
+	backend=biber,
+	style=authoryear,
+	giveninits=true,
+	uniquename=false,
+	maxcitenames=3,
+	maxbibnames=99,
+	dashed=false,
+	natbib=true,
+	useprefix=true,
+	hyperref=true,
+	isbn=false,
+	eprint=false,
+	doi=true,
+	url=true
+]{biblatex}
 \addbibresource{bibliography.bib}
+
+% In-text citations: no comma before year; comma before page number; "and" with serial comma
+\renewcommand*{\nameyeardelim}{\addspace}
+\renewcommand*{\postnotedelim}{\addcomma\space}
+\DeclareFieldFormat{postnote}{#1}
+\DeclareFieldFormat{multipostnote}{#1}
+
+% Reference list: First author "Last, F. M.", subsequent authors "F. M. Last"
+% Chicago 15th / JEE uses a comma before "and" even with 2 authors when first is inverted
+\DeclareNameAlias{sortname}{family-given/given-family}
+\DeclareNameAlias{editor}{given-family}
+\renewcommand*{\finalnamedelim}{%
+	\ifnumgreater{\value{liststop}}{2}
+		{\finalandcomma}
+		{\ifbibliography{\ifcurrentname{author}{\addcomma}{}}{}}%
+	\addspace\bibstring{and}\space}
+\DefineBibliographyStrings{american}{
+	editor = {ed.},
+	editors = {ed.},
+	urlseen = {accessed}
+}
+
+% Period between author(s) and year; no parentheses around year in bibliography
+\renewbibmacro*{date+extradate}{%
+	\iffieldundef{labelyear}
+		{}
+		{\setunit{\addperiod\space}\printtext{\printlabeldateextra}}}
+
+% No quotation marks around article/chapter titles
+\DeclareFieldFormat[article,inbook,incollection,inproceedings,patent,thesis,unpublished]{title}{#1\isdot}
+
+% Journal format: Journal Title Volume (Number): Pages. No colon after "In" for chapters.
+\renewcommand*{\intitlepunct}{\addspace}
+\renewbibmacro{in:}{%
+	\ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
+\DeclareFieldFormat[article]{volume}{#1}
+\DeclareFieldFormat[article]{number}{\mkbibparens{#1}}
+\DeclareFieldFormat[article]{pages}{#1}
+\DeclareFieldFormat[incollection]{pages}{#1}
+\renewcommand*{\bibpagespunct}{\ifentrytype{article}{\addcolon\space}{\addcomma\space}}
+\renewbibmacro*{volume+number+eid}{%
+	\printfield{volume}%
+	\setunit*{\addspace}%
+	\printfield{number}%
+	\setunit{\addcomma\space}%
+	\printfield{eid}}
+
+% DOI format: doi: 10.xxxx/...
+\DeclareFieldFormat{doi}{doi:\space\ifhyperref{\href{https://doi.org/#1}{\nolinkurl{#1}}}{\nolinkurl{#1}}}
+\DeclareFieldFormat{url}{\url{#1}}
+
+% Reference list heading: new page titled REFERENCES, double-spaced with hanging indent
+\defbibheading{bibliography}[\refname]{%
+	\clearpage
+	\section*{REFERENCES}%
+}
+\setlength{\bibhang}{0.5in}
+\setlength{\bibitemsep}{0pt}
 
 % Scale hats and bars (e.g. \wh{x})
 \newcommand\wh[1]{\hstretch{2}{\hat{\hstretch{.5}{#1}}}}
 \newcommand\wb[1]{\hstretch{2}{\bar{\hstretch{.5}{#1}}}}
 
-% custom table functions
-% indents second level entries
+% Custom table helpers
 \newcommand{\indentrow}[1]{\quad #1}
-
-% adds space above row
 \newcommand{\customlinespace}{\addlinespace[.1cm]}
 
-% command for all table/figure notes
-\newcommand{\Fignote}[1]{
+% Table/figure notes (left-justified, aligned with table's left edge)
+\newcommand{\Fignote}[1]{%
 	\begin{tablenotes}[para,flushleft]\footnotesize
 		\textit{Note}: #1
-	\end{tablenotes}
+	\end{tablenotes}%
 }
 
-% stars
+% Stars
 \newcommand{\sym}[1]{\rlap{#1}}
 
-% note addendem for regression tables
-\newcommand{\Regnote}{Standard errors in parentheses are robust to heteroskedasticity. ***, **, and * indicate significance at the 1, 5, and 10 percent critical levels, respectively.}
+% Probability note for regression tables (JEE format: single-line, italicized p, no trailing period)
+\newcommand{\Regnote}{Standard errors in parentheses are robust to heteroskedasticity.\par\noindent $^{*}p < .10$; $^{**}p < .05$; $^{***}p < .01$}
 
-% Flowchart helpers
-\usetikzlibrary{shapes, arrows, positioning, trees}
-
-
-% *****************************************************************
-% Title page stuff
-% *****************************************************************
-
-\title{The effect of a supplementary video book on learning in intermediate microeconomics}
-\author{Melissa Famulari}
-\author{Zachary A. Goodman\thanks{mfamulari@ucsd.edu and zack@zgoodman.com.
-We thank the students who took intermediate microeconomics in the fall of 2018 and 2019 for participating in this study.
-We thank UC San Diego's Academic Senate for financial support and the Teaching + Learning Commons for help with the data.
-We gratefully recognize Alec Hoover, Ida Grigoryeva, Jessica Morales, Yingjia Zhang, and Shuli Zhu for outstanding research assistance.
-Finally, we thank the applied microeconomics group at UC San Diego for many helpful suggestions.
-This research was approved under UC San Diego's Human Research Protections Program (IRB approval 170886 in fall 2018 and 2019).
-The paper investigates the use of Intermediate Microeconomics Video Handbook (IMVH) video lectures by UC San Diego students, some of which were developed by one of the authors, in collaboration with UC San Diego and the UC Office of the President.
-The IMVH was provided to students at no charge and neither author has a direct financial interest in the distribution of the IMVH.}}
-\affil{University of California, San Diego}
-\date{\today} % TODO: add link to most recent version
+% Centered table/figure insertion callout per JEE style sheet
+\newcommand{\insertplaceholder}[1]{%
+	\begin{center}
+		[Insert #1 about here]
+	\end{center}
+}
