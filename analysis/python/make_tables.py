@@ -1450,8 +1450,18 @@ def build_referee_tables():
         return "no attrition" if pd.isna(p) else f"$p={p:.2f}$"
 
 
-    def tree(year):
-        a = attr[attr["sample"] == str(year)].set_index("arm")
+    # Above-median midterm 1 takers before removing minors and opt-outs; not in
+    # the Stata export. Counted from the fall 2018 and fall 2019 treatment
+    # assignment files.
+    ABOVE_MEDIAN_ASSIGNED = {"2018": 216, "2019": 209}
+    ABOVE_MEDIAN_ASSIGNED["pooled"] = sum(ABOVE_MEDIAN_ASSIGNED.values())
+
+    def below_assigned(sample):
+        a = attr[attr["sample"] == sample].set_index("arm")
+        return int(a.loc["1"].assigned + a.loc["2"].assigned)
+
+    def tree(sample, top_label, above_label, level2_dist="10mm"):
+        a = attr[attr["sample"] == str(sample)].set_index("arm")
         r = {k: a.loc[k] for k in ["0", "1", "2"]}
         p = a.loc["pvalue"]
         below = int(r["1"].assigned + r["2"].assigned)
@@ -1479,10 +1489,10 @@ def build_referee_tables():
             "\t\t\tpval/.style = {shape=rectangle, draw=none, inner sep=0mm, outer sep=0mm, minimum height=1em, align=left, text width=20mm},\n"
             "\t\t\tcmnt/.style = {shape=rectangle, draw=none, inner sep=0mm, outer sep=0mm, minimum height=1em, align=right},\n"
             "\t\t\tlevel 1/.style = {sibling distance=50mm, level distance=15mm},\n"
-            "\t\t\tlevel 2/.style = {sibling distance=35mm, level distance=10mm}, edge from parent fork down, edge from parent/.style = {draw, semithick, -latex},\n"
+            f"\t\t\tlevel 2/.style = {{sibling distance=35mm, level distance={level2_dist}}}, edge from parent fork down, edge from parent/.style = {{draw, semithick, -latex}},\n"
             "\t\t\t]\n"
-            f"\t\t\t\\node [text width = 50mm] (L1) {{Midterm 1 takers, {year}}}\n"
-            "\t\t\tchild {node (L2) {Above median}\n"
+            f"\t\t\t\\node [text width = 50mm] (L1) {{{top_label}}}\n"
+            f"\t\t\tchild {{node (L2) {{{above_label}}}\n"
             + chain(r["0"], "\\textit{Above median}", "L")
             + "}\n"
             f"\t\t\tchild {{node {{Below or equal to median: {below}}}\n"
@@ -1509,16 +1519,44 @@ def build_referee_tables():
         "\\begin{figure}[p]\n\t\\begin{center}\n"
         "\t\t\\caption{Attrition by Treatment Arm and Year}\n"
         "\t\t\\label{fig:attritchart_year}\n\t\t\\footnotesize\n"
-        "\t\t\\textbf{Panel A: 2018}\\\\[1mm]\n" + tree(2018) + "\n\t\t\\bigskip\n\n"
-        "\t\t\\textbf{Panel B: 2019}\\\\[1mm]\n" + tree(2019) + "\n"
+        "\t\t\\textbf{Panel A: 2018}\\\\[1mm]\n" + tree(
+            2018,
+            f"Midterm 1 takers, 2018: {ABOVE_MEDIAN_ASSIGNED['2018'] + below_assigned('2018')}",
+            f"Above median: {ABOVE_MEDIAN_ASSIGNED['2018']}",
+        ) + "\n\t\t\\bigskip\n\n"
+        "\t\t\\textbf{Panel B: 2019}\\\\[1mm]\n" + tree(
+            2019,
+            f"Midterm 1 takers, 2019: {ABOVE_MEDIAN_ASSIGNED['2019'] + below_assigned('2019')}",
+            f"Above median: {ABOVE_MEDIAN_ASSIGNED['2019']}",
+        ) + "\n"
         "\\end{center}\n\t\t{\\footnotesize \\noindent \\textit{Note}: Percentages in parentheses are, at each stage, the share of students who observed their treatment status "
         "who took the second midterm, took the final exam, or enrolled in Micro B, calculated separately for each treatment arm and year. "
         "The p-values are from a two-sample t-test of the equality of attrition rates between the "
-        "\\textit{Control} and \\textit{Incentive} arms at each stage within year. "
-        "\\textit{Above median} counts before removing minors and opt-outs are not available by year.\\par}\n"
+        "\\textit{Control} and \\textit{Incentive} arms at each stage within year.\\par}\n"
         "\\end{figure}\n"
     )
     write_tex(TEX, "attrite_chart_by_year", fig)
+
+    # ## Pooled attrition chart (main text)
+
+    fig = (
+        "\\begin{figure}[t]\n\t\\begin{center}\n"
+        "\t\t\\caption{Attrition by Treatment Arm}\n"
+        "\t\t\\label{fig:attritchart}\n\t\t\\footnotesize\n"
+        + tree(
+            "pooled",
+            "Midterm 1 takers \\\\ eligible for experiment: "
+            f"{ABOVE_MEDIAN_ASSIGNED['pooled'] + below_assigned('pooled')}",
+            f"Above median: {ABOVE_MEDIAN_ASSIGNED['pooled']}",
+            level2_dist="15mm",
+        )
+        + "\\end{center}\n\t\t{\\footnotesize \\noindent \\textit{Note}: Percentages in parentheses are, at each stage, the share of students who observed their treatment status "
+        "who took the second midterm, took the final exam, or enrolled in Micro B, calculated separately for each treatment arm. "
+        "The p-values are from a two-sample t-test of the equality of attrition rates between the "
+        "\\textit{Control} and \\textit{Incentive} arms at each stage.\\par}\n"
+        "\\end{figure}\n"
+    )
+    write_tex(TEX, "attrite_chart", fig)
 
     # ## Table A1 by year: balance, exam-taker sample
 

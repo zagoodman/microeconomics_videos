@@ -4,40 +4,37 @@
 		\label{fig:attritchart}
 		\footnotesize
 		\begin{tikzpicture}[
-			node distance=0mm,
+			node distance=0mm, level distance=10mm,
 			every node/.style = {shape=rectangle, draw=none, text width = 30mm, minimum height = 1em, align=center},
-			pval/.style = {shape=rectangle, draw=none, inner sep=0mm, outer sep=0mm, minimum height=1em, align=left},
+			pval/.style = {shape=rectangle, draw=none, inner sep=0mm, outer sep=0mm, minimum height=1em, align=left, text width=20mm},
 			cmnt/.style = {shape=rectangle, draw=none, inner sep=0mm, outer sep=0mm, minimum height=1em, align=right},
-			level 1/.style = {sibling distance=50mm},
-			level 2/.style = {sibling distance=35mm}, edge from parent fork down, edge from parent/.style = {draw, semithick, -latex},
+			level 1/.style = {sibling distance=50mm, level distance=15mm},
+			level 2/.style = {sibling distance=35mm, level distance=15mm}, edge from parent fork down, edge from parent/.style = {draw, semithick, -latex},
 			]
-			\begin{scope}
-				\node [text width = 50mm] (L1) {Midterm 1 takers \\ eligible for experiment: 861}
-				child {node (L2) {Above median: 425}
-					child {node (L3) {\textit{Above median}}
-						child {node (L4) {420}
-							child {node (L45) {418 (100\%)}
-								child {node (L5) {417 (99.8\%)}
-									child {node (L6) {415 (99.3\%)}
-										child {node (L7) {284 (67.9\%)}
-				}}}}}}}
-				child {node {Below or equal to median: 436}
-					child {node {\textit{Control}: 218}
-						child {node {215}
-							child {node {196 (100\%)}
-								child {node {193 (98.5\%)}
-									child {node {184 (93.9\%)}
-										child {node {114 (58.2\%)}
-					}}}}}}
-					child {node {\textit{Incentive}: 218}
-						child {node (R4) {215}
-							child {node (R45) {206 (100\%)}
-								child {node (R5) {202 (98.1\%)}
-									child {node (R6) {190 (92.2\%)}
-										child {node (R7) {100 (48.5\%)}
-				}}}}}}};
-			\end{scope}
-			% row labels, from bottom to top
+			\node [text width = 50mm] (L1) {Midterm 1 takers \\ eligible for experiment: 861}
+			child {node (L2) {Above median: 425}
+child {node (L3) {\textit{Above median}}
+child {node (L4) {420}
+child {node (L45) {418 (100\%)}
+child {node (L5) {417 (99.8\%)}
+child {node (L6) {415 (99.3\%)}
+child {node (L7) {284 (67.9\%)}
+}}}}}}}
+			child {node {Below or equal to median: 436}
+child {node (C3) {\textit{Control}: 218}
+child {node (C4) {215}
+child {node (C45) {196 (100\%)}
+child {node (C5) {193 (98.5\%)}
+child {node (C6) {184 (93.9\%)}
+child {node (C7) {114 (58.2\%)}
+}}}}}}
+child {node (R3) {\textit{Incentive}: 218}
+child {node (R4) {215}
+child {node (R45) {206 (100\%)}
+child {node (R5) {202 (98.1\%)}
+child {node (R6) {190 (92.2\%)}
+child {node (R7) {100 (48.5\%)}
+}}}}}}};
 			\node[cmnt] (l7) [left=3mm of L7] {Took Micro B};
 			\node[cmnt] (l6) [left=3mm of L6] {Took Final Exam};
 			\node[cmnt] (l5) [left=3mm of L5] {Took Midterm 2};
@@ -45,12 +42,10 @@
 			\node[cmnt] (l4) [left=3mm of L4] {Opt-in and \\ 18 or older};
 			\node[cmnt] (l3) [left=3mm of L3] {Treatment arm};
 			\node[cmnt] (l2) [left=of l3.east |- L2.west] {Midterm score};
-			%pvals, from top to bottom
 			\node[pval] (r5) [right=3mm of R5] {$p=0.75$};
 			\node[pval] (r6) [right=3mm of R6] {$p=0.52$};
 			\node[pval] (r7) [right=3mm of R7] {$p=0.05$};
 		\end{tikzpicture}
-        \end{center}
-		{\footnotesize \noindent \textit{Note}: Percentages in parentheses are, at each stage, the share of students who observed their treatment status who took the second midterm, took the final exam, or enrolled in Micro B, calculated separately for each treatment arm.
-		The p-values are from a two-sample t-test of the equality of attrition rates between the \textit{Control} and \textit{Incentive} arms at each stage.}
+\end{center}
+		{\footnotesize \noindent \textit{Note}: Percentages in parentheses are, at each stage, the share of students who observed their treatment status who took the second midterm, took the final exam, or enrolled in Micro B, calculated separately for each treatment arm. The p-values are from a two-sample t-test of the equality of attrition rates between the \textit{Control} and \textit{Incentive} arms at each stage.\par}
 \end{figure}

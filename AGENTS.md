@@ -50,7 +50,5 @@ The codebase separates data construction from analysis: `construction/` transfor
 ## Repository Conventions
 
 - **Data privacy**: Raw and generated data files (`.xlsx`, `.xls`, `.csv`, `.dta`) are gitignored. Never commit raw data; it must be obtained separately and placed in `data/raw/`.
-- **Committed outputs**: Generated LaTeX tables (`tex/tables/*.tex`) and figure files (`tex/plots/`) are tracked in version control.
-- **Hand-maintained table**: `tex/tables/attrite_chart.tex` is not produced by `make_tables.py`; edit it directly. Every other table in `tex/tables/` is generated and will be overwritten on the next run.
-- **Validation**: There is no formal test suite; validate changes by re-running the affected pipeline stage and reviewing diffs in generated tables, figures, and logs.
+- **Committed outputs**: Generated LaTeX tables (`tex/tables/*.tex`) and figure files (`tex/plots/`) are tracked in version control.- **Validation**: There is no formal test suite; validate changes by re-running the affected pipeline stage and reviewing diffs in generated tables, figures, and logs.
 - **Documentation**: After structural changes to the pipeline, build process, dependencies, or conventions, update this file to keep it accurate.
