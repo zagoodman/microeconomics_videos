@@ -4,7 +4,7 @@ Guidance for AI coding agents working in this repository.
 
 ## Project Overview
 
-Replication repository for *"The Effects of Supplementary Videos on Learning in Intermediate Microeconomics: Estimates from a Field Experiment"* by Melissa Famulari and Zachary A. Goodman (UC San Diego). Evaluates the effectiveness of the Intermediate Microeconomics Video Handbook (IMVH) using a randomized controlled trial.
+Replication repository for *"The Effects of Incentivizing Video Watching: A Field Experiment in Intermediate Microeconomics"* by Melissa Famulari and Zachary A. Goodman (UC San Diego). A field experiment estimating how a small grade incentive to watch Intermediate Microeconomics Video Handbook (IMVH) videos affects below-median students' study behavior and exam performance.
 
 ## Pipeline
 
@@ -51,5 +51,6 @@ The codebase separates data construction from analysis: `construction/` transfor
 
 - **Data privacy**: Raw and generated data files (`.xlsx`, `.xls`, `.csv`, `.dta`) are gitignored. Never commit raw data; it must be obtained separately and placed in `data/raw/`.
 - **Committed outputs**: Generated LaTeX tables (`tex/tables/*.tex`) and figure files (`tex/plots/`) are tracked in version control.
+- **Hand-maintained table**: `tex/tables/attrite_chart.tex` is not produced by `make_tables.py`; edit it directly. Every other table in `tex/tables/` is generated and will be overwritten on the next run.
 - **Validation**: There is no formal test suite; validate changes by re-running the affected pipeline stage and reviewing diffs in generated tables, figures, and logs.
 - **Documentation**: After structural changes to the pipeline, build process, dependencies, or conventions, update this file to keep it accurate.
