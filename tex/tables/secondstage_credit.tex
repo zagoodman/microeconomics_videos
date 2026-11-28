@@ -9,9 +9,9 @@
 \multicolumn{5}{l}{\textbf{Panel A}: Midterm 2 score} \\ 
 \customlinespace \indentrow{RF: Incentive} & 0.176\sym{*} & 0.183\sym{*} & 0.176\sym{*} & 0.174\sym{*} \\
  & (0.090) & (0.094) & (0.090) & (0.096) \\
-\customlinespace \indentrow{2SLS: 10 videos} & 0.302\sym{*} & 0.311\sym{*} & 0.344\sym{**} & 0.331\sym{*} \\
+\customlinespace \indentrow{2SLS: 10 unique videos} & 0.302\sym{*} & 0.311\sym{*} & 0.344\sym{**} & 0.331\sym{*} \\
  & (0.166) & (0.173) & (0.171) & (0.182) \\
-\customlinespace \indentrow{2SLS: 1 hour of videos} & 0.181\sym{*} & 0.187\sym{*} & 0.206\sym{**} & 0.195\sym{*} \\
+\customlinespace \indentrow{2SLS: 1 hour of unique videos} & 0.181\sym{*} & 0.187\sym{*} & 0.206\sym{**} & 0.195\sym{*} \\
  & (0.099) & (0.103) & (0.102) & (0.107) \\
 \midrule 
 Observations & 395 & 362 & 395 & 362 \\
@@ -19,18 +19,18 @@ Observations & 395 & 362 & 395 & 362 \\
 \multicolumn{5}{l}{\textbf{Panel B}: Final exam score} \\ 
 \customlinespace \indentrow{RF: Incentive} & 0.175\sym{**} & 0.174\sym{*} & 0.175\sym{**} & 0.138 \\
  & (0.089) & (0.103) & (0.088) & (0.103) \\
-\customlinespace \indentrow{2SLS: 10 videos} & 0.085\sym{**} & 0.086\sym{*} & 0.087\sym{**} & 0.071 \\
+\customlinespace \indentrow{2SLS: 10 unique videos} & 0.085\sym{**} & 0.086\sym{*} & 0.087\sym{**} & 0.071 \\
  & (0.043) & (0.051) & (0.043) & (0.051) \\
-\customlinespace \indentrow{2SLS: 1 hour of videos} & 0.053\sym{**} & 0.054\sym{*} & 0.054\sym{**} & 0.045 \\
+\customlinespace \indentrow{2SLS: 1 hour of unique videos} & 0.053\sym{**} & 0.054\sym{*} & 0.054\sym{**} & 0.045 \\
  & (0.027) & (0.032) & (0.027) & (0.032) \\
 \midrule 
 Observations & 374 & 332 & 374 & 332 \\
 Treatment assignment controls & Yes & No & Yes & Yes \\
 Demographic controls & No & No & Yes & Yes \\
-Pair Fixed Effects & No & No & No & Yes \\
+Pair fixed effects & No & No & No & Yes \\
 \bottomrule
 \end{tabular}
-\Fignote{This table replicates Table~\ref{tab:secondstage_table} using credit-eligible video measures as the endogenous variable. The reduced-form (\textit{RF}) estimates do not depend on the video measure and are identical to Table~\ref{tab:secondstage_table}. Video measures count only credit-eligible video openings: a video counts only if the student did not open another video before this one could have been watched in its entirety at 2x playback speed (allowing one minute for timestamp rounding), the condition \textit{Incentive} students were told was required for credit. The rule is applied identically to all arms. Test scores are measured in standard deviation units. Model (1) contains linear controls for midterm 1 score and year; (2) is the difference in means and standard errors calculated using the repeated sampling framework of Neyman (1923); (3) and (4) use the post-double-selection (PDS) procedure of \textcite{bch2014a} to select control variables then estimate treatment effects and standard errors. Models (2) and (4) include only students whose matched-pair did not attrite from the experiment. \Regnote}
+\Fignote{This table replicates Table~\ref{tab:secondstage_table} using credit-eligible video measures as the endogenous variable. The reduced-form (\textit{RF}) estimates do not depend on the video measure and are identical to Table~\ref{tab:secondstage_table}. Video measures count only credit-eligible video openings: a video counts only if the student did not open another video before this one could have been watched in its entirety at 2x playback speed (allowing one minute for timestamp rounding), consistent with what \textit{Incentive} students were told was required for credit. The rule is applied identically to all arms. Test scores are measured in standard deviation units. Model (1) contains linear controls for midterm 1 score and year; (2) is the difference in means and standard errors calculated using the repeated sampling framework of Neyman (1923); (3) and (4) use the post-double-selection (PDS) procedure of \textcite{bch2014a} to select control variables then estimate treatment effects and standard errors. Models (2) and (4) include only students whose matched pair did not attrite from the experiment. \Regnote}
 \end{threeparttable}
 \end{table} 
 \end{spacing}

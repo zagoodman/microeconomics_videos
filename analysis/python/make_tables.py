@@ -185,7 +185,7 @@ def build_main_tables():
 
     # notes on model specification
 
-    note_ittspec = "This table reports coefficients on $Incentive_i$ from Equations \\ref{eq:itt_spec}."
+    note_ittspec = "This table reports coefficients on $Incentive_i$ from Equation \\ref{eq:itt_spec}."
 
     note_bothspec = (
         "This table reports coefficients on $Incentive_i$ from Equation \\ref{eq:itt_spec} "
@@ -198,8 +198,8 @@ def build_main_tables():
         + "the difference in means and standard errors calculated using the repeated sampling "
         + "framework of Neyman (1923); (3) and (4) use the post-double-selection (PDS) procedure of "
         + "\\textcite{bch2014a} to select control variables then estimate treatment effects and "
-        + "standard errors. The control variables selected using PDS are listed in Table "
-        + "\\ref{tab:controlvars_selected_itt}. Models (2) and (4) include only students whose matched-"
+        + "standard errors. The control variables selected using PDS are listed in Appendix Table "
+        + "\\ref{tab:controlvars_selected_itt}. Models (2) and (4) include only students whose matched "
         + "pair did not attrite from the experiment."
     )
 
@@ -288,7 +288,7 @@ def build_main_tables():
         dfsub = dfsub.reset_index(drop=True)
         dfsub.loc[len(dfsub)] = ["Treatment assignment controls", "", "Yes", "No",  "Yes", "Yes"]
         dfsub.loc[len(dfsub)] = ["Demographic controls",          "", "No",  "No",  "Yes", "Yes"]
-        dfsub.loc[len(dfsub)] = ["Pair Fixed Effects",            "", "No",  "No",  "No",  "Yes"]
+        dfsub.loc[len(dfsub)] = ["Pair fixed effects",            "", "No",  "No",  "No",  "Yes"]
 
         dfsub.rename(columns={"depvar": "", "ctrlmean": "Control Mean",
                                "ITT": "(1)", "Neyman": "(2)", "All": "(3)", "FEs": "(4)"}, inplace=True)
@@ -453,11 +453,11 @@ def build_main_tables():
     # convert to latex
 
     column_format = "m{0.25\\linewidth} *{8}{>{\\centering\\arraybackslash}m{0.095\\linewidth}}"
-    caption = "Balance test, exam taker sample"
+    caption = "Balance Test, Exam Taker Sample"
     label = "balance_table_takers"
     note = (
         "This table includes all students who completed the second midterm and final exams. "
-        + "Descriptions of each variable can be found in Table \\ref{tab:controlvars_desc}. "
+        + "Descriptions of each variable can be found in Appendix Table \\ref{tab:controlvars_desc}. "
         + "\\textit{Female} and \\textit{Male} are coded zero for nine students who do not report "
         + "a gender. \\textit{P-values} are reported for the Welch's t-test of equal means between "
         + "the \\textit{Control} and \\textit{Incentive} arms."
@@ -489,7 +489,7 @@ def build_main_tables():
     # convert to latex
 
     column_format = "m{0.25\\linewidth} *{5}{>{\\centering\\arraybackslash}m{0.095\\linewidth}}"
-    caption = "Balance test, full sample"
+    caption = "Balance Test, Full Sample"
     label = "balance_table_all"
     note = (
         "This table includes all students who saw their treatment assignment. "
@@ -537,12 +537,12 @@ def build_main_tables():
     # convert to latex
 
     column_format = "m{0.25\\linewidth} *{6}{>{\\centering\\arraybackslash}m{0.095\\linewidth}}"
-    caption = "Baseline balance test, matched pairs"
+    caption = "Baseline Balance Test, Matched Pairs"
     label = "balance_table_matched"
     note = (
         "This table includes all matched pairs who both complete the second midterm "
         + "or final exams. "
-        + "Descriptions of each variable can be found in Table \\ref{tab:controlvars_desc}. "
+        + "Descriptions of each variable can be found in Appendix Table \\ref{tab:controlvars_desc}. "
         + "\\textit{Female} and \\textit{Male} are coded zero for nine students who do not report "
         + "a gender. \\textit{P-values} are reported for the Welch's t-test of equal means between "
         + "the \\textit{Control} and \\textit{Incentive} arms."
@@ -595,7 +595,7 @@ def build_main_tables():
     # translate to tex
 
     column_format = r"p{0.3\linewidth} p{0.6\linewidth}"
-    caption = "Candidate control variables for post-double-selection"
+    caption = "Candidate Control Variables for Post-Double-Selection"
     label = "controlvars_desc"
     note = (
         "\\textit{Midterm 1 score} and \\textit{Math quiz score} are measured in control standard deviations. "
@@ -604,8 +604,8 @@ def build_main_tables():
         + 'records: \\textit{Asian} includes "Chinese/Chinese American", "Vietnamese", "East Indian/Pakistani", '
         + '"Japanese/Japanese American", "Korean/Korean American", and "All other Asian/Asian American"; \\textit{Latinx} '
         + 'includes "Mexican/Mexican American", "Chicano", and "All other Spanish-American/Latino"; \\textit{White} '
-        + 'includes "White/Caucasian"; and the omitted category inludes "African American/Black", "Pacific Islander", '
-        + 'and "Not give/declined to state".'
+        + 'includes "White/Caucasian"; and the omitted category includes "African American/Black", "Pacific Islander", '
+        + 'and "Not given/declined to state".'
     )
 
     table0 = convert_to_latex(
@@ -675,7 +675,7 @@ def build_main_tables():
         r"p{0.07\linewidth} >{\hangindent=1em}p{0.38\linewidth} "
         + r"p{0.22\linewidth} p{0.22\linewidth}"
     )
-    caption = "ITT model controls selected via post-double-selection"
+    caption = "ITT Model Controls Selected via Post-Double-Selection"
     label = "controlvars_selected_itt"
     note = (
         "Controls chosen via the PDS procedure of \\textcite{bch2014a}. "
@@ -765,7 +765,7 @@ def build_main_tables():
     # convert to latex
 
     column_format = r"p{.25\linewidth} p{0.3\linewidth} " + r"p{0.22\linewidth} p{0.22\linewidth}"
-    caption = "LATE model controls selected via post-double-selection"
+    caption = "LATE Model Controls Selected via Post-Double-Selection"
     label = "controlvars_selected_iv"
     note = (
         "Controls chosen via the PDS procedure of \\textcite{bch2014a}. "
@@ -910,7 +910,7 @@ def build_main_tables():
 
     # name instruments
     dfsub["Instrumented"] = dfsub["Instrumented"].replace(
-        {"z": "RF: Incentive", "v": "2SLS: 10 videos", "d": "2SLS: 1 hour of videos"}
+        {"z": "RF: Incentive", "v": "2SLS: 10 unique videos", "d": "2SLS: 1 hour of unique videos"}
     )
 
     # remove Instrumented duplicates and unnecessary cols
@@ -936,7 +936,7 @@ def build_main_tables():
     dfsub.reset_index(drop=True, inplace=True)
     dfsub.loc[len(dfsub), :] = ["Treatment assignment controls", "Yes", "No", "Yes", "Yes"]
     dfsub.loc[len(dfsub), :] = ["Demographic controls", "No", "No", "Yes", "Yes"]
-    dfsub.loc[len(dfsub), :] = ["Pair Fixed Effects", "No", "No", "No", "Yes"]
+    dfsub.loc[len(dfsub), :] = ["Pair fixed effects", "No", "No", "No", "Yes"]
 
 
     # translate to tex
@@ -1099,7 +1099,7 @@ def build_main_tables():
         "sampling framework of Neyman (1923); (3) and (4) use the post-double-selection "
         "(PDS) procedure of \\textcite{bch2014a} to select control variables then estimate "
         "treatment effects and standard errors. The control variables selected using PDS "
-        "are listed in Table \\ref{tab:controlvars_selected_itt}."
+        "are listed in Appendix Table \\ref{tab:controlvars_selected_itt}."
     )
     note = combine_notes([note_ittspec, notex, note_models_t8, note_ctrlmean])
 
@@ -1109,7 +1109,7 @@ def build_main_tables():
 
     # add indents
     varlist = [x for x in dfsub.iloc[:, 0].unique() if x not in ["", "Observations",
-               "Treatment assignment controls", "Demographic controls", "Pair Fixed Effects"]]
+               "Treatment assignment controls", "Demographic controls", "Pair fixed effects"]]
     table = add_indents(table, varlist)
 
     # write to tex file
@@ -1507,16 +1507,16 @@ def build_referee_tables():
 
     fig = (
         "\\begin{figure}[p]\n\t\\begin{center}\n"
-        "\t\t\\caption{Attrition by treatment arm and year}\n"
+        "\t\t\\caption{Attrition by Treatment Arm and Year}\n"
         "\t\t\\label{fig:attritchart_year}\n\t\t\\footnotesize\n"
         "\t\t\\textbf{Panel A: 2018}\\\\[1mm]\n" + tree(2018) + "\n\t\t\\bigskip\n\n"
         "\t\t\\textbf{Panel B: 2019}\\\\[1mm]\n" + tree(2019) + "\n"
-        "\t\t{Percentages in parentheses are the portion of students who observe their treatment status and took the "
-        "second midterm, final exam, and enrolled in Micro B, calculated separately for each treatment arm and year. "
+        "\\end{center}\n\t\t{\\footnotesize \\noindent \\textit{Note}: Percentages in parentheses are, at each stage, the share of students who observed their treatment status "
+        "who took the second midterm, took the final exam, or enrolled in Micro B, calculated separately for each treatment arm and year. "
         "The p-values are from a two-sample t-test of the equality of attrition rates between the "
         "\\textit{Control} and \\textit{Incentive} arms at each stage within year. "
-        "\\textit{Above median} counts before removing minors and opt-outs are not available by year.}\n"
-        "\t\\end{center}\n\\end{figure}\n"
+        "\\textit{Above median} counts before removing minors and opt-outs are not available by year.\\par}\n"
+        "\\end{figure}\n"
     )
     write_tex(TEX, "attrite_chart_by_year", fig)
 
@@ -1571,7 +1571,7 @@ def build_referee_tables():
             nobs += [str(int(b.loc[(exam, "mid1scorestd", a)]["N"])) for a in [0, 1, 2]] + [""]
         return (
             "\\begin{spacing}{1.0} \n"
-            f"\\begin{{table}} \\centering \\caption{{Balance test, exam taker sample, {year}}} \n"
+            f"\\begin{{table}} \\centering \\caption{{Balance Test, Exam Taker Sample, {year}}} \n"
             f"\\label{{tab:balance_table_takers_{year}}} \n"
             "\\resizebox{\\linewidth}{!}{% \n\\begin{threeparttable} \n"
             "\\begin{tabular}{m{0.25\\linewidth} *{8}{>{\\centering\\arraybackslash}m{0.095\\linewidth}}}\n"
@@ -1585,8 +1585,8 @@ def build_referee_tables():
             + " & ".join(nobs)
             + " \\\\\n\\bottomrule\n\\end{tabular}\n"
             f"\\Fignote{{This table includes all students in {year} who completed the second midterm and final "
-            "exams. It reproduces Table~\\ref{tab:balance_table_takers} separately by year. Descriptions of each "
-            "variable can be found in Table \\ref{tab:controlvars_desc}. \\textit{Female} and \\textit{Male} are "
+            "exams. It reproduces Appendix Table~\\ref{tab:balance_table_takers} separately by year. Descriptions of each "
+            "variable can be found in Appendix Table \\ref{tab:controlvars_desc}. \\textit{Female} and \\textit{Male} are "
             "coded zero for students who do not report a gender. \\textit{P-values} are reported for the Welch's "
             "t-test of equal means between the \\textit{Control} and \\textit{Incentive} arms. \\Regnote} \n"
             "\\end{threeparttable}}\n\\end{table} \n\\end{spacing}\n"
@@ -1612,7 +1612,7 @@ def build_referee_tables():
         lines.append("\\customlinespace")
     table = (
         "\\begin{spacing}{1.0} \n"
-        "\\begin{table} \\centering \\caption{Exam scores by year} \n"
+        "\\begin{table} \\centering \\caption{Exam Scores by Year} \n"
         "\\label{tab:exam_stats_by_year} \n\\begin{threeparttable} \n"
         "\\begin{tabular}{l *{8}{c}}\n\\toprule \n"
         " & \\multicolumn{4}{c}{2018} & \\multicolumn{4}{c}{2019} \\\\ \n"
@@ -1637,19 +1637,19 @@ def build_referee_tables():
         "Model (1) contains linear controls for midterm 1 score and year; (2) is the difference in means and "
         "standard errors calculated using the repeated sampling framework of Neyman (1923); (3) and (4) use the "
         "post-double-selection (PDS) procedure of \\textcite{bch2014a} to select control variables then estimate "
-        "treatment effects and standard errors. Models (2) and (4) include only students whose matched-pair did "
+        "treatment effects and standard errors. Models (2) and (4) include only students whose matched pair did "
         "not attrite from the experiment."
     )
     NOTE_CREDIT = (
         "Video measures count only credit-eligible video openings: a video counts only if the student did not "
         "open another video before this one could have been watched in its entirety at 2x playback speed "
-        "(allowing one minute for timestamp rounding), the condition \\textit{Incentive} students were told was required for credit. "
+        "(allowing one minute for timestamp rounding), consistent with what \\textit{Incentive} students were told was required for credit. "
         "The rule is applied identically to all arms."
     )
     FOOT = [
         ("Treatment assignment controls", ["Yes", "No", "Yes", "Yes"]),
         ("Demographic controls", ["No", "No", "Yes", "Yes"]),
-        ("Pair Fixed Effects", ["No", "No", "No", "Yes"]),
+        ("Pair fixed effects", ["No", "No", "No", "Yes"]),
     ]
 
 
@@ -1703,8 +1703,8 @@ def build_referee_tables():
     # Table 5 analogue
     labels = {
         "RF": "RF: Incentive",
-        "2SLS_videos10": "2SLS: 10 videos",
-        "2SLS_hours": "2SLS: 1 hour of videos",
+        "2SLS_videos10": "2SLS: 10 unique videos",
+        "2SLS_hours": "2SLS: 1 hour of unique videos",
     }
     body = ""
     for exam, letter, title in [("mid2", "A", "Midterm 2 score"), ("final", "B", "Final exam score")]:
@@ -1764,7 +1764,7 @@ def build_referee_tables():
     FOOT5 = [
         ("Treatment assignment controls", ["Yes", "No", "Yes", "Yes", "Yes"]),
         ("Demographic controls", ["No", "No", "Yes", "Yes", "No"]),
-        ("Pair Fixed Effects", ["No", "No", "No", "Yes", "No"]),
+        ("Pair fixed effects", ["No", "No", "No", "Yes", "No"]),
         ("Sample", ["Final", "Final", "Final", "Final", "All"]),
     ]
     body += "\\midrule \n"
@@ -1783,7 +1783,7 @@ def build_referee_tables():
         "students who took the Micro A final exam (\\textit{Final}); models (2) and (4) include only students whose matched "
         "pair did not attrite. Model (5) is model (1) estimated on all students who saw their treatment assignment "
         "(\\textit{All}), coding students who did not enroll as zero; this is the population in "
-        "Figure~\\ref{fig:attritchart_year}. Panel C reproduces Table~\\ref{tab:spillover_100b} and adds model (5). "
+        "Appendix Figure~\\ref{fig:attritchart_year}. Panel C reproduces Table~\\ref{tab:spillover_100b} and adds model (5). "
         "Panel D reports the difference between the 2019 and 2018 estimates; because the years are independent samples, its "
         "standard error is $\\sqrt{se_{2018}^2 + se_{2019}^2}$. \\textit{Control mean} is the enrollment rate of "
         "\\textit{Control} students in each estimation sample. \\Regnote}\n"
